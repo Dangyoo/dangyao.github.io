@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"dangyoo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="闲言碎语最近心血来潮，想把自己的知识库迁移到一个统一的地方。 之前用过一段时间语雀，在线编辑实在是有点卡，用了一年放弃了。 后来改用 Notion，操作非常方便，但是页面多起来以后，时常卡顿。 另外这类应用都把内容存到了服务器上，说实话没有本地备份还是有些不放心的。 考虑到主要目的是将知识库做好分类，并且保存到一个看起来不太会丢的地方，不需要各种各样的多媒体内容，大多是文字的东西，好像建个站更方便">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鱼人宝宝都能看懂的个人博客搭建攻略">
+<meta property="og:url" content="https://dangyoo.github.io/2023/03/09/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%94%BB%E7%95%A5/index.html">
+<meta property="og:site_name" content="西左Log">
+<meta property="og:description" content="闲言碎语最近心血来潮，想把自己的知识库迁移到一个统一的地方。 之前用过一段时间语雀，在线编辑实在是有点卡，用了一年放弃了。 后来改用 Notion，操作非常方便，但是页面多起来以后，时常卡顿。 另外这类应用都把内容存到了服务器上，说实话没有本地备份还是有些不放心的。 考虑到主要目的是将知识库做好分类，并且保存到一个看起来不太会丢的地方，不需要各种各样的多媒体内容，大多是文字的东西，好像建个站更方便">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dangyoo.github.io/images/create_repository.jpg">
+<meta property="og:image" content="https://dangyoo.github.io/images/pages_setting.jpg">
+<meta property="article:published_time" content="2023-03-09T07:17:10.000Z">
+<meta property="article:modified_time" content="2023-08-12T09:02:07.646Z">
+<meta property="article:author" content="西左">
+<meta property="article:tag" content="HEXO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dangyoo.github.io/images/create_repository.jpg">
+
+<link rel="canonical" href="https://dangyoo.github.io/2023/03/09/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%94%BB%E7%95%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>鱼人宝宝都能看懂的个人博客搭建攻略 | 西左Log</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">西左Log</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2023/03/09/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E4%B8%AA%E4%BA%BA%E5%8D%9A%E5%AE%A2%E6%90%AD%E5%BB%BA%E6%94%BB%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="西左">
+      <meta itemprop="description" content="自是者不彰。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="西左Log">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          鱼人宝宝都能看懂的个人博客搭建攻略
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-03-09 15:17:10" itemprop="dateCreated datePublished" datetime="2023-03-09T15:17:10+08:00">2023-03-09</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-08-12 17:02:07" itemprop="dateModified" datetime="2023-08-12T17:02:07+08:00">2023-08-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%95%99%E7%A8%8B/" itemprop="url" rel="index"><span itemprop="name">教程</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>最近心血来潮，想把自己的知识库迁移到一个统一的地方。</p>
+<p>之前用过一段时间语雀，在线编辑实在是有点卡，用了一年放弃了。</p>
+<p>后来改用 Notion，操作非常方便，但是页面多起来以后，时常卡顿。</p>
+<p>另外这类应用都把内容存到了服务器上，说实话没有本地备份还是有些不放心的。</p>
+<p>考虑到主要目的是将知识库做好分类，并且保存到一个看起来不太会丢的地方，不需要各种各样的多媒体内容，大多是文字的东西，好像建个站更方便一些。</p>
+<h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><p>首先没有什么经验，先上知乎搜了下大概的技术类型，这篇文章讲的比较详细</p>
+<p><a target="_blank" rel="noopener" href="https://blog.osfpu.com/post/static-blog-best-solution/">静态博客技术选型最佳实践</a></p>
+<p>根据需求，不考虑整域名和服务器，使用最快速的方法，毕竟内容更重要是吧，所以选定免费且用的人多所以教程丰富的</p>
+<p>GitHub Pages + Hexo</p>
+<h2 id="配置和安装"><a href="#配置和安装" class="headerlink" title="配置和安装"></a>配置和安装</h2><h3 id="GitHub-Pages"><a href="#GitHub-Pages" class="headerlink" title="GitHub Pages"></a>GitHub Pages</h3><p>Github Pages 主要完成两个任务，一是存放内容，二是提供网页服务</p>
+<p><a target="_blank" rel="noopener" href="https://pages.github.com/">Github Pages官方介绍</a></p>
+<p>首先注册 github 账号，然后在主页 new 一个 repository，在 Repository name 一栏填写 <code>username</code>.github.io</p>
+<p>这个<code>username</code>必须和你的账户名一致，如果账户名有大写字母，这里改为小写字母即可</p>
+<p>底下的 <em>Add a README file</em> 最好选中，这样会直接创建一个主分支，如果没有文件的话仓库是没有分支的</p>
+<img src="/images/create_repository.jpg" width="50%" height="50%">
+
+<p>创建好后进入对应 Repository，点击 Setting，侧边栏找到 Pages，设置好默认的分支</p>
+<img src="/images/pages_setting.jpg" width="50%" height="50%">
+
+<p>到这里 Github 上就已经操作好啦，这个 Repository 里存的就是你要对外呈现的内容，域名为 <code>username</code>.github.io</p>
+<h3 id="Hexo"><a href="#Hexo" class="headerlink" title="Hexo"></a>Hexo</h3><p>由于 GitHub Pages 存放的都是静态文件，正常的博客存放的除了文章内容之外，还有文章列表、文章分类、文章标签等动态内容</p>
+<p>这部分我们就可以用 Hexo 来完成</p>
+<p>Hexo自称是一个快速、简洁且高效的博客框架，能够解析 Markdown 文章并生成静态页面</p>
+<p>也就是能够解决文章列表、文章分类、文章标签等动态内容和文章页面的生成，我们只需要将文章内容提交到 GitHub 即可</p>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/zh-cn/">Hexo官网</a></p>
+<p>安装 Hexo 的前置任务是安装 Node.js 和 Git</p>
+<p><a target="_blank" rel="noopener" href="https://nodejs.org/en/">Node.js下载</a></p>
+<p><a target="_blank" rel="noopener" href="https://git-scm.com/">Git下载</a></p>
+<p>安装好 Node.js 后就可以使用 npm 来做 Hexo 的安装</p>
+<blockquote>
+<p>npm install -g hexo</p>
+</blockquote>
+<p>安装好后，在想要的根目录下运行以下命令进行初始化，我这里的根目录是 <code>./Blog</code></p>
+<blockquote>
+<p>hexo init</p>
+</blockquote>
+<p>初始化后会生成一系列文件夹和文件，其中比较重要的是以下几个</p>
+<ul>
+<li>_config.yml 配置文件，站点名字、主题、链接啥的都在这里改</li>
+<li>themes 存储页面主题的文件夹，站点好看不好看就靠它</li>
+<li>source 存储用户资源，比如文章内容、图片等</li>
+<li>source&#x2F;_posts 存储文章内容</li>
+</ul>
+<p>此时就可以对站点进行本地预览</p>
+<blockquote>
+<p>hexo s</p>
+</blockquote>
+<p>在浏览器中进入 <a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a> 就能看到默认主题的网页啦</p>
+<h3 id="把-Hexo-和-Github-Pages-结合起来"><a href="#把-Hexo-和-Github-Pages-结合起来" class="headerlink" title="把 Hexo 和 Github Pages 结合起来"></a>把 Hexo 和 Github Pages 结合起来</h3><p>修改 _config.yml 文件的内容，在文件最后找到 <code>deploy</code>，修改下面的内容，注意每一行英文分号后边的空格不要删掉</p>
+<ul>
+<li>type: git</li>
+<li>repo: <code>https://github.com/username/username.github.io</code></li>
+<li>branch: main</li>
+</ul>
+<p>repo 中的 <code>username</code> 需要替换为自己的账户名称</p>
+<p>branch 和你在 GitHub Pages - Settings - Pages 中设置的分支一致</p>
+<p>设置后在根目录执行命令</p>
+<blockquote>
+<p>hexo clean</p>
+<p>hexo g  &#x2F;&#x2F; 生成目录</p>
+<p>hexo d  &#x2F;&#x2F; 同步 Git</p>
+</blockquote>
+<p>如果发生 <code>ERROR Deployer not found: git</code> 错误，则执行</p>
+<blockquote>
+<p>npm install hexo-deployer-git –save</p>
+</blockquote>
+<p>之后等一会儿就可以通过域名 <code>username</code>.github.io 在线访问博客了</p>
+<h3 id="常用操作"><a href="#常用操作" class="headerlink" title="常用操作"></a>常用操作</h3><p>新建一篇文章</p>
+<blockquote>
+<p>hexo n “文章标题”</p>
+</blockquote>
+<p>之后在任意编辑器中对文章进行编辑即可</p>
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><p>Hexo 的页面美化是通过主题 theme 来实现的，在 _config.yml 文件可以看到一个 theme 项，默认值为 <code>landscape</code>，可以下载各种各样的主题来进行美化</p>
+<p>比如本站用的就是 next 这个主题，另外常见的还有 butterfly 等主题</p>
+<p><a target="_blank" rel="noopener" href="https://hexo.io/themes/">Hexo主题库</a></p>
+<h3 id="下载主题"><a href="#下载主题" class="headerlink" title="下载主题"></a>下载主题</h3><p>举例 butterfly 主题的下载和使用</p>
+<p>首先在根目录下载主题到 themes 文件夹</p>
+<blockquote>
+<p>git clone -b master <a target="_blank" rel="noopener" href="https://gitee.com/immyw/hexo-theme-butterfly.git">https://gitee.com/immyw/hexo-theme-butterfly.git</a> themes&#x2F;butterfly</p>
+<p>git clone <a target="_blank" rel="noopener" href="https://github.com/theme-next/hexo-theme-next">https://github.com/theme-next/hexo-theme-next</a> themes&#x2F;next</p>
+<p>git clone <a target="_blank" rel="noopener" href="https://github.com/litten/hexo-theme-yilia.git">https://github.com/litten/hexo-theme-yilia.git</a> themes&#x2F;yilia</p>
+</blockquote>
+<p>然后修改 _config.yml 文件的 theme 值为 butterfly&#x2F;next&#x2F;yilia 即可</p>
+<h2 id="在文章中添加图片"><a href="#在文章中添加图片" class="headerlink" title="在文章中添加图片"></a>在文章中添加图片</h2><p>通过在 source 文件夹下新建存储图片的文件夹，如 images</p>
+<p>然后将所需要的图片放在 images 文件夹下</p>
+<p>在文章中使用 <code>![img](/images/a.jpg)</code> 即可</p>
+<p>如果需要调整图片大小，可以直接使用 HTML 的 img 标签 <code>&lt;img src=&quot;/images/a.jpg&quot; width=&quot;50%&quot; height=&quot;50%&quot;&gt;</code></p>
+<h2 id="隐藏文章"><a href="#隐藏文章" class="headerlink" title="隐藏文章"></a>隐藏文章</h2><p>当一篇文章被设置为「隐藏」时，它不会出现在任何列表中（包括首页、存档、分类页面、标签页面、Feed、站点地图等），也不会被搜索引擎索引（前提是搜索引擎遵守 noindex 标签）</p>
+<blockquote>
+<p>npm install hexo-hide-posts –save</p>
+</blockquote>
+<p>如果安装过程中出现 <code>run npm audit fix to fix them, or npm audit for details</code> 提示，尝试运行</p>
+<blockquote>
+<p>npm audit fix</p>
+<p>npm set audit false</p>
+</blockquote>
+<p>在 _config.yml 中添加如下设置</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># hexo-hide-posts</span><br><span class="line"><span class="attr">hide_posts</span>:</span><br><span class="line">  # 可以改成其他你喜欢的名字</span><br><span class="line">  <span class="attr">filter</span>: hidden</span><br><span class="line">  # 指定你想要传递隐藏文章的位置，比如让所有隐藏文章在存档页面可见</span><br><span class="line">  # 常见的位置有：index, tag, category, archive, sitemap, feed, etc.</span><br><span class="line">  # 留空则默认全部隐藏</span><br><span class="line">  <span class="attr">public_generators</span>: []</span><br><span class="line">  # 为隐藏的文章添加 noindex meta 标签，阻止搜索引擎收录</span><br><span class="line">  <span class="attr">noindex</span>: <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+
+<p>在想要隐藏的文章中，添加 <code>hidden</code> 属性</p>
+<figure class="highlight markdown"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">---</span><br><span class="line">title: &#x27;Hidden Post&#x27;</span><br><span class="line">date: &#x27;2021/03/05 21:45:14&#x27;</span><br><span class="line"><span class="section">hidden: true</span></span><br><span class="line"><span class="section">---</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="换台电脑继续建站"><a href="#换台电脑继续建站" class="headerlink" title="换台电脑继续建站"></a>换台电脑继续建站</h2><p>在公司使用电脑A搭好以后，回家想用电脑B继续写文章，结果发现 <code>hexo d</code> 传到 Git 上的是已经解析好的静态网页文件，也就是只有 public 文件夹中的东西，其他属于 hexo 框架的部分都没有上传</p>
+<p>所以需要把框架内容也同步到 Git 上，换电脑之后 pull 到本地继续编辑</p>
+<ol>
+<li>在 Git 上另外建一个分支 hexo，与静态文件所在的分支分开，并将 hexo 分支设为 <code>default</code></li>
+<li>在本地原本根目录 <code>./Blog</code> 之外的地方，重新 <code>git clone</code> 这个 hexo 分支，例如 hexo 分支目录为 <code>./hexo</code></li>
+<li>清空 <code>./hexo</code> 中的内容，把 <code>./Blog</code> 目录中的内容复制到<code>./hexo</code> 中</li>
+<li>运行 <code>git add .</code> <code>git commit -m &quot;hexo框架&quot;</code> <code>git push</code>，将内容更新到 hexo 分支</li>
+</ol>
+<p>这样 Git 项目上，两个分支就分别为 hexo 框架内容 和 博客网页内容 了，以上的操作都发生在电脑A</p>
+<p>换新电脑B之后，先安装 Node.js 和 git</p>
+<p>然后 <code>git clone</code> hexo 分支，就可以直接进行博客编辑了，由于配置文件 _config.yml 中跟踪的分支是静态文件分支 main，所以使用 <code>hexo d</code> 提交时也会把内容提交到 main 分支</p>
+<p>每次在电脑B或电脑A编辑之后，除了使用 <code>hexo d</code> 提交网页内容外，还要记得使用 <code>git push</code> 提交更新后的框架内容</p>
+<h2 id="使用遇到的问题"><a href="#使用遇到的问题" class="headerlink" title="使用遇到的问题"></a>使用遇到的问题</h2><ol>
+<li><p>提示“无法加载文件hexo.ps1，因为在此系统上禁止运行脚本转载”</p>
+<blockquote>
+<p>是Windows10下的策略设置问题，用管理员方式打开PowerShell（搜索PowerShell后选择管理员打开）并执行</p>
+<blockquote>
+<p>set-ExecutionPolicy RemoteSigned  输入Y</p>
+</blockquote>
+<p>即可</p>
+</blockquote>
+</li>
+<li><p>提示“Cannot find module ‘hexo’ from…”</p>
+<blockquote>
+<p>安装包的问题，可能是误删了什么地方的东西，运行</p>
+<blockquote>
+<p>npm install hexo –save</p>
+</blockquote>
+<p>即可</p>
+</blockquote>
+</li>
+<li><p>hexo g后提示“NO LAYOUT”</p>
+<blockquote>
+<p>确认主题是否还在themes文件夹下，可能被误删了</p>
+</blockquote>
+</li>
+</ol>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://pdpeng.github.io/2022/01/19/setup-personal-blog/">快速搭建个人博客 —— 保姆级教程</a></p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144722437">Hexo建站手册（详细教程）</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/24422335">有哪些好看的 Hexo 主题</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Miracle_ps/article/details/114791335">Hexo 添加图片——不用插件，超简单</a></p>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/51377148/how-to-fix-npm-vulnerabilities-manually">How to fix npm vulnerabilities manually</a></p>
+<p><a target="_blank" rel="noopener" href="https://theme-next.iissnan.com/getting-started.html">NexT使用文档</a></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/HEXO/" rel="tag"># HEXO</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/25/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84CDC%E7%9F%A5%E8%AF%86/" rel="prev" title="鱼人宝宝都能看懂的CDC知识">
+      <i class="fa fa-chevron-left"></i> 鱼人宝宝都能看懂的CDC知识
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2023/03/17/%E6%B4%8B%E8%91%B1%E5%9C%A8%E7%83%B9%E9%A5%AA%E4%B8%AD%E7%9A%84%E4%BD%9C%E7%94%A8/" rel="next" title="洋葱在烹饪中的作用">
+      洋葱在烹饪中的作用 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E9%80%89%E5%9E%8B"><span class="nav-number">2.</span> <span class="nav-text">技术选型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE%E5%92%8C%E5%AE%89%E8%A3%85"><span class="nav-number">3.</span> <span class="nav-text">配置和安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#GitHub-Pages"><span class="nav-number">3.1.</span> <span class="nav-text">GitHub Pages</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Hexo"><span class="nav-number">3.2.</span> <span class="nav-text">Hexo</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%8A-Hexo-%E5%92%8C-Github-Pages-%E7%BB%93%E5%90%88%E8%B5%B7%E6%9D%A5"><span class="nav-number">3.3.</span> <span class="nav-text">把 Hexo 和 Github Pages 结合起来</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%93%8D%E4%BD%9C"><span class="nav-number">3.4.</span> <span class="nav-text">常用操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BE%8E%E5%8C%96"><span class="nav-number">4.</span> <span class="nav-text">美化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%8B%E8%BD%BD%E4%B8%BB%E9%A2%98"><span class="nav-number">4.1.</span> <span class="nav-text">下载主题</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%A8%E6%96%87%E7%AB%A0%E4%B8%AD%E6%B7%BB%E5%8A%A0%E5%9B%BE%E7%89%87"><span class="nav-number">5.</span> <span class="nav-text">在文章中添加图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9A%90%E8%97%8F%E6%96%87%E7%AB%A0"><span class="nav-number">6.</span> <span class="nav-text">隐藏文章</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8D%A2%E5%8F%B0%E7%94%B5%E8%84%91%E7%BB%A7%E7%BB%AD%E5%BB%BA%E7%AB%99"><span class="nav-number">7.</span> <span class="nav-text">换台电脑继续建站</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E9%81%87%E5%88%B0%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">8.</span> <span class="nav-text">使用遇到的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">9.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="西左"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">西左</p>
+  <div class="site-description" itemprop="description">自是者不彰。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">5</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dangyoo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dangyoo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">西左</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
