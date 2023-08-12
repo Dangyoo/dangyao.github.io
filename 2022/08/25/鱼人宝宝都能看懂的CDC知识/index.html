@@ -27,16 +27,18 @@
 <meta property="og:site_name" content="西左Log">
 <meta property="og:description" content="闲言碎语在上家公司（代称N司）时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。 在伪删除方案无法推动的情况下，数据侧考虑获取业务数据">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dangyoo.github.io/images/datax1.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/datax2.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/debezium.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/canal.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/binlog.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/binlog1.png">
 <meta property="article:published_time" content="2022-08-25T09:06:03.000Z">
-<meta property="article:modified_time" content="2023-08-12T10:35:20.827Z">
+<meta property="article:modified_time" content="2023-08-12T13:24:29.097Z">
 <meta property="article:author" content="西左">
 <meta property="article:tag" content="Data">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://dangyoo.github.io/images/debezium.png">
+<meta name="twitter:image" content="https://dangyoo.github.io/images/datax1.png">
 
 <link rel="canonical" href="https://dangyoo.github.io/2022/08/25/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84CDC%E7%9F%A5%E8%AF%86/">
 
@@ -186,7 +188,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-12 18:35:20" itemprop="dateModified" datetime="2023-08-12T18:35:20+08:00">2023-08-12</time>
+                <time title="修改时间：2023-08-12 21:24:29" itemprop="dateModified" datetime="2023-08-12T21:24:29+08:00">2023-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -214,9 +216,47 @@
 <h2 id="啥叫CDC"><a href="#啥叫CDC" class="headerlink" title="啥叫CDC"></a>啥叫CDC</h2><p>CDC全称是Change Data Capture，即变更数据捕获，它是数据库领域常见的技术，主要用于捕获数据库的一些变更，然后把变更数据发送到下游。它的应用比较广，可以做一些数据同步、数据分发和数据采集，还可以做ETL。</p>
 <h2 id="CDC的类型"><a href="#CDC的类型" class="headerlink" title="CDC的类型"></a>CDC的类型</h2><p>业界主要分为两种：</p>
 <ol>
-<li>基于查询，客户端会通过SQL方式查询源库表变更数据，然后对外发送。这类技术是入侵式的，需要在数据源执行SQL语句，使用这种技术实现CDC会影响数据源的性能，通常需要扫描包含大量记录的整个表。常见工具有Sqoop&#x2F;Kafka JDBC Source。</li>
+<li>基于查询，客户端会通过SQL方式查询源库表变更数据，然后对外发送。这类技术是入侵式的，需要在数据源执行SQL语句，使用这种技术实现CDC会影响数据源的性能，通常需要扫描包含大量记录的整个表。常见工具有Sqoop&#x2F;DataX&#x2F;Kafka JDBC Source。</li>
 <li>基于日志，这也是业界广泛使用的一种方式，一般是通过binlog方式。变更的记录会写入binlog，解析binlog后会写入消息系统，或直接基于Flink CDC进行处理。这种技术是非入侵性的，不需要在数据源执行SQL语句，通过读取源数据库的日志文件以识别对源库表的创建&#x2F;修改或删除数据。常见工具有Debezium&#x2F;Canal&#x2F;Maxwell。</li>
 </ol>
+<h3 id="DataX"><a href="#DataX" class="headerlink" title="DataX"></a>DataX</h3><p>DataX是阿里巴巴开源的一个异构数据源离线同步工具，实现包括 MySQL、Oracle、SqlServer、Postgre、HDFS、Hive、ADS、HBase、TableStore(OTS)、MaxCompute(ODPS)、DRDS等各种异构数据源之间高效的数据同步功能。</p>
+<p>异构数据源离线同步指的是将源端数据同步到目的端，但是端与端的数据源类型种类繁多，在没有DataX之前，端与端的链路将组成一个复杂的网状结构，非常零散无法把同步核心逻辑抽象出来。</p>
+<p>为了解决异构数据源同步问题，DataX将复杂的网状的同步链路变成了星型数据链路，DataX作为中间传输载体负责连接各种数据源。</p>
+<p>所以，当需要接入一个新的数据源的时候，只需要将此数据源对接到DataX，就可以跟已有的数据源做到无缝数据同步。</p>
+<p>DataX本身作为离线数据同步框架，采用Framework+plugin架构构建。将数据源读取和写入抽象成为Reader&#x2F;Writer插件，纳入到整个同步框架中。</p>
+<img src="/images/datax1.png" width="50%" height="50%">
+
+<ul>
+<li>Reader：数据采集模块，负责采集数据源的数据，将数据发送给Framework。</li>
+<li>Writer：数据写入模块，负责不断向Framework取数据，并将数据写入到目的端。</li>
+<li>Framework：它用于连接Reader和Writer，作为两者的数据传输通道，并处理缓冲、并发、数据转换等问题。</li>
+</ul>
+<h4 id="核心模块"><a href="#核心模块" class="headerlink" title="核心模块"></a>核心模块</h4><p>DataX完成单个数据同步的作业，我们把它称之为Job，DataX接收到一个Job之后，将启动一个进程来完成整个作业同步过程。</p>
+<p>DataX Job启动后，会根据不同的源端切分策略，将Job切分成多个小的Task(子任务)，以便于并发执行。</p>
+<p>切分多个Task之后，DataX Job会调用Scheduler模块，根据配置的并发数据量，将拆分成的Task重新组合，组装成TaskGroup（任务组）。每一个TaskGroup负责以一定的并发运行完毕分配好的所有Task，默认单个任务组的并发数量为5。</p>
+<p>每一个Task都由TaskGroup负责启动，Task启动后，会固定启动Reader-&gt;Channel-&gt;Writer的线程来完成任务同步工作。</p>
+<p>DataX作业运行完成之后，Job监控并等待多个TaskGroup模块任务完成，等待所有TaskGroup任务完成后Job成功退出。否则，异常退出。</p>
+<img src="/images/datax2.png" width="50%" height="50%">
+
+<h4 id="调度流程"><a href="#调度流程" class="headerlink" title="调度流程"></a>调度流程</h4><p>举例来说，用户提交了一个DataX作业，并且配置了20个并发，目的是将一个100张分表的MySQL数据同步到ODPS里面。 DataX的调度决策思路是：</p>
+<ol>
+<li>DataX Job根据分库分表切分成了100个Task。</li>
+<li>根据20个并发，DataX计算共需要分配4个TaskGroup。</li>
+<li>4个TaskGroup平分切分好的100个Task，每一个TaskGroup负责以5个并发共计运行25个Task。</li>
+</ol>
+<h4 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h4><p>常用的优化参数有：Channel（通道）&#x2F;SplitPk（切片）&#x2F;BatchSize（批数据大小）</p>
+<ul>
+<li>Channel - 通道，并发量，该设置对传输效率影响较为明显，设置为1时，即没有并发，此时同步速度均为8.9M&#x2F;s，将该设置调高之后，速率明显倍增，但增大到一定程度后，瓶颈就转到其他配置了。</li>
+<li>SplitPk - 切片，MySQLReader进行数据抽取时，如果制定SplitPk，表示用户希望使用SplitPk代表的字段进行数据分片，DataX因此会启动并发任务进行数据同步，这样可以大大提高数据同步的效能。推荐SplitPk使用表主键，因为表主键通常情况下比较均匀，因此切分出来的分片也不容易出现数据热点。目前SplitPk仅支持整型数据切分，不支持浮点&#x2F;字符串&#x2F;日期等其他类型。如果用户指定其他非支持类型，MySQLReader将报错。如果SplitPk不填写，DataX视作使用单通道同步该表数据，并发需要与Channel设置配合。</li>
+<li>BatchSize - 批数据大小，一次性批量提交的记录数大小，该值可以极大减少DataX与MySQL的网络交互次数，并提升整体吞吐量，默认为1024MB，过大可能会造成DataX运行进程OOM。</li>
+</ul>
+<h4 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h4><p>Datax的优势非常明显：</p>
+<ul>
+<li>首先，部署非常简单，无论是在物理机上或者虚拟机上，只要网络通畅，便可进行数据同步，给实施人员带来了极大的便利，不受标准数据同步产品部署的条框限制</li>
+<li>再者，它是开源产品，几乎没有成本<br>但是，它的缺点也是显而易见的：</li>
+<li>开源工具更多的是提供基础能力，并不具备任务管理，进度跟踪、校验等等一系列的功能，只能使用者自己通过脚本或者表格记录</li>
+<li>单机部署，不提供分布式方案，需要通过调度系统解决</li>
+</ul>
 <h3 id="Debezium"><a href="#Debezium" class="headerlink" title="Debezium"></a>Debezium</h3><p>当一个应用程序将数据写入到数据库时，变更会被记录在日志文件中，然后数据库的表才会被更新。对于MySQL来说，日志文件是binlog；对于PostgreSQL来说，是write-ahead-log；而对于MongoDB来说，是op日志。<br>Debezium有针对不同数据库的连接器，所以它能完全理解所有这些日志文件格式的艰巨工作。<br>Debezium可以读取日志文件，并产生一个通用的抽象事件到消息系统中，如Apache Kafka，其中会包含数据的变化。</p>
 <img src="/images/debezium.png" width="50%" height="50%">
 
@@ -274,7 +314,7 @@
 <li>Redo Log作为服务器异常宕机后事务数据自动恢复使用，Binlog可以作为主从复制和数据恢复使用。Binlog没有自动crash-safe能力。</li>
 </ul>
 <p>crash-safe即在InnoDB 存储引擎中，事务提交过程中任何阶段，MySQL突然奔溃，重启后都能保证事务的完整性，已提交的数据不会丢失，未提交完整的数据会自动进行回滚。这个能力依赖的就是redo log和undo log两个日志</p>
-<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/zh-cn/red_hat_integration/2022.q3/html-single/getting_started_with_debezium/index#doc-wrapper">Debezium入门</a><br><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/770496">Canal入门</a></p>
+<h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/1045779">DataX入门</a><br><a target="_blank" rel="noopener" href="https://access.redhat.com/documentation/zh-cn/red_hat_integration/2022.q3/html-single/getting_started_with_debezium/index#doc-wrapper">Debezium入门</a><br><a target="_blank" rel="noopener" href="https://developer.aliyun.com/article/770496">Canal入门</a></p>
 
     </div>
 
@@ -355,7 +395,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%A5%E5%8F%ABCDC"><span class="nav-number">2.</span> <span class="nav-text">啥叫CDC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDC%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">CDC的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Debezium"><span class="nav-number">3.1.</span> <span class="nav-text">Debezium</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Canal"><span class="nav-number">3.2.</span> <span class="nav-text">Canal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binlog"><span class="nav-number">4.</span> <span class="nav-text">Binlog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.2.</span> <span class="nav-text">记录模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%85%A5%E6%9C%BA%E5%88%B6"><span class="nav-number">4.3.</span> <span class="nav-text">写入机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E4%BB%A3%E7%A0%81"><span class="nav-number">4.4.</span> <span class="nav-text">操作代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-Log%E5%92%8CBinlog%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.5.</span> <span class="nav-text">Redo Log和Binlog的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%95%A5%E5%8F%ABCDC"><span class="nav-number">2.</span> <span class="nav-text">啥叫CDC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#CDC%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">CDC的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#DataX"><span class="nav-number">3.1.</span> <span class="nav-text">DataX</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E6%A8%A1%E5%9D%97"><span class="nav-number">3.1.1.</span> <span class="nav-text">核心模块</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B0%83%E5%BA%A6%E6%B5%81%E7%A8%8B"><span class="nav-number">3.1.2.</span> <span class="nav-text">调度流程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E5%8C%96"><span class="nav-number">3.1.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%98%E7%BC%BA%E7%82%B9"><span class="nav-number">3.1.4.</span> <span class="nav-text">优缺点</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Debezium"><span class="nav-number">3.2.</span> <span class="nav-text">Debezium</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Canal"><span class="nav-number">3.3.</span> <span class="nav-text">Canal</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binlog"><span class="nav-number">4.</span> <span class="nav-text">Binlog</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="nav-number">4.1.</span> <span class="nav-text">使用场景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AE%B0%E5%BD%95%E6%A8%A1%E5%BC%8F"><span class="nav-number">4.2.</span> <span class="nav-text">记录模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%99%E5%85%A5%E6%9C%BA%E5%88%B6"><span class="nav-number">4.3.</span> <span class="nav-text">写入机制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E4%BB%A3%E7%A0%81"><span class="nav-number">4.4.</span> <span class="nav-text">操作代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Redo-Log%E5%92%8CBinlog%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">4.5.</span> <span class="nav-text">Redo Log和Binlog的区别</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E6%96%87%E7%AB%A0"><span class="nav-number">5.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
