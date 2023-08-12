@@ -17,8 +17,65 @@ CDC全称是Change Data Capture，即变更数据捕获，它是数据库领域�
 ## CDC的类型
 
 业界主要分为两种：
-1. 基于查询，客户端会通过SQL方式查询源库表变更数据，然后对外发送。这类技术是入侵式的，需要在数据源执行SQL语句，使用这种技术实现CDC会影响数据源的性能，通常需要扫描包含大量记录的整个表。常见工具有Sqoop/Kafka JDBC Source。
+1. 基于查询，客户端会通过SQL方式查询源库表变更数据，然后对外发送。这类技术是入侵式的，需要在数据源执行SQL语句，使用这种技术实现CDC会影响数据源的性能，通常需要扫描包含大量记录的整个表。常见工具有Sqoop/DataX/Kafka JDBC Source。
 2. 基于日志，这也是业界广泛使用的一种方式，一般是通过binlog方式。变更的记录会写入binlog，解析binlog后会写入消息系统，或直接基于Flink CDC进行处理。这种技术是非入侵性的，不需要在数据源执行SQL语句，通过读取源数据库的日志文件以识别对源库表的创建/修改或删除数据。常见工具有Debezium/Canal/Maxwell。
+
+### DataX
+
+DataX是阿里巴巴开源的一个异构数据源离线同步工具，实现包括 MySQL、Oracle、SqlServer、Postgre、HDFS、Hive、ADS、HBase、TableStore(OTS)、MaxCompute(ODPS)、DRDS等各种异构数据源之间高效的数据同步功能。
+
+异构数据源离线同步指的是将源端数据同步到目的端，但是端与端的数据源类型种类繁多，在没有DataX之前，端与端的链路将组成一个复杂的网状结构，非常零散无法把同步核心逻辑抽象出来。
+
+为了解决异构数据源同步问题，DataX将复杂的网状的同步链路变成了星型数据链路，DataX作为中间传输载体负责连接各种数据源。
+
+所以，当需要接入一个新的数据源的时候，只需要将此数据源对接到DataX，就可以跟已有的数据源做到无缝数据同步。
+
+DataX本身作为离线数据同步框架，采用Framework+plugin架构构建。将数据源读取和写入抽象成为Reader/Writer插件，纳入到整个同步框架中。
+
+<img src="/images/datax1.png" width="50%" height="50%">
+
+- Reader：数据采集模块，负责采集数据源的数据，将数据发送给Framework。
+- Writer：数据写入模块，负责不断向Framework取数据，并将数据写入到目的端。
+- Framework：它用于连接Reader和Writer，作为两者的数据传输通道，并处理缓冲、并发、数据转换等问题。
+
+#### 核心模块
+
+DataX完成单个数据同步的作业，我们把它称之为Job，DataX接收到一个Job之后，将启动一个进程来完成整个作业同步过程。
+
+DataX Job启动后，会根据不同的源端切分策略，将Job切分成多个小的Task(子任务)，以便于并发执行。
+
+切分多个Task之后，DataX Job会调用Scheduler模块，根据配置的并发数据量，将拆分成的Task重新组合，组装成TaskGroup（任务组）。每一个TaskGroup负责以一定的并发运行完毕分配好的所有Task，默认单个任务组的并发数量为5。
+
+每一个Task都由TaskGroup负责启动，Task启动后，会固定启动Reader->Channel->Writer的线程来完成任务同步工作。
+
+DataX作业运行完成之后，Job监控并等待多个TaskGroup模块任务完成，等待所有TaskGroup任务完成后Job成功退出。否则，异常退出。
+
+<img src="/images/datax2.png" width="50%" height="50%">
+
+#### 调度流程
+
+举例来说，用户提交了一个DataX作业，并且配置了20个并发，目的是将一个100张分表的MySQL数据同步到ODPS里面。 DataX的调度决策思路是：
+
+1. DataX Job根据分库分表切分成了100个Task。
+2. 根据20个并发，DataX计算共需要分配4个TaskGroup。
+3. 4个TaskGroup平分切分好的100个Task，每一个TaskGroup负责以5个并发共计运行25个Task。
+
+#### 优化
+
+常用的优化参数有：Channel（通道）/SplitPk（切片）/BatchSize（批数据大小）
+
+- Channel - 通道，并发量，该设置对传输效率影响较为明显，设置为1时，即没有并发，此时同步速度均为8.9M/s，将该设置调高之后，速率明显倍增，但增大到一定程度后，瓶颈就转到其他配置了。
+- SplitPk - 切片，MySQLReader进行数据抽取时，如果制定SplitPk，表示用户希望使用SplitPk代表的字段进行数据分片，DataX因此会启动并发任务进行数据同步，这样可以大大提高数据同步的效能。推荐SplitPk使用表主键，因为表主键通常情况下比较均匀，因此切分出来的分片也不容易出现数据热点。目前SplitPk仅支持整型数据切分，不支持浮点/字符串/日期等其他类型。如果用户指定其他非支持类型，MySQLReader将报错。如果SplitPk不填写，DataX视作使用单通道同步该表数据，并发需要与Channel设置配合。
+- BatchSize - 批数据大小，一次性批量提交的记录数大小，该值可以极大减少DataX与MySQL的网络交互次数，并提升整体吞吐量，默认为1024MB，过大可能会造成DataX运行进程OOM。
+
+#### 优缺点
+
+Datax的优势非常明显：
+- 首先，部署非常简单，无论是在物理机上或者虚拟机上，只要网络通畅，便可进行数据同步，给实施人员带来了极大的便利，不受标准数据同步产品部署的条框限制
+- 再者，它是开源产品，几乎没有成本
+但是，它的缺点也是显而易见的：
+- 开源工具更多的是提供基础能力，并不具备任务管理，进度跟踪、校验等等一系列的功能，只能使用者自己通过脚本或者表格记录
+- 单机部署，不提供分布式方案，需要通过调度系统解决
 
 ### Debezium
 
@@ -138,5 +195,6 @@ crash-safe即在InnoDB 存储引擎中，事务提交过程中任何阶段，MyS
 
 ## 参考文章
 
+[DataX入门](https://developer.aliyun.com/article/1045779)
 [Debezium入门](https://access.redhat.com/documentation/zh-cn/red_hat_integration/2022.q3/html-single/getting_started_with_debezium/index#doc-wrapper)
 [Canal入门](https://developer.aliyun.com/article/770496)
