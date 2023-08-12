@@ -30,7 +30,7 @@
 <meta property="og:image" content="https://dangyoo.github.io/images/create_repository.jpg">
 <meta property="og:image" content="https://dangyoo.github.io/images/pages_setting.jpg">
 <meta property="article:published_time" content="2023-03-09T07:17:10.000Z">
-<meta property="article:modified_time" content="2023-08-12T09:02:07.646Z">
+<meta property="article:modified_time" content="2023-08-12T13:37:48.347Z">
 <meta property="article:author" content="西左">
 <meta property="article:tag" content="HEXO">
 <meta name="twitter:card" content="summary">
@@ -121,6 +121,11 @@
     <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
 
   </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
         <li class="menu-item menu-item-archives">
 
     <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
@@ -184,7 +189,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2023-08-12 17:02:07" itemprop="dateModified" datetime="2023-08-12T17:02:07+08:00">2023-08-12</time>
+                <time title="修改时间：2023-08-12 21:37:48" itemprop="dateModified" datetime="2023-08-12T21:37:48+08:00">2023-08-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -212,6 +217,8 @@
 <p>后来改用 Notion，操作非常方便，但是页面多起来以后，时常卡顿。</p>
 <p>另外这类应用都把内容存到了服务器上，说实话没有本地备份还是有些不放心的。</p>
 <p>考虑到主要目的是将知识库做好分类，并且保存到一个看起来不太会丢的地方，不需要各种各样的多媒体内容，大多是文字的东西，好像建个站更方便一些。</p>
+<span id="more"></span>
+
 <h2 id="技术选型"><a href="#技术选型" class="headerlink" title="技术选型"></a>技术选型</h2><p>首先没有什么经验，先上知乎搜了下大概的技术类型，这篇文章讲的比较详细</p>
 <p><a target="_blank" rel="noopener" href="https://blog.osfpu.com/post/static-blog-best-solution/">静态博客技术选型最佳实践</a></p>
 <p>根据需求，不考虑整域名和服务器，使用最快速的方法，毕竟内容更重要是吧，所以选定免费且用的人多所以教程丰富的</p>
@@ -345,6 +352,21 @@
 <p>确认主题是否还在themes文件夹下，可能被误删了</p>
 </blockquote>
 </li>
+<li><p>开启分类页面之后无法生成分类的首页 Cannot GET &#x2F;categories&#x2F;</p>
+<blockquote>
+<p>首先要给分类页面建一个首页，运行</p>
+<blockquote>
+<p>hexo new page “categories”</p>
+</blockquote>
+<p>然后再source目录下找到新建的categories文件夹，找到里边的index.md文件，添加对应的type</p>
+<blockquote>
+<p>title: categories</p>
+<p>date: xxxx-xx-xx xx:xx:xx</p>
+<p>type: “categories”</p>
+</blockquote>
+<p>即可</p>
+</blockquote>
+</li>
 </ol>
 <h2 id="参考文章"><a href="#参考文章" class="headerlink" title="参考文章"></a>参考文章</h2><p><a target="_blank" rel="noopener" href="https://pdpeng.github.io/2022/01/19/setup-personal-blog/">快速搭建个人博客 —— 保姆级教程</a></p>
 <p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144722437">Hexo建站手册（详细教程）</a></p>
@@ -456,8 +478,10 @@
         </a>
       </div>
       <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
         <span class="site-state-item-count">3</span>
-        <span class="site-state-item-name">分类</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
         <span class="site-state-item-count">5</span>
