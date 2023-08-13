@@ -1,7 +1,7 @@
 ---
 title: 鱼人宝宝都能看懂的Erupt实践攻略
 date: 2023-03-30 16:17:16
-categories: 教程
+categories: 实践
 tags: Erupt
 ---
 ## 闲言碎语
