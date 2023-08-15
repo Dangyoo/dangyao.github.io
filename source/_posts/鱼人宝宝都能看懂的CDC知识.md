@@ -2,7 +2,7 @@
 title: 鱼人宝宝都能看懂的CDC知识
 date: 2022-08-25 17:06:03
 categories: 知识
-tags: Data
+tags:  [Data, CDC, DataX, Debezium, Cannal, Binlog]
 ---
 ## 闲言碎语
 

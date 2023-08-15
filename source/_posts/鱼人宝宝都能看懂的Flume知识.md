@@ -2,7 +2,7 @@
 title: 鱼人宝宝都能看懂的Flume知识
 date: 2022-09-05 21:06:03
 categories: 知识
-tags: Data
+tags: [Data, Flume]
 ---
 ## 闲言碎语
 
