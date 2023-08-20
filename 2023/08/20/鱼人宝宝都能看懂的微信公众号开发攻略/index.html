@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"dangyoo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="闲言碎语大概在18年的时候曾经开过一个公众号，用了当时比较火的小黄鸭做了一个人工聊天机器人，后来慢慢就荒废了，近来想着可以做一些技术的应用实践，就把这个公众号捡起来。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鱼人宝宝都能看懂的微信公众号开发攻略">
+<meta property="og:url" content="https://dangyoo.github.io/2023/08/20/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/index.html">
+<meta property="og:site_name" content="西左Log">
+<meta property="og:description" content="闲言碎语大概在18年的时候曾经开过一个公众号，用了当时比较火的小黄鸭做了一个人工聊天机器人，后来慢慢就荒废了，近来想着可以做一些技术的应用实践，就把这个公众号捡起来。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2023-08-20T07:17:10.000Z">
+<meta property="article:modified_time" content="2023-08-20T12:37:42.838Z">
+<meta property="article:author" content="西左">
+<meta property="article:tag" content="微信公众号">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://dangyoo.github.io/2023/08/20/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>鱼人宝宝都能看懂的微信公众号开发攻略 | 西左Log</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?15db7c636ac845c8c8fe0ca45dac6e54";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">西左Log</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2023/08/20/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="西左">
+      <meta itemprop="description" content="自是者不彰。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="西左Log">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          鱼人宝宝都能看懂的微信公众号开发攻略
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-20 15:17:10" itemprop="dateCreated datePublished" datetime="2023-08-20T15:17:10+08:00">2023-08-20</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>大概在18年的时候曾经开过一个公众号，用了当时比较火的小黄鸭做了一个人工聊天机器人，后来慢慢就荒废了，近来想着可以做一些技术的应用实践，就把这个公众号捡起来。</p>
+<span id="more"></span>
+
+<h2 id="第一步：服务配置"><a href="#第一步：服务配置" class="headerlink" title="第一步：服务配置"></a>第一步：服务配置</h2><p>首先需要将自己的服务器和微信公众号平台进行对接，<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/doc/offiaccount/Basic_Information/Access_Overview.html">接入指南</a></p>
+<p>基本逻辑是，现在服务器上配置一个服务，对应一个接口，来响应微信这边发出的配置请求</p>
+<p>微信发出的请求里包含了signature、timestamp、nonce、echostr这四个东西，需要在服务端获取他们，然后做一个计算，返回一个东西</p>
+<p>微信这边判断返回的东西和想要的一样，那就对接上了</p>
+<h3 id="用Flask框架搭个服务"><a href="#用Flask框架搭个服务" class="headerlink" title="用Flask框架搭个服务"></a>用Flask框架搭个服务</h3><p>首先肯定是配置环境，看到网上之前收藏的攻略用的是web.py，但这东西不支持python2，所以就换一个成熟一点的</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">conda create --name gzh python=3.9  <span class="comment"># 有些包对3.10的支持不太好，3.9会稳一点</span></span><br><span class="line"><span class="comment"># 创建一个gzh开发所用的虚拟环境</span></span><br><span class="line">conda activate gzh  <span class="comment"># 激活虚拟环境</span></span><br><span class="line">pip install flask  <span class="comment"># 安装flask包</span></span><br></pre></td></tr></table></figure>
+
+<p>安装好后开始编写一个响应Web请求的应用</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># wechat.py</span></span><br><span class="line"><span class="comment"># coding:utf-8</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, abort</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"></span><br><span class="line">WECHAT_TOKEN = <span class="string">&#x27;xxx&#x27;</span>  <span class="comment"># 随便写，后边与公众号基本配置中配置的token一致即可</span></span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&quot;/wechat&quot;</span></span>)  </span><span class="comment"># 响应路径</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">wechat</span>():</span><br><span class="line">    signature = request.args.get(<span class="string">&#x27;signature&#x27;</span>)  <span class="comment"># 从请求中获取相应的变量值</span></span><br><span class="line">    timestamp = request.args.get(<span class="string">&#x27;timestamp&#x27;</span>)</span><br><span class="line">    nonce = request.args.get(<span class="string">&#x27;nonce&#x27;</span>)</span><br><span class="line">    echostr = request.args.get(<span class="string">&#x27;echostr&#x27;</span>)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">not</span> <span class="built_in">all</span>([signature, timestamp, nonce, echostr]):</span><br><span class="line">        abort(<span class="number">400</span>)  <span class="comment"># 如果没有则返回400相应</span></span><br><span class="line">    </span><br><span class="line">    temp = [WECHAT_TOKEN, timestamp, nonce]  <span class="comment"># 按要求生成列表</span></span><br><span class="line">    temp.sort()  <span class="comment"># 按要求排序</span></span><br><span class="line">    temp = <span class="string">&#x27;&#x27;</span>.join(temp)</span><br><span class="line">    sign = hashlib.sha1(temp.encode(<span class="string">&#x27;utf8&#x27;</span>)).hexdigest()  <span class="comment"># 按要求加密</span></span><br><span class="line">    <span class="keyword">if</span> signature != sign:</span><br><span class="line">        abort(<span class="number">403</span>)  <span class="comment"># 如果不一致则返回403相应</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        <span class="keyword">return</span> echostr  <span class="comment"># 按要求返回</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">80</span>, debug=<span class="literal">True</span>)  <span class="comment"># 不写host可能外网无法访问</span></span><br></pre></td></tr></table></figure>
+
+<p>在wechat.py所在路径下执行<code>sudo python3 wechat.py</code></p>
+<p>后台执行则<code>nohup sudo python3 wechat.py &amp;</code></p>
+<p>要注意的点是<code>sudo python3</code>和虚拟环境下的<code>python3</code>对应的sys.path不同问题需要处理</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"> 如果需要用sudo python来执行，比如flask，就把python的路径邪道sudo python的路径底下</span><br><span class="line"><span class="comment"># python命令的执行路径</span></span><br><span class="line"><span class="comment"># python -&gt; import sys -&gt; sys.path</span></span><br><span class="line">[<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;/home/dy/miniconda3/envs/gzh/lib/python39.zip&#x27;</span>, <span class="string">&#x27;/home/dy/miniconda3/envs/gzh/lib/python3.9&#x27;</span>, <span class="string">&#x27;/home/dy/miniconda3/envs/gzh/lib/python3.9/lib-dynload&#x27;</span>, <span class="string">&#x27;/home/dy/miniconda3/envs/gzh/lib/python3.9/site-packages&#x27;</span>]<span class="comment"># sudo python命令的执行路径</span></span><br><span class="line"><span class="comment"># sudo python3 -&gt; import sys -&gt; sys.path</span></span><br><span class="line">[<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;/usr/lib/python39.zip&#x27;</span>, <span class="string">&#x27;/usr/lib/python3.9&#x27;</span>, <span class="string">&#x27;/usr/lib/python3.9/lib-dynload&#x27;</span>, <span class="string">&#x27;/usr/local/lib/python3.9/dist-packages&#x27;</span>, <span class="string">&#x27;/usr/lib/python3/dist-packages&#x27;</span>]</span><br><span class="line"><span class="comment"># 将python命令的路径内容放到一个.pth文件中</span></span><br><span class="line">vim userpathonpath.pth</span><br><span class="line"><span class="comment"># /home/dy/miniconda3/envs/gzh/lib/python39.zip</span></span><br><span class="line"><span class="comment"># 一行一个把python的路径写到文件里</span></span><br><span class="line"><span class="comment"># 然后把文件copy到sudo python3的路径下</span></span><br><span class="line">sudo <span class="built_in">cp</span> userpathonpath.pth /usr/lib/python3/dist-packages/userpathonpath.pth</span><br><span class="line"></span><br><span class="line"><span class="comment"># 这样sudo python在寻找路径的时候就会遍历.pth文件中的路径</span></span><br><span class="line"><span class="comment"># sudo python3 -&gt; import sys -&gt; sys.path</span></span><br><span class="line">[<span class="string">&#x27;&#x27;</span>, <span class="string">&#x27;/usr/lib/python39.zip&#x27;</span>, <span class="string">&#x27;/usr/lib/python3.9&#x27;</span>, <span class="string">&#x27;/usr/lib/python3.9/lib-dynload&#x27;</span>, <span class="string">&#x27;/usr/local/lib/python3.9/dist-packages&#x27;</span>, <span class="string">&#x27;/usr/lib/python3/dist-packages&#x27;</span>, <span class="string">&#x27;/home/dy/miniconda3/envs/gzh/lib/python3.9&#x27;</span>, <span class="string">&#x27;/home/dy/miniconda3/envs/gzh/lib/python3.9/lib-dynload&#x27;</span>, <span class="string">&#x27;/home/dy/miniconda3/envs/gzh/lib/python3.9/site-packages&#x27;</span>]</span><br></pre></td></tr></table></figure>
+
+<p>另外公众号端也需要一些配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">公众号左侧目录中找到“配置与开发”- “基本配置”</span><br><span class="line">URL填写你自己的服务器IP和响应路径，例如http://xxx.xxx.xxx.xxx/wechat</span><br><span class="line">Token填写服务端配置好的WECHAT_TOKEN</span><br><span class="line">EncodingAESKey点一下随机生成</span><br><span class="line">消息加解密方式选择兼容模式</span><br><span class="line">提交，返回“配置成功”即可</span><br></pre></td></tr></table></figure>
+<h3 id="收发文字消息"><a href="#收发文字消息" class="headerlink" title="收发文字消息"></a>收发文字消息</h3><p>最基本的就是接收消息和回复消息了，<a target="_blank" rel="noopener" href="https://developers.weixin.qq.com/doc/offiaccount/Message_Management/Receiving_standard_messages.html">官方文档</a></p>
+<p>消息的结构是xml，使用Python处理xml结构的数据可以使用xmltodict包<code>pip install xmltodict</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> flask <span class="keyword">import</span> Flask, request, make_response</span><br><span class="line"><span class="keyword">import</span> hashlib</span><br><span class="line"><span class="keyword">import</span> xmltodict</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">app = Flask(__name__)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 接收消息的是POST，GET只用于服务配置</span></span><br><span class="line"><span class="meta">@app.route(<span class="params"><span class="string">&#x27;/wechat&#x27;</span>,methods=[<span class="string">&#x27;GET&#x27;</span>,<span class="string">&#x27;POST&#x27;</span>]</span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">index</span>():</span><br><span class="line">    <span class="comment"># 这部分是服务配置的处理</span></span><br><span class="line">    <span class="keyword">if</span> request.method ==<span class="string">&#x27;GET&#x27;</span>:</span><br><span class="line">        token = <span class="string">&#x27;xxx&#x27;</span></span><br><span class="line">        data = request.args</span><br><span class="line">        signature = data.get(<span class="string">&#x27;signature&#x27;</span>)</span><br><span class="line">        timestamp = data.get(<span class="string">&#x27;timestamp&#x27;</span>)</span><br><span class="line">        nonce = data.get(<span class="string">&#x27;nonce&#x27;</span>)</span><br><span class="line">        echostr = data.get(<span class="string">&#x27;echostr&#x27;</span>)</span><br><span class="line">        temp = [timestamp, nonce, token]</span><br><span class="line">        temp.sort()</span><br><span class="line">        temp = <span class="string">&#x27;&#x27;</span>.join(temp)</span><br><span class="line">        <span class="keyword">if</span> (hashlib.sha1(temp.encode(<span class="string">&#x27;utf8&#x27;</span>)).hexdigest() == signature):</span><br><span class="line">            <span class="keyword">return</span> echostr</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;error&#x27;</span>, <span class="number">403</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 这部分是消息收发处理</span></span><br><span class="line">    <span class="keyword">if</span> request.method == <span class="string">&#x27;POST&#x27;</span>:</span><br><span class="line">        <span class="comment"># 获取微信服务器post过来的xml数据</span></span><br><span class="line">        xml = request.data</span><br><span class="line">        <span class="comment"># 用xmltodict包处理xml格式的数据，转换成字典进行取值</span></span><br><span class="line">        req = xmltodict.parse(xml)[<span class="string">&#x27;xml&#x27;</span>]</span><br><span class="line">        <span class="comment"># 判断post过来的数据中数据类型是不是文本</span></span><br><span class="line">        <span class="keyword">if</span> <span class="string">&#x27;text&#x27;</span> == req.get(<span class="string">&#x27;MsgType&#x27;</span>):</span><br><span class="line">            <span class="comment"># 获取用户的消息，开始构造返回数据，把用户发送的消息原封不动的返回过去</span></span><br><span class="line">            <span class="comment"># 先构造为字典格式</span></span><br><span class="line">            resp = &#123;</span><br><span class="line">                <span class="string">&#x27;ToUserName&#x27;</span>:req.get(<span class="string">&#x27;FromUserName&#x27;</span>),</span><br><span class="line">                <span class="string">&#x27;FromUserName&#x27;</span>:req.get(<span class="string">&#x27;ToUserName&#x27;</span>),</span><br><span class="line">                <span class="string">&#x27;CreateTime&#x27;</span>:<span class="built_in">int</span>(time.time()),</span><br><span class="line">                <span class="string">&#x27;MsgType&#x27;</span>:<span class="string">&#x27;text&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;Content&#x27;</span>:req.get(<span class="string">&#x27;Content&#x27;</span>)</span><br><span class="line">            &#125;</span><br><span class="line">        <span class="keyword">else</span>:  <span class="comment"># 如果发过来的是图片或者其他非文本的格式，则返回无法识别</span></span><br><span class="line">            resp = &#123;</span><br><span class="line">                <span class="string">&#x27;ToUserName&#x27;</span>: req.get(<span class="string">&#x27;FromUserName&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">                <span class="string">&#x27;FromUserName&#x27;</span>: req.get(<span class="string">&#x27;ToUserName&#x27;</span>, <span class="string">&#x27;&#x27;</span>),</span><br><span class="line">                <span class="string">&#x27;CreateTime&#x27;</span>: <span class="built_in">int</span>(time.time()),</span><br><span class="line">                <span class="string">&#x27;MsgType&#x27;</span>: <span class="string">&#x27;text&#x27;</span>,</span><br><span class="line">                <span class="string">&#x27;Content&#x27;</span>: <span class="string">&#x27;无法识别该消息类型&#x27;</span></span><br><span class="line">            &#125;</span><br><span class="line">        <span class="comment"># 把构造的字典转换成xml格式</span></span><br><span class="line">        xml = xmltodict.unparse(&#123;<span class="string">&#x27;xml&#x27;</span>:resp&#125;)</span><br><span class="line">        <span class="comment"># 返回数据</span></span><br><span class="line">        <span class="keyword">return</span> xml</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    app.run(host=<span class="string">&#x27;0.0.0.0&#x27;</span>, port=<span class="number">80</span>, debug=<span class="literal">True</span>)</span><br></pre></td></tr></table></figure>
+
+<p>到这里基本的收发信息就处理好了，其实也就足以做一些基本功能的开发了</p>
+<h2 id="第二步：读写数据库"><a href="#第二步：读写数据库" class="headerlink" title="第二步：读写数据库"></a>第二步：读写数据库</h2><p>实现这样一个需求：</p>
+<p>用户发送一个电影名字，公众号返回一个资源链接</p>
+<p>资源存储在服务器的一个数据库中</p>
+<p>管理员可以发送特殊格式的消息来向数据库中写入数据</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7/" rel="tag"># 微信公众号</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/06/30/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E6%A2%AF%E5%AD%90%E6%90%AD%E5%BB%BA%E6%94%BB%E7%95%A5/" rel="prev" title="鱼人宝宝都能看懂的梯子搭建攻略">
+      <i class="fa fa-chevron-left"></i> 鱼人宝宝都能看懂的梯子搭建攻略
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%9C%8D%E5%8A%A1%E9%85%8D%E7%BD%AE"><span class="nav-number">2.</span> <span class="nav-text">第一步：服务配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8Flask%E6%A1%86%E6%9E%B6%E6%90%AD%E4%B8%AA%E6%9C%8D%E5%8A%A1"><span class="nav-number">2.1.</span> <span class="nav-text">用Flask框架搭个服务</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%94%B6%E5%8F%91%E6%96%87%E5%AD%97%E6%B6%88%E6%81%AF"><span class="nav-number">2.2.</span> <span class="nav-text">收发文字消息</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E8%AF%BB%E5%86%99%E6%95%B0%E6%8D%AE%E5%BA%93"><span class="nav-number">3.</span> <span class="nav-text">第二步：读写数据库</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="西左"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">西左</p>
+  <div class="site-description" itemprop="description">自是者不彰。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">9</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">14</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dangyoo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dangyoo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">西左</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
