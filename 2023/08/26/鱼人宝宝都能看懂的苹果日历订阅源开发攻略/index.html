@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"dangyoo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="闲言碎语近期为了学英语，用美区账号下了些App，结果把手机地区、语言啥的改了之后，发现之前的日历节日都不见了，看到有Subscribe的选项，就想着自己做一个算了。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鱼人宝宝都能看懂的苹果日历订阅源开发攻略">
+<meta property="og:url" content="https://dangyoo.github.io/2023/08/26/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/index.html">
+<meta property="og:site_name" content="西左Log">
+<meta property="og:description" content="闲言碎语近期为了学英语，用美区账号下了些App，结果把手机地区、语言啥的改了之后，发现之前的日历节日都不见了，看到有Subscribe的选项，就想着自己做一个算了。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dangyoo.github.io/images/ics_format.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/ics_sample.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/ios_calender_sample.png">
+<meta property="article:published_time" content="2023-08-26T08:47:10.000Z">
+<meta property="article:modified_time" content="2023-08-26T12:33:10.979Z">
+<meta property="article:author" content="西左">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dangyoo.github.io/images/ics_format.png">
+
+<link rel="canonical" href="https://dangyoo.github.io/2023/08/26/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>鱼人宝宝都能看懂的苹果日历订阅源开发攻略 | 西左Log</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?15db7c636ac845c8c8fe0ca45dac6e54";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">西左Log</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2023/08/26/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="西左">
+      <meta itemprop="description" content="自是者不彰。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="西左Log">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          鱼人宝宝都能看懂的苹果日历订阅源开发攻略
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-08-26 16:47:10" itemprop="dateCreated datePublished" datetime="2023-08-26T16:47:10+08:00">2023-08-26</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E5%AE%9E%E8%B7%B5/" itemprop="url" rel="index"><span itemprop="name">实践</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>近期为了学英语，用美区账号下了些App，结果把手机地区、语言啥的改了之后，发现之前的日历节日都不见了，看到有Subscribe的选项，就想着自己做一个算了。</p>
+<span id="more"></span>
+
+<h2 id="查怎么实现"><a href="#查怎么实现" class="headerlink" title="查怎么实现"></a>查怎么实现</h2><p>这东西网上实现的已经很多了，随手打开一个Star最多的<a target="_blank" rel="noopener" href="https://github.com/lanceliao/china-holiday-calender">china-holidy-calender</a>，看到订阅地址是一个.ics的文件，打开后查看文件格式</p>
+<img src="/images/ics_format.png" width="40%" height="40%">
+
+<p>里边的字段对应到iOS日历里的信息，Git上给的是20210501的图</p>
+<img src="/images/ics_sample.png" width="40%" height="60%">
+
+<img src="/images/ios_calender_sample.png" width="40%" height="40%">
+
+<p>那就比较简单了，首先肯定是把需要从网上某个地方获取的字段提取出来，然后把这些数据从某个地方拿下来（存到数据库里），再生成一个对应格式的ics文件</p>
+<h2 id="提取字段"><a href="#提取字段" class="headerlink" title="提取字段"></a>提取字段</h2><p>DTSTART：日程开始时间</p>
+<p>DTEND：日程结束时间</p>
+<p>每一天就用日历里的All-day类型日程即可，DTSTART &#x3D; DTEND</p>
+<p>SUMMARY：日程标题</p>
+<p>DESCRIPTION：日程备注</p>
+<p>备注不需要搞太复杂，把节日信息放上就够了，甚至只要标题有就够了，不需要备注</p>
+<p>没了</p>
+<h2 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h2><p>看Git上这个项目是从政府网上拿的数据，搜了一下只有2022年和2023年发布过，看起来如果有变更还要再做维护的样子</p>
+<p>找了一下Python中有一个包<a target="_blank" rel="noopener" href="https://pypi.org/project/chinesecalendar/">chinesecalendar</a></p>
+<p>先基于这个数据做一个实现吧</p>
+<h2 id="chinesecalendar"><a href="#chinesecalendar" class="headerlink" title="chinesecalendar"></a>chinesecalendar</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># !pip install chinesecalendar  先安装</span></span><br><span class="line"><span class="comment"># 试用</span></span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> chinese_calendar <span class="keyword">as</span> calendar</span><br><span class="line">calendar.get_holiday_detail(datetime.date(<span class="number">2023</span>,<span class="number">9</span>,<span class="number">29</span>))</span><br><span class="line"><span class="comment"># (True, &#x27;Mid-autumn Festival&#x27;)</span></span><br><span class="line">calendar.get_holiday_detail(datetime.date(<span class="number">2023</span>,<span class="number">9</span>,<span class="number">28</span>))</span><br><span class="line"><span class="comment"># (False, None)</span></span><br><span class="line">calendar.get_holiday_detail(datetime.date(<span class="number">2023</span>,<span class="number">10</span>,<span class="number">7</span>))</span><br><span class="line"><span class="comment"># (False, &#x27;National Day&#x27;)</span></span><br><span class="line">calendar.get_holiday_detail(datetime.date(<span class="number">2023</span>,<span class="number">10</span>,<span class="number">14</span>))</span><br><span class="line"><span class="comment"># (True, None)</span></span><br></pre></td></tr></table></figure>
+
+<p>主要用get_holiday_detail就够了，返回一个Tuple类型，两个元素，第一个元素代表是否节假日，第二个元素代表哪个节假日</p>
+<p>此外如果调休上班，周六周日会标记为（False，调休的节日名）</p>
+<p>可以加上一个周六周日的判断，结合这个结果来判断是否为调休上班</p>
+<p>日历中标记所有节假日以及调休上班的日期</p>
+<h2 id="脚本"><a href="#脚本" class="headerlink" title="脚本"></a>脚本</h2><p>第一步先把要的数据拿到并做好结构化</p>
+<p>第二步把数据拼成想要的ics文件格式</p>
+<h3 id="第一步：拿数据"><a href="#第一步：拿数据" class="headerlink" title="第一步：拿数据"></a>第一步：拿数据</h3><p>写一个脚本获取数据，只保存需要标记的日期信息，存到PostgreSQL中</p>
+<p>想把假期和调休分别标记，所以多加一个标识，表结构定义为</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">CREATE</span> <span class="keyword">TABLE</span> calendar_data(</span><br><span class="line">    the_date    TEXT, <span class="comment">--COMMENT &#x27;日期&#x27;,</span></span><br><span class="line">    the_type    TEXT, <span class="comment">--COMMENT &#x27;标记类型，1:假期|2:调休&#x27;,</span></span><br><span class="line">    mark        TEXT  <span class="comment">--COMMENT &#x27;节日信息&#x27;  </span></span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"># \d calendar_data;</span><br><span class="line">           <span class="keyword">Table</span> &quot;public.calendar_data&quot;</span><br><span class="line">  <span class="keyword">Column</span>  <span class="operator">|</span> Type <span class="operator">|</span> <span class="keyword">Collation</span> <span class="operator">|</span> Nullable <span class="operator">|</span> <span class="keyword">Default</span> </span><br><span class="line"><span class="comment">----------+------+-----------+----------+---------</span></span><br><span class="line"> the_date <span class="operator">|</span> text <span class="operator">|</span>           <span class="operator">|</span>          <span class="operator">|</span> </span><br><span class="line"> the_type <span class="operator">|</span> text <span class="operator">|</span>           <span class="operator">|</span>          <span class="operator">|</span> </span><br><span class="line"> mark     <span class="operator">|</span> text <span class="operator">|</span>           <span class="operator">|</span>          <span class="operator">|</span> </span><br></pre></td></tr></table></figure>
+
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># get_calendar_data.py</span></span><br><span class="line"><span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">import</span> chinese_calendar <span class="keyword">as</span> calendar</span><br><span class="line"><span class="keyword">import</span> psycopg2</span><br><span class="line"></span><br><span class="line"><span class="comment"># 主要用到的函数：</span></span><br><span class="line"><span class="comment"># 当天时间</span></span><br><span class="line"><span class="comment"># today = datetime.date.today()  # datetime.date(2023, 8, 26)</span></span><br><span class="line"><span class="comment"># 判断周几，返回1~7</span></span><br><span class="line"><span class="comment"># today.isoweekday()  # 6</span></span><br><span class="line"><span class="comment"># 下一天</span></span><br><span class="line"><span class="comment"># next_day = today + datetime.timedelta(days=1)  # datetime.date(2023, 8, 27)</span></span><br><span class="line"><span class="comment"># 节假日信息</span></span><br><span class="line"><span class="comment"># calendar.get_holiday_detail(datetime.date(2023,10,7))</span></span><br><span class="line"><span class="comment"># (False, &#x27;National Day&#x27;)</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 连接数据库</span></span><br><span class="line">conn = psycopg2.connect(database=<span class="string">&#x27;x&#x27;</span>,user=<span class="string">&#x27;x&#x27;</span>,password=<span class="string">&#x27;x&#x27;</span>,host=<span class="string">&#x27;127.0.0.1&#x27;</span>,port=<span class="string">&#x27;5432&#x27;</span>)</span><br><span class="line">cursor = conn.cursor()</span><br><span class="line"><span class="comment"># 循环日期，查找返回结果</span></span><br><span class="line"><span class="comment"># 如果结果需要插入表中，则执行写入</span></span><br><span class="line">today = datetime.date.today()</span><br><span class="line"><span class="comment"># 这个库只提供当年的数据</span></span><br><span class="line">left_days = (datetime.date(today.year+<span class="number">1</span>,<span class="number">1</span>,<span class="number">1</span>) - today).days</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(left_days):</span><br><span class="line">    the_date = today+datetime.timedelta(days=i)</span><br><span class="line">    calendar_result = calendar.get_holiday_detail(the_date)</span><br><span class="line">    <span class="keyword">if</span> calendar_result[<span class="number">1</span>]:</span><br><span class="line">        mark = calendar_result[<span class="number">1</span>]</span><br><span class="line">        the_type = <span class="number">1</span> <span class="keyword">if</span> calendar_result[<span class="number">0</span>] <span class="keyword">else</span> <span class="number">2</span></span><br><span class="line">        cursor.execute(<span class="string">&quot;&quot;&quot;INSERT INTO calendar_data(the_date, the_type, mark) VALUES(&#x27;%s&#x27;, &#x27;%s&#x27;, &#x27;%s&#x27;)&quot;&quot;&quot;</span> % (the_date.strftime(<span class="string">&#x27;%Y%m%d&#x27;</span>), the_type, mark))</span><br><span class="line"></span><br><span class="line"><span class="comment"># 循环结束后一次性commit</span></span><br><span class="line">conn.commit()</span><br></pre></td></tr></table></figure>
+
+<p>执行后去数据库里查看</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"># <span class="keyword">select</span> <span class="operator">*</span> <span class="keyword">from</span> calendar_data;</span><br><span class="line"> the_date <span class="operator">|</span> the_type <span class="operator">|</span>        mark         </span><br><span class="line"><span class="comment">----------+----------+---------------------</span></span><br><span class="line"> <span class="number">20230929</span> <span class="operator">|</span> <span class="number">1</span>        <span class="operator">|</span> Mid<span class="operator">-</span>autumn Festival</span><br><span class="line"> <span class="number">20230930</span> <span class="operator">|</span> <span class="number">1</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line"> <span class="number">20231001</span> <span class="operator">|</span> <span class="number">1</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line"> <span class="number">20231002</span> <span class="operator">|</span> <span class="number">1</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line"> <span class="number">20231003</span> <span class="operator">|</span> <span class="number">1</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line"> <span class="number">20231004</span> <span class="operator">|</span> <span class="number">1</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line"> <span class="number">20231005</span> <span class="operator">|</span> <span class="number">1</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line"> <span class="number">20231006</span> <span class="operator">|</span> <span class="number">1</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line"> <span class="number">20231007</span> <span class="operator">|</span> <span class="number">2</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line"> <span class="number">20231008</span> <span class="operator">|</span> <span class="number">2</span>        <span class="operator">|</span> <span class="type">National</span> <span class="keyword">Day</span></span><br><span class="line">(<span class="number">10</span> <span class="keyword">rows</span>)</span><br></pre></td></tr></table></figure>
+<h3 id="第二步：写文件"><a href="#第二步：写文件" class="headerlink" title="第二步：写文件"></a>第二步：写文件</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 将文件格式分为Event和其他两部分</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">return_ics_header</span>(<span class="params">the_type</span>):</span><br><span class="line">    <span class="keyword">if</span> the_type == <span class="number">1</span>:</span><br><span class="line">        calname = <span class="string">&#x27;节假日&#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        calname = <span class="string">&#x27;调休&#x27;</span></span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;BEGIN:VCALENDAR\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;PRODID:NULL\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;VERSION:2.0\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;CALSCALE:GREGORIAN\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;METHOD:PUBLISH\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;X-WR-CALNAME:<span class="subst">&#123;calname&#125;</span>\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;X-WR-TIMEZONE:Asia/Shanghai\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;X-WR-CALDESC:<span class="subst">&#123;calname&#125;</span>日历\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;BEGIN:VTIMEZONE\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;TZID:Asia/Shanghai\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;X-LIC-LOCATION:Asia/Shanghai\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;BEGIN:STANDARD\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;TZOFFSETFROM:+0800\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;TZOFFSETTO:+0800\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;TZNAME:CST\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;DTSTART:19700101T000000\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;END:STANDARD\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;END:VTIMEZONE\n&quot;</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">def</span> <span class="title function_">return_ics_event</span>(<span class="params">the_date, mark, the_type</span>):</span><br><span class="line">    <span class="keyword">if</span> the_type == <span class="number">1</span>:</span><br><span class="line">        caldesc = <span class="string">&#x27;Holiday &#x27;</span></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        caldesc = <span class="string">&#x27;Work &#x27;</span></span><br><span class="line">    <span class="keyword">return</span> <span class="string">&quot;BEGIN:VEVENT\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;DTSTART;VALUE=DATE:<span class="subst">&#123;the_date&#125;</span>\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;DTEND;VALUE=DATE:<span class="subst">&#123;the_date&#125;</span>\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;DTSTAMP:<span class="subst">&#123;the_date&#125;</span>T000001\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;UID:<span class="subst">&#123;the_date&#125;</span>T000001_dy\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;CREATED:<span class="subst">&#123;the_date&#125;</span>T000001\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;DESCRIPTION:<span class="subst">&#123;mark&#125;</span>\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;LAST-MODIFIED:20230826T00:00:01\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;SEQUENCE:0\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;STATUS:CONFIRMED\n&quot;</span> \</span><br><span class="line">          + <span class="string">f&quot;SUMMARY:<span class="subst">&#123;caldesc&#125;</span><span class="subst">&#123;mark&#125;</span>\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;TRANSP:TRANSPARENT\n&quot;</span> \</span><br><span class="line">          + <span class="string">&quot;END:VEVENT\n&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 这里三引号内容输出的时候每一行前边会有空格，用inspect.cleandoc做处理</span></span><br><span class="line"><span class="comment"># 结果最后订阅后显示validation failed，不知道是哪里格式有问题，把这个换一下</span></span><br><span class="line"><span class="comment"># 试了下其他人gitee上的ics也显示同样的问题，换github试一下</span></span><br><span class="line"><span class="comment"># 整了半天，是头文件中VERSION必须是2.0</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 根据类型生成两个ics文件    </span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">mk_ics_file</span>(<span class="params">the_type</span>):</span><br><span class="line">    pwd = <span class="string">&quot;/home/dy/gzh/my_calendar/&quot;</span></span><br><span class="line">    fname = pwd+<span class="string">&quot;calendar%s.ics&quot;</span>%the_type</span><br><span class="line">    header = return_ics_header(the_type)</span><br><span class="line">    ics_event = <span class="string">&#x27;&#x27;</span></span><br><span class="line">    conn = psycopg2.connect(database=<span class="string">&#x27;dy&#x27;</span>,user=<span class="string">&#x27;dy&#x27;</span>,password=<span class="string">&#x27;qwe1234qwe&#x27;</span>,host=<span class="string">&#x27;127.0.0.1&#x27;</span>,port=<span class="string">&#x27;5432&#x27;</span>)</span><br><span class="line">    cursor = conn.cursor()</span><br><span class="line">    cursor.execute(<span class="string">&quot;SELECT the_date, mark FROM calendar_data WHERE the_type = &#x27;%s&#x27;&quot;</span>%the_type)</span><br><span class="line">    result = cursor.fetchall()</span><br><span class="line">    <span class="keyword">for</span> each_result <span class="keyword">in</span> result:</span><br><span class="line">        ics_event = ics_event + return_ics_event(each_result[<span class="number">0</span>], each_result[<span class="number">1</span>], the_type)</span><br><span class="line">    <span class="comment"># file_content = inspect.cleandoc(header) + &#x27;\n&#x27; + inspect.cleandoc(ics_event) + &quot;\nEND:VCALENDAR&quot;</span></span><br><span class="line">    file_content = header + ics_event + <span class="string">&quot;END:VCALENDAR&quot;</span></span><br><span class="line">    <span class="keyword">with</span> <span class="built_in">open</span>(fname, <span class="string">&#x27;w&#x27;</span>, encoding=<span class="string">&#x27;utf-8&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">        f.write(file_content)</span><br></pre></td></tr></table></figure>
+
+<p>生成两个文件calendar1.ics和calendar2.ics</p>
+<p>分别对应节假日日历和调休日历</p>
+<h3 id="第三步：上传文件"><a href="#第三步：上传文件" class="headerlink" title="第三步：上传文件"></a>第三步：上传文件</h3><p>用Git来保存文件，然后订阅</p>
+<p>坑了一个小时的一个点：头文件中VERSION必须是2.0</p>
+<p>订阅地址：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">假期：https://raw.githubusercontent.com/Dangyoo/my_calendar/master/calendar1.ics</span><br><span class="line">调休：https://raw.githubusercontent.com/Dangyoo/my_calendar/master/calendar2.ics</span><br></pre></td></tr></table></figure>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/iOS/" rel="tag"># iOS</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/08/20/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E5%BE%AE%E4%BF%A1%E5%85%AC%E4%BC%97%E5%8F%B7%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/" rel="prev" title="鱼人宝宝都能看懂的微信公众号开发攻略">
+      <i class="fa fa-chevron-left"></i> 鱼人宝宝都能看懂的微信公众号开发攻略
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9F%A5%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">查怎么实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8F%90%E5%8F%96%E5%AD%97%E6%AE%B5"><span class="nav-number">3.</span> <span class="nav-text">提取字段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8E%B7%E5%8F%96%E6%95%B0%E6%8D%AE"><span class="nav-number">4.</span> <span class="nav-text">获取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#chinesecalendar"><span class="nav-number">5.</span> <span class="nav-text">chinesecalendar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%84%9A%E6%9C%AC"><span class="nav-number">6.</span> <span class="nav-text">脚本</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E6%8B%BF%E6%95%B0%E6%8D%AE"><span class="nav-number">6.1.</span> <span class="nav-text">第一步：拿数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%86%99%E6%96%87%E4%BB%B6"><span class="nav-number">6.2.</span> <span class="nav-text">第二步：写文件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%EF%BC%9A%E4%B8%8A%E4%BC%A0%E6%96%87%E4%BB%B6"><span class="nav-number">6.3.</span> <span class="nav-text">第三步：上传文件</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="西左"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">西左</p>
+  <div class="site-description" itemprop="description">自是者不彰。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">3</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dangyoo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dangyoo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">西左</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
