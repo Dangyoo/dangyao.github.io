@@ -1,5 +1,5 @@
 ---
-title: 鱼人宝宝都能看懂的CDC知识
+title: 鱼人宝宝都能看懂的Debezium知识
 date: 2023-08-27 17:49:03
 categories: 知识
 tags:  [Data, CDC, Debezium]
