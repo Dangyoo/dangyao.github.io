@@ -124,8 +124,8 @@ curl -H "Accept:application/json" localhost:8083/connectors/
      "connector.class": "io.debezium.connector.mysql.MySqlConnector",  # 官方内置类
      "database.hostname": "localhost",
      "database.port": "3306",
-     "database.user": "root",
-     "database.password": "123456",
+     "database.user": "x",
+     "database.password": "x",
      "database.server.id": "1",  # my.cnf中配置的server-id
      "database.server.name": "cr7-demo",
      "include.schema.changes": "true",
@@ -433,4 +433,132 @@ curl -X DELETE localhost:8083/connectors/test-mysql-connector
 # }
 ```
 
+### 监控PostgreSQL
 
+首先配置PostgreSQL
+
+``` bash
+psql -c "show config_file"
+# 查找配置文件路径
+# /etc/postgresql/13/main/postgresql.conf
+sudo vim /etc/postgresql/13/main/postgresql.conf
+# 修改listen_address = '*'
+# 新增
+# wal_level = logical
+# max_wal_senders = 2
+# max_replication_slots = 1
+
+# 配置pg_hba.conf
+sudo vim /etc/postgresql/13/main/pg_hba.conf
+# 新增
+# host all			all	0.0.0.0/0	scram-sha-256
+# host replication	all	0.0.0.0.0	trust
+
+# 重启数据库
+sudo systemctl restart postgresql
+```
+
+然后建立测试用表
+
+``` sql
+! psql
+CREATE DATABASE testdb OWNER x;
+! psql -d testdb;
+CREATE TABLE stu(id INT, name VARCHAR, age INT);
+INSERT INTO stu VALUES(1, 'zs', 10);
+```
+
+安装PostgreSQL Connector
+
+``` bash
+wget https://repo1.maven.org/maven2/io/debezium/debezium-connector-postgres/1.7.1.Final/debezium-connector-postgres-1.7.1.Final-plugin.tar.gz
+tar -zxvf debezium-connector-postgres-1.7.1.Final-plugin.tar.gz
+cd debezium-connector-postgres/
+```
+
+注册连接器并查看数据
+
+``` bash
+# 配置信息
+{
+	"name": "postgresql-connector",  # 连接器名称
+	"config": {
+     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",  # 官方内置类
+     "database.hostname": "localhost",
+     "database.port": "5432",
+     "database.user": "x",
+     "database.password": "x",
+     "database.dbname": "testdb",
+     "database.server.name": "pgsqldemo",
+     "plugin.name": "pgoutput"
+  }
+}
+# 写入postgresql-connector.json文件中
+# 重启Kafka连接器，这里不重启的话会报500 Failed to find any class that implements Connector错误
+
+# 使用curl注册
+curl -i -X POST -H "Content-Type:application/json" --data @postgresql-connector.json localhost:8083/connectors
+# HTTP/1.1 201 Created
+
+# 检查连接器
+curl -H "Accept:application/json" localhost:8083/connectors/
+# ["postgresql-connector","mysql-connector"]
+# 检查连接器运行状态
+curl localhost:8083/connectors/postgresql-connector/status -s | jq
+# {
+#   "name": "postgresql-connector",
+#   "connector": {
+#     "state": "RUNNING",
+#     "worker_id": "127.0.1.1:8083"
+#   },
+#   "tasks": [
+#     {
+#       "id": 0,
+#       "state": "RUNNING",
+#       "worker_id": "127.0.1.1:8083"
+#     }
+#   ],
+#   "type": "source"
+# }
+
+# 查看Kafka中的Topic
+./kafka-topics.sh --list --bootstrap-server localhost:9092
+# pgsqldemo.public.stu
+
+# 查看Topic中的数据
+./kafka-console-consumer.sh \
+--bootstrap-server localhost:9092 \
+--topic pgsqldemo.public.stu \
+--from-beginning
+# {
+#     "before":null,
+#     "after":{
+#         "id":1,
+#         "name":"zs",
+#         "age":10
+#     },
+#     "source":{
+#         "version":"1.7.1.Final",
+#         "connector":"postgresql",
+#         "name":"pgsqldemo",
+#         "ts_ms":1693214757722,
+#         "snapshot":"last",
+#         "db":"testdb",
+#         "sequence":"[null,\"23256472\"]",
+#         "schema":"public",
+#         "table":"stu",
+#         "txId":516,
+#         "lsn":23256472,
+#         "xmin":null
+#     },
+#     "op":"r",
+#     "ts_ms":1693214757727,
+#     "transaction":null
+# }
+```
+
+## 常见问题
+
+snapshot.mode = initial，控制Debezium在首次监控某个表的时候会先同步所有的历史数据，如果在同步历史数据的过程中不能避免数据更新，则使用snapshot.locking.mode = minimal来给表加锁
+
+默认一个表的监控数据会写入一个Topic中，支持通过topic routing设置同样表结构的表可以写入同一个Topic中

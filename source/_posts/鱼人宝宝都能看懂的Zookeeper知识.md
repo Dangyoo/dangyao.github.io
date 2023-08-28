@@ -1,5 +1,5 @@
 ---
-title: 鱼人宝宝都能看懂的Kafka知识
+title: 鱼人宝宝都能看懂的Zookeeper知识
 date: 2023-08-24 18:06:03
 categories: 知识
 tags: [Data, Zookeeper]
