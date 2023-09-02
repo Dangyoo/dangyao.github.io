@@ -167,6 +167,81 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2023/09/02/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Git%E7%9F%A5%E8%AF%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="西左">
+      <meta itemprop="description" content="自是者不彰。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="西左Log">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2023/09/02/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Git%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">鱼人宝宝都能看懂的Git知识</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2023-09-02 16:06:03" itemprop="dateCreated datePublished" datetime="2023-09-02T16:06:03+08:00">2023-09-02</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">知识</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>之前的工作中基本没有用到过Git，所有代码都是通过SaaS平台编辑管理，在上家T司本来想着后续推动一下用Git管理但是没机会，好在现在这家NT司就是用Git来管理项目的。</p>
+<p>常用的操作比如博客管理就是用到了add、commit、push，至于里边的公钥配置啥的原理以及分支管理都搞得不太明白，刚好有机会搞一下</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/09/02/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Git%E7%9F%A5%E8%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2023/08/27/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Debezium%E7%9F%A5%E8%AF%86/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -363,136 +438,14 @@
 
       
           <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>对动物园管理员的了解一直停留在“这是一个管理Hadoop各种服务的服务“，但具体是怎么实现管理协调功能的，不太清楚，遂搞清楚一下</p>
-<h2 id="Apache-Zookeeper"><a href="#Apache-Zookeeper" class="headerlink" title="Apache Zookeeper"></a>Apache Zookeeper</h2><p>Zookeeper是一种分布式协调服务，用于管理大型主机。在分布式环境中协调和管理服务是一个复杂的过程，Zookeeper通过其简单的架构和API解决了这个问题，允许开发人员专注于核心应用程序逻辑，而不用担心应用程序的分布式特性</p>
-<h3 id="应用场景"><a href="#应用场景" class="headerlink" title="应用场景"></a>应用场景</h3><ol>
-<li>分布式协调组件：一旦某个节点发生改变，就会通知所有监听方改变自己的值</li>
-<li>分布式锁：依靠ZAB协议实现锁的强一致性</li>
-<li>无状态化实现：作为数据中心维护各种状态数据</li>
-</ol>
-<h3 id="搭建"><a href="#搭建" class="headerlink" title="搭建"></a>搭建</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 下载Zookeeper安装包</span></span><br><span class="line">wget https://dlcdn.apache.org/zookeeper/zookeeper-3.9.0/apache-zookeeper-3.9.0-bin.tar.gz</span><br><span class="line"><span class="comment"># 解压缩</span></span><br><span class="line">tar -zxvf apache-zookeeper-3.9.0.tar.gz</span><br><span class="line"><span class="comment"># 运行服务</span></span><br><span class="line"><span class="built_in">cd</span> apache-zookeeper-3.9.0-bin/bin</span><br><span class="line">./zkServer.sh</span><br><span class="line"><span class="comment"># 提示Error: JAVA_HOME is not set and java could not be found in PATH.</span></span><br><span class="line"><span class="comment"># 没有安装Java，Zookeeper是Java实现，所以要先安装Java</span></span><br><span class="line">sudo apt install default-jdk</span><br><span class="line"><span class="comment"># 安装默认JRE的话会安装JAVA 11</span></span><br><span class="line">./zkServer.sh</span><br><span class="line"><span class="comment"># 提示../conf/zoo.cfg: No such file or directory</span></span><br><span class="line"><span class="built_in">cd</span> ../conf/</span><br><span class="line"><span class="built_in">cp</span> zoo_sample.cfg zoo.cfg  <span class="comment"># 使用示例配置</span></span><br><span class="line"><span class="built_in">cd</span> ../bin/</span><br><span class="line">./zkServer.sh start</span><br><span class="line"><span class="comment"># 检查是否成功启动</span></span><br><span class="line">ps -ef|grep zookeeper</span><br><span class="line"></span><br><span class="line"><span class="comment"># 错误提示</span></span><br><span class="line"><span class="comment"># 提示Starting zookeeper ... FAILED TO START</span></span><br><span class="line">./zkServer.sh start-foreground</span><br><span class="line"><span class="comment"># 查看启动失败原因</span></span><br><span class="line"><span class="comment"># Error: Could not find or load main class org.apache.zookeeper.server.quorum.QuorumPeerMain</span></span><br><span class="line"><span class="comment"># Caused by: java.lang.ClassNotFoundException: org.apache.zookeeper.server.quorum.QuorumPeerMain</span></span><br><span class="line"><span class="comment"># 下载错了包，要下载的是带有‘-bin’的包</span></span><br><span class="line">wget https://www.apache.org/dyn/closer.lua/zookeeper/zookeeper-3.9.0/apache-zookeeper-3.9.0-bin.tar.gz</span><br><span class="line">tar -zxvf apache-zookeeper-3.9.0-bin.tar.gz</span><br><span class="line"><span class="comment"># 提示gzip: stdin: not in gzip format</span></span><br><span class="line"><span class="comment"># 后来发现是链接问题，真正的下载链接要点进去</span></span><br><span class="line"><span class="comment"># 参考文章https://www.amwalle.com/more/working/20210516-gzip-stdin-not-in-gzip-format.html</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="常见命令"><a href="#常见命令" class="headerlink" title="常见命令"></a>常见命令</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">./zkServer.sh status</span><br><span class="line"><span class="comment"># 查看服务状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># status提示Error contacting service. It is probably not running.</span></span><br><span class="line"><span class="comment"># 说明还是没有启动成功</span></span><br><span class="line"><span class="comment"># ./zkServer.sh start-foreground查看原因</span></span><br><span class="line"><span class="comment"># Problem starting AdminServer on address 0.0.0.0, port 8080 and command URL /commands</span></span><br><span class="line"><span class="comment"># 看起来是有个Admin服务想绑定到8080端口但是被占用了</span></span><br><span class="line"><span class="comment"># vim ../conf/zoo.cfg</span></span><br><span class="line"><span class="comment"># 编辑配置文件，加上一行</span></span><br><span class="line"><span class="comment"># admin.serverPort=8081</span></span><br><span class="line"><span class="comment"># ./zkServer.sh start</span></span><br><span class="line"><span class="comment"># ./zkServer.sh status</span></span><br><span class="line"><span class="comment"># 提示Mode: standalone，启动成功</span></span><br><span class="line"></span><br><span class="line">./zkServer.sh stop</span><br><span class="line"><span class="comment"># 停止服务状态</span></span><br><span class="line"></span><br><span class="line">./zkCli.sh</span><br><span class="line"><span class="comment"># 进入zookeeper控制台</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h3><p>Zookeeper内部保存数据的模型为树模型，数据存储基于节点，节点称为Znode，Znode的引用方式是路径引用，路径类似于文件路径</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">ls</span> /</span><br><span class="line"><span class="comment"># [zookeeper]</span></span><br><span class="line"><span class="comment"># 查看根节点</span></span><br><span class="line"></span><br><span class="line">create /test1</span><br><span class="line"><span class="built_in">ls</span> /</span><br><span class="line"><span class="comment"># [test1, zookeeper]</span></span><br><span class="line"><span class="comment"># 创建一个新节点</span></span><br><span class="line"></span><br><span class="line">create /test2</span><br><span class="line"><span class="built_in">ls</span> /</span><br><span class="line"><span class="comment"># [test2, test1, zookeeper]</span></span><br><span class="line">create /test2/sub2 abc</span><br><span class="line">get /test2/sub2</span><br><span class="line"><span class="comment"># abc</span></span><br><span class="line">create /test2/sub1</span><br><span class="line"><span class="built_in">ls</span> /test2</span><br><span class="line"><span class="comment"># [sub2, sub1]</span></span><br><span class="line"><span class="built_in">set</span> /test2/sub1 bbc</span><br><span class="line">get /test2/sub1</span><br><span class="line"><span class="comment"># bbc</span></span><br><span class="line"><span class="comment"># 存入数据并获取</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">ls</span> -R /</span><br><span class="line"><span class="comment"># /</span></span><br><span class="line"><span class="comment"># /test1</span></span><br><span class="line"><span class="comment"># /test2</span></span><br><span class="line"><span class="comment"># /zookeeper</span></span><br><span class="line"><span class="comment"># /test2/sub1</span></span><br><span class="line"><span class="comment"># /test2/sub2</span></span><br><span class="line"><span class="comment"># /zookeeper/config</span></span><br><span class="line"><span class="comment"># /zookeeper/quota</span></span><br><span class="line"><span class="comment"># 递归查询所有子节点</span></span><br><span class="line"></span><br><span class="line">delete /test1  <span class="comment"># 删除节点，有根节点时无法删除</span></span><br><span class="line">deleteall /test2  <span class="comment"># 删除根节点及其子节点</span></span><br><span class="line"></span><br><span class="line">delete -v 0 /test3  <span class="comment"># 乐观锁删除</span></span><br><span class="line"><span class="comment"># 如果这个节点被修改，则不能删除，如果没有，则能够删除</span></span><br><span class="line"><span class="comment"># 并行时Znode可能被其他机器节点修改</span></span><br></pre></td></tr></table></figure>
-
-<h4 id="Znode"><a href="#Znode" class="headerlink" title="Znode"></a>Znode</h4><h5 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h5><p>每个Znode中，包含了四个部分：</p>
-<ol>
-<li>data：节点中的数据</li>
-<li>acl：权限<ul>
-<li>c：create创建权限，允许在该节点下创建子节点</li>
-<li>w：write更新权限，允许更新该节点的数据</li>
-<li>r：read读取权限，允许读取该节点的内容以及子节点的列表信息</li>
-<li>d：delete删除权限，允许删除该节点的子节点</li>
-<li>a：admin管理权限，允许对该节点进行acl权限设置</li>
-</ul>
-</li>
-<li>stat：描述当前节点的元数据</li>
-<li>child：当前节点的子节点</li>
-</ol>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 注册当前会话的账号和密码</span></span><br><span class="line">addauth digest username:<span class="built_in">pwd</span></span><br><span class="line"><span class="comment"># 创建节点并设置权限</span></span><br><span class="line">create /test-node abcd auth:username:<span class="built_in">pwd</span>:cdwra</span><br><span class="line"><span class="comment"># 在另一个会话中，必须先使用账号密码，才能拥有操作该节点的权限</span></span><br><span class="line">get /test-node</span><br><span class="line"><span class="comment"># Insufficient permission : /test-node</span></span><br><span class="line"><span class="comment"># 另一个会话中访问不到</span></span><br><span class="line">addauth digest username:<span class="built_in">pwd</span></span><br><span class="line">get /test-node</span><br><span class="line"><span class="comment"># abcd</span></span><br><span class="line"><span class="comment"># 给这个会话添加权限后再进行访问</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建节点并设置权限后提示KeeperErrorCode = InvalidACL for /test-node</span></span><br><span class="line"><span class="comment"># 少写了关键词auth:</span></span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">[zk: localhost:2181(CONNECTED) 15] get -s /test2</span><br><span class="line">null</span><br><span class="line">cZxid = 0x4  <span class="comment"># 创建节点的事务ID</span></span><br><span class="line">ctime = Wed Aug 23 19:23:09 CST 2023  <span class="comment"># 创建节点的时间</span></span><br><span class="line">mZxid = 0x4  <span class="comment"># 修改节点的事务ID</span></span><br><span class="line">mtime = Wed Aug 23 19:23:09 CST 2023  <span class="comment"># 修改节点的时间</span></span><br><span class="line">pZxid = 0x7  <span class="comment"># 添加和删除子节点的事务ID</span></span><br><span class="line">cversion = 2  <span class="comment">#</span></span><br><span class="line">dataVersion = 0  <span class="comment"># 节点内的数据版本，每更新一次版本+1</span></span><br><span class="line">aclVersion = 0  <span class="comment"># 节点内的权限版本</span></span><br><span class="line">ephemeralOwner = 0x0  <span class="comment"># 如果当前节点是临时节点，该值是当前节点所有者的session id，否则为0</span></span><br><span class="line">dataLength = 0  <span class="comment"># 节点数据的长度</span></span><br><span class="line">numChildren = 2  <span class="comment"># 子节点个数</span></span><br><span class="line">[zk: localhost:2181(CONNECTED) 17] get -s /test2/sub1</span><br><span class="line">abc</span><br><span class="line">cZxid = 0x7</span><br><span class="line">ctime = Wed Aug 23 19:23:19 CST 2023</span><br><span class="line">mZxid = 0x7</span><br><span class="line">mtime = Wed Aug 23 19:23:19 CST 2023</span><br><span class="line">pZxid = 0x7</span><br><span class="line">cversion = 0</span><br><span class="line">dataVersion = 0</span><br><span class="line">aclVersion = 0</span><br><span class="line">ephemeralOwner = 0x0</span><br><span class="line">dataLength = 3</span><br><span class="line">numChildren = 0</span><br><span class="line">[zk: localhost:2181(CONNECTED) 16] get -s /test2/sub2</span><br><span class="line">bbc</span><br><span class="line">cZxid = 0x5</span><br><span class="line">ctime = Wed Aug 23 19:23:11 CST 2023</span><br><span class="line">mZxid = 0x8</span><br><span class="line">mtime = Wed Aug 23 19:23:41 CST 2023</span><br><span class="line">pZxid = 0x5</span><br><span class="line">cversion = 0</span><br><span class="line">dataVersion = 1</span><br><span class="line">aclVersion = 0</span><br><span class="line">ephemeralOwner = 0x0</span><br><span class="line">dataLength = 3</span><br><span class="line">numChildren = 0</span><br></pre></td></tr></table></figure>
-
-<h5 id="类型"><a href="#类型" class="headerlink" title="类型"></a>类型</h5><p>持久节点：创建出的节点在会话结束后依然存在，create path</p>
-<p>持久序号（sequence）节点：创建出的节点，根据先后顺序，会在节点之后带上一个数值，越后执行数值越大，适用于分布式锁的应用场景，create -s path</p>
-<p>临时（ephemeral）节点：会话结束后自动被删除的节点，通过这个特性可以实现服务注册与发现的效果，create -e path</p>
-<p>临时序号节点：适用于临时的分布式锁，create -s -e path</p>
-<p>容器（Container）节点：当容器中没有任何子节点，该容器节点会被zk定期删除，create -c path</p>
-<p>TTL（Time-To-Live）节点：可以指定节点的到期时间，到期后被zk定期删除，只能通过系统配置zookeeper.extendedTypesEnabled&#x3D;true开启，create -t ttl path</p>
-<h3 id="持久化机制"><a href="#持久化机制" class="headerlink" title="持久化机制"></a>持久化机制</h3><p>在恢复时先恢复快照文件中的数据到内存中，再用日志文件中的数据做增量恢复，以此来提高回复速度</p>
-<h4 id="事务日志"><a href="#事务日志" class="headerlink" title="事务日志"></a>事务日志</h4><p>log，zk把执行的命令以日志形式保存在dataLogDir指定的路径中，如果没有指定dataLogDir，则保存到dataDir路径中</p>
-<h4 id="数据快照"><a href="#数据快照" class="headerlink" title="数据快照"></a>数据快照</h4><p>snapshot，zk会在一定的时间间隔内做一次内存数据的快照，把该时刻的内存数据保存在快照文件中</p>
-<h3 id="分布式锁"><a href="#分布式锁" class="headerlink" title="分布式锁"></a>分布式锁</h3><p>分布式锁其实就是，控制分布式系统不同进程共同访问共享资源的一种锁的实现</p>
-<p>如果不同的系统或同一个系统的不同主机之间共享了某个资源，往往需要互斥来防止彼此干扰，以保证一致性</p>
-<h4 id="锁的种类"><a href="#锁的种类" class="headerlink" title="锁的种类"></a>锁的种类</h4><ul>
-<li>读锁：大家都可以读，要想上读锁的前提是之前没有写锁</li>
-<li>写锁：只有得到写锁才能写，要想上写锁的前提是之前没有任何锁</li>
-</ul>
-<p>数据正在进行写入的时候，是不能读取的；数据想要写入，不能正在被读取或写入</p>
-<h5 id="读锁"><a href="#读锁" class="headerlink" title="读锁"></a>读锁</h5><p>zk如何上读锁</p>
-<ul>
-<li>创建一个临时序号节点，节点的数据是read，表示是读锁</li>
-<li>获取当前zk中序号比自己小的所有节点</li>
-<li>判断最小节点是否是读锁<ul>
-<li>如果不是读锁，则上锁失败，为最小节点设置监听，阻塞等待，zk的watch机制会在最小节点发生变化时通知当前节点，于是再执行第二步的流程</li>
-<li>如果是读锁，则上锁成功</li>
-</ul>
-</li>
-</ul>
-<h5 id="写锁"><a href="#写锁" class="headerlink" title="写锁"></a>写锁</h5><p>zk如何上写锁</p>
-<ul>
-<li>创建一个临时序号节点，节点的数据是write，表示是写锁</li>
-<li>获取zk中所有的子节点</li>
-<li>判断自己是否是最小的节点<ul>
-<li>如果是，则上写锁成功</li>
-<li>如果不是，说明前面还有锁，则上锁失败，监听最小节点，如果最小节点有变化，则回到第二步</li>
-</ul>
-</li>
-</ul>
-<h5 id="羊群效应"><a href="#羊群效应" class="headerlink" title="羊群效应"></a>羊群效应</h5><p>如果用上述的上锁方式，只要节点发生变化，就会出发其他节点的监听事件，这样的话对zk的压力非常大，调整成链式监听，可以解决该问题，即只监听自己序号的上一个节点，而不是监听最小节点</p>
-<h3 id="Watch机制"><a href="#Watch机制" class="headerlink" title="Watch机制"></a>Watch机制</h3><p>可以将Watch理解为注册在特定Znode上的触发器，当这个Znode发生改变，即调用了create、delete、setData方法时，将会出发Znode上注册的对应事件，请求Watch的客户端会接收到异步通知</p>
-<h4 id="具体操作"><a href="#具体操作" class="headerlink" title="具体操作"></a>具体操作</h4><p>get -w &#x2F;test客户端对&#x2F;test这个Znode进行监听</p>
-<p>当另一个客户端对被监听节点进行改变时，当前客户端会受到WatchedEvent</p>
-<h4 id="交互过程"><a href="#交互过程" class="headerlink" title="交互过程"></a>交互过程</h4><p>客户端调用getData方法，参数为true</p>
-<p>服务端收到请求，返回节点数据，并且在对应的哈希表里插入被Watch的Znode路径，以及Watcher列表</p>
-<p>当被Watch的Znode删除时，服务端会查找哈希表，找到对应Znode的所有Watcher，异步通知客户端，并且删除哈希表中对应的Key-Value</p>
-<h3 id="集群"><a href="#集群" class="headerlink" title="集群"></a>集群</h3><p>Zookeeper追求的是一致性，但不保证强一致性（半数Follower返回ACK），而是保证顺序一致性（依靠事务ID的单调递增）</p>
-<h4 id="集群角色"><a href="#集群角色" class="headerlink" title="集群角色"></a>集群角色</h4><p>Zookeeper集群中的节点有三种角色</p>
-<ul>
-<li>Leader：处理集群的所有事务请求，集群中只有一个Leader</li>
-<li>Follower：只能处理读请求，可以参与Leader选举</li>
-<li>Observer：只负责读，提升集群的读性能，不参与Leader选举</li>
-</ul>
-<h4 id="集群搭建"><a href="#集群搭建" class="headerlink" title="集群搭建"></a>集群搭建</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 1. 在/usr/local/zookeeper下创建四个文件，分别用来保存四个节点的数据</span></span><br><span class="line"><span class="comment"># 分别保存4个节点的myid，并赋值</span></span><br><span class="line">/usr/local/zookeeper/zkdata/zk1 <span class="comment"># echo 1 &gt; myid</span></span><br><span class="line">/usr/local/zookeeper/zkdata/zk2 <span class="comment"># echo 2 &gt; myid</span></span><br><span class="line">/usr/local/zookeeper/zkdata/zk3 <span class="comment"># echo 3 &gt; myid</span></span><br><span class="line">/usr/local/zookeeper/zkdata/zk4 <span class="comment"># echo 4 &gt; myid</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 编写4个zoo.cfg</span></span><br><span class="line"><span class="comment"># 举例在zk2中，配置文件为zoo2.cfg</span></span><br><span class="line"><span class="comment"># dataDir = /usr/local/zookeeper/zkdata/zk2</span></span><br><span class="line"><span class="comment"># client_port = 2182</span></span><br><span class="line"><span class="comment"># 添加4个节点的通信端口和选举端口</span></span><br><span class="line"><span class="comment"># server.1=xxx.xxx.xxx.xxx:2001:3001</span></span><br><span class="line"><span class="comment"># server.2=xxx.xxx.xxx.xxx:2002:3002</span></span><br><span class="line"><span class="comment"># server.3=xxx.xxx.xxx.xxx:2003:3003</span></span><br><span class="line"><span class="comment"># server.4=xxx.xxx.xxx.xxx:2004:3004:observer  # 声明为Observer不参与选举</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 启动集群</span></span><br><span class="line">./zkServer.sh start ../conf/zoo1.cfg</span><br><span class="line">./zkServer.sh start ../conf/zoo2.cfg</span><br><span class="line">./zkServer.sh start ../conf/zoo3.cfg</span><br><span class="line">./zkServer.sh start ../conf/zoo4.cfg</span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 查看节点角色</span></span><br><span class="line">./zkServer.sh status ../conf/zoo1.cfg</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
-
-<h4 id="集群连接"><a href="#集群连接" class="headerlink" title="集群连接"></a>集群连接</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./bin/zkCli.sh -server xxx.xxx.xxx.xxx:2181,xxx.xxx.xxx.xxx:2182,xxx.xxx.xxx.xxx:2183</span><br><span class="line"><span class="comment"># 连接所有集群节点的client_port</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="ZAB协议"><a href="#ZAB协议" class="headerlink" title="ZAB协议"></a>ZAB协议</h3><p>ZAB（Zookeeper Atomic Broadcast）协议，解决了Zookeeper的崩溃恢复和主从数据同步的问题。</p>
-<h4 id="状态"><a href="#状态" class="headerlink" title="状态"></a>状态</h4><p>ZAB定义了四种节点状态</p>
-<ul>
-<li>Looking：选举状态</li>
-<li>Following：Follower节点所处的状态</li>
-<li>Leading：Leader节点所处的状态</li>
-<li>Observing：Observer节点所处的状态</li>
-</ul>
-<h4 id="启动时的选举"><a href="#启动时的选举" class="headerlink" title="启动时的选举"></a>启动时的选举</h4><p>Zookeeper集群的节点在上线时，会进入到Looking状态，当启动的节点大于1台时，就开始进入选举流程</p>
-<p>节点1生成自己的选票，选票格式为（myid | zXid），其中myid为配置的节点id，zXid为节点的事务（增删改）执行次数，刚上线时，zXid&#x3D;0，此时节点1生成的选票为（1 | 0）</p>
-<p>节点2生成自己的选票（2 | 0）</p>
-<p>节点1和节点2分别将自己的选票发送给对方，此时两个节点中都存在两张选票：（1 | 0）、（2 | 0）</p>
-<p>每个节点依次比较所有选票的zXid、myid，将较大的那张选票投入到投票箱中，这个步骤结束后，两个节点的投票箱中存在1张选票，选票为（2 | 0）</p>
-<p>由于配置文件中定义了参与选举的节点数为3，所以只有当投票箱中有节点选票过半（3&#x2F;2 &#x3D; 1.5），即获得两张选票时，才能选出Leader，于是开始第二轮投票</p>
-<p>第二轮开始，每个节点会将手上较大的选票发送给对方，而非第一轮时自己的选票，发送后两个节点中都存在两张选票：（2 | 0）、（2 | 0），其中一张是自己生成的，另一张是对方投递过来的</p>
-<p>经过比较两张选票，将较大的投入到投票箱中，这个步骤结束后，两个节点的投票箱中都存在2张选票，选票为（2 | 0）、（2 | 0）</p>
-<p>myid为2的节点获票过半，则被选为Leader</p>
-<p>此时启动节点3，如果集群已经产生Leader，则节点3会自动将自己作为Follower</p>
-<h4 id="崩溃时的选举"><a href="#崩溃时的选举" class="headerlink" title="崩溃时的选举"></a>崩溃时的选举</h4><p>Leader建立完成后，会周期性向Follwer发送心跳（Ping命令，没有内容的socket）</p>
-<p>当Leader崩溃后，Follower发现socket通道已关闭，于是Follwer会进入到Looking状态，重新回到Leader选举状态，此时集群不能对外提供服务</p>
-<h4 id="数据同步"><a href="#数据同步" class="headerlink" title="数据同步"></a>数据同步</h4><p>客户端向服务端写数据时，数据会首先传给Leader节点，由Leader节点处理数据的写入</p>
-<p>Leader节点先把数据写到自己的数据文件中，并给自己返回一个ACK</p>
-<p>Leader把数据发送给所有的Follower</p>
-<p>Follwer将数据写到本地数据文件中，并给Leader返回一个ACK</p>
-<p>Leader收到半数以上的ACK后向所有的Follower发送Commit</p>
-<p>Follwer收到Commit后把数据文件中的数据写到内存中</p>
-<h4 id="NIO和BIO"><a href="#NIO和BIO" class="headerlink" title="NIO和BIO"></a>NIO和BIO</h4><p>BIO，Block-IO是一种同步阻塞的通信模式，NOI，即Non-Block IO，是一种非阻塞同步的通信模式</p>
-<p>除此之外还有AOI，Asynchronous IO，异步非阻塞通信模式</p>
-<p>BIO适用于连接数目较小且固定的架构，这种方式对服务器资源要求较高，并发局限于应用中</p>
-<p>NIO适用于连接数目多且连接比较短的架构，并发局限于应用中</p>
-<p>AIO适用于连接数目多且连接比较长的架构，充分调用OS参与并发操作</p>
-<h5 id="NIO"><a href="#NIO" class="headerlink" title="NIO"></a>NIO</h5><p>用于被客户端连接的2181端口，使用的是NIO模式与客户端建立连接</p>
-<p>客户端开启Watch时，也是NIO，等待Zookeeper服务器的回调</p>
-<h5 id="BIO"><a href="#BIO" class="headerlink" title="BIO"></a>BIO</h5><p>集群在选举时，多个节点之间的投票通信使用的是BIO</p>
-<h2 id="CAP理论"><a href="#CAP理论" class="headerlink" title="CAP理论"></a>CAP理论</h2><p>一个分布式系统最多只能满足一致性（Consistency）、可用性（Availability）和分区容错性（Partition tolerance）这三项中的两项</p>
-<h3 id="一致性"><a href="#一致性" class="headerlink" title="一致性"></a>一致性</h3><p>Consistency，指的是all nodes see the same data at the same time，即更新操作成功并返回客户端完成后，所有节点在同一时间的数据完全一致</p>
-<h3 id="可用性"><a href="#可用性" class="headerlink" title="可用性"></a>可用性</h3><p>Availability，指的是Reads and writes always succeed，即服务一致可用，且是正常相应时间</p>
-<h3 id="分区容错性"><a href="#分区容错性" class="headerlink" title="分区容错性"></a>分区容错性</h3><p>Partition tolerance，指的是the system continues to operate despite arbitrary message loss or failure of part of the system，即分布式系统在遇到某节点或网络分区故障的时候，仍然能够对外提供满足一致性或可用性的服务</p>
-<h2 id="BASE理论"><a href="#BASE理论" class="headerlink" title="BASE理论"></a>BASE理论</h2><p>BASE理论是CAP理论的延伸，核心思想是即使无法做到强一致性（Strong Consistency），但应用可以采用适合的方法达到最终一致性（Eventual Consistency）</p>
-<h3 id="基本可用"><a href="#基本可用" class="headerlink" title="基本可用"></a>基本可用</h3><p>Basically Available，指的是分布式系统在出现故障的时候，允许损失部分可用性，保证核心可用</p>
-<h3 id="软状态"><a href="#软状态" class="headerlink" title="软状态"></a>软状态</h3><p>Soft State，指的是允许系统存在中间状态，而该中间状态不会影响系统整体可用性。分布式存储中一般一份数据至少会有三个副本，允许不同节点间副本同步的延迟就是软状态的体现</p>
-<h3 id="最终一致性"><a href="#最终一致性" class="headerlink" title="最终一致性"></a>最终一致性</h3><p>Eventual Consistency，指的是系统中的所有数据副本经过一定时间后，最终能够达到一致的状态</p>
-<h2 id="Curator"><a href="#Curator" class="headerlink" title="Curator"></a>Curator</h2><p>Curator是Netflix公司开源的一套Zookeeper客户端框架，封装了大部分Zookeeper的功能，比如Leader选举、分布式锁等，减少了技术人员再使用Zookeeper时的底层细节开发工作</p>
-<p>在Java开发时引入依赖即可调用对应的方法进行操作</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2023/08/24/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Zookeeper%E7%9F%A5%E8%AF%86/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
@@ -962,80 +915,6 @@
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2022/09/15/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Kafka%E7%9F%A5%E8%AF%86/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpeg">
-      <meta itemprop="name" content="西左">
-      <meta itemprop="description" content="自是者不彰。">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="西左Log">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2022/09/15/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Kafka%E7%9F%A5%E8%AF%86/" class="post-title-link" itemprop="url">鱼人宝宝都能看懂的Kafka知识</a>
-        </h2>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-calendar"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2022-09-15 18:06:03" itemprop="dateCreated datePublished" datetime="2022-09-15T18:06:03+08:00">2022-09-15</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="far fa-folder"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E7%9F%A5%E8%AF%86/" itemprop="url" rel="index"><span itemprop="name">知识</span></a>
-                </span>
-            </span>
-
-          
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>没啥好说的，Kafka算是每个公司都会用到的东西了吧，虽然知道是消息队列，但具体怎么队列的，和其他的比如RabbitMQ有啥区别，确实不太懂。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2022/09/15/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Kafka%E7%9F%A5%E8%AF%86/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
 
   
   <nav class="pagination">
@@ -1107,7 +986,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1120,7 +999,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
