@@ -451,7 +451,7 @@ sudo vim /etc/postgresql/13/main/postgresql.conf
 # 配置pg_hba.conf
 sudo vim /etc/postgresql/13/main/pg_hba.conf
 # 新增
-# host all			all	0.0.0.0/0	scram-sha-256
+# host all              all	0.0.0.0/0	scram-sha-256
 # host replication	all	0.0.0.0.0	trust
 
 # 重启数据库
