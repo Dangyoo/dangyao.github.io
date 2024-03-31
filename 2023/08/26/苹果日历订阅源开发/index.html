@@ -23,8 +23,8 @@
 
   <meta name="description" content="闲言碎语近期为了学英语，用美区账号下了些App，结果把手机地区、语言啥的改了之后，发现之前的日历节日都不见了，看到有Subscribe的选项，就想着自己做一个算了。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="鱼人宝宝都能看懂的苹果日历订阅源开发攻略">
-<meta property="og:url" content="https://dangyoo.github.io/2023/08/26/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/index.html">
+<meta property="og:title" content="苹果日历订阅源开发">
+<meta property="og:url" content="https://dangyoo.github.io/2023/08/26/%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91/index.html">
 <meta property="og:site_name" content="西左Log">
 <meta property="og:description" content="闲言碎语近期为了学英语，用美区账号下了些App，结果把手机地区、语言啥的改了之后，发现之前的日历节日都不见了，看到有Subscribe的选项，就想着自己做一个算了。">
 <meta property="og:locale" content="zh_CN">
@@ -32,13 +32,13 @@
 <meta property="og:image" content="https://dangyoo.github.io/images/ics_sample.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/ios_calender_sample.png">
 <meta property="article:published_time" content="2023-08-26T08:47:10.000Z">
-<meta property="article:modified_time" content="2023-08-26T13:05:51.810Z">
+<meta property="article:modified_time" content="2024-03-31T07:52:59.725Z">
 <meta property="article:author" content="西左">
 <meta property="article:tag" content="iOS">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://dangyoo.github.io/images/ics_format.png">
 
-<link rel="canonical" href="https://dangyoo.github.io/2023/08/26/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/">
+<link rel="canonical" href="https://dangyoo.github.io/2023/08/26/%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91/">
 
 
 <script id="page-configurations">
@@ -51,7 +51,7 @@
   };
 </script>
 
-  <title>鱼人宝宝都能看懂的苹果日历订阅源开发攻略 | 西左Log</title>
+  <title>苹果日历订阅源开发 | 西左Log</title>
   
 
 
@@ -175,7 +175,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2023/08/26/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91%E6%94%BB%E7%95%A5/">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2023/08/26/%E8%8B%B9%E6%9E%9C%E6%97%A5%E5%8E%86%E8%AE%A2%E9%98%85%E6%BA%90%E5%BC%80%E5%8F%91/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -188,7 +188,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          鱼人宝宝都能看懂的苹果日历订阅源开发攻略
+          苹果日历订阅源开发
         </h1>
 
         <div class="post-meta">
@@ -265,7 +265,7 @@
 <p>分别对应节假日日历和调休日历</p>
 <h3 id="第三步：上传文件"><a href="#第三步：上传文件" class="headerlink" title="第三步：上传文件"></a>第三步：上传文件</h3><p>用Git来保存文件，然后订阅</p>
 <p>坑了一个小时的一个点：头文件中VERSION必须是2.0</p>
-<p>订阅地址：</p>
+<p>订阅地址：<br>(服务器没再续了，就这吧)</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">假期：https://raw.githubusercontent.com/Dangyoo/my_calendar/master/calendar1.ics</span><br><span class="line">调休：https://raw.githubusercontent.com/Dangyoo/my_calendar/master/calendar2.ics</span><br></pre></td></tr></table></figure>
 
     </div>
@@ -285,12 +285,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2023/08/24/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Zookeeper%E7%9F%A5%E8%AF%86/" rel="prev" title="鱼人宝宝都能看懂的Zookeeper知识">
-      <i class="fa fa-chevron-left"></i> 鱼人宝宝都能看懂的Zookeeper知识
+    <a href="/2023/08/24/Zookeeper/" rel="prev" title="Zookeeper">
+      <i class="fa fa-chevron-left"></i> Zookeeper
     </a></div>
       <div class="post-nav-item">
-    <a href="/2023/08/27/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Debezium%E7%9F%A5%E8%AF%86/" rel="next" title="鱼人宝宝都能看懂的Debezium知识">
-      鱼人宝宝都能看懂的Debezium知识 <i class="fa fa-chevron-right"></i>
+    <a href="/2023/08/27/Debezium/" rel="next" title="Debezium">
+      Debezium <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -379,7 +379,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -411,7 +411,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>

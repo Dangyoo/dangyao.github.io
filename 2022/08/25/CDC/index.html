@@ -23,8 +23,8 @@
 
   <meta name="description" content="闲言碎语在上家公司（代称N司）时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。 在伪删除方案无法推动的情况下，数据侧考虑获取业务数据">
 <meta property="og:type" content="article">
-<meta property="og:title" content="鱼人宝宝都能看懂的CDC知识">
-<meta property="og:url" content="https://dangyoo.github.io/2022/08/25/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84CDC%E7%9F%A5%E8%AF%86/index.html">
+<meta property="og:title" content="CDC">
+<meta property="og:url" content="https://dangyoo.github.io/2022/08/25/CDC/index.html">
 <meta property="og:site_name" content="西左Log">
 <meta property="og:description" content="闲言碎语在上家公司（代称N司）时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。 在伪删除方案无法推动的情况下，数据侧考虑获取业务数据">
 <meta property="og:locale" content="zh_CN">
@@ -35,18 +35,14 @@
 <meta property="og:image" content="https://dangyoo.github.io/images/binlog.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/binlog1.png">
 <meta property="article:published_time" content="2022-08-25T09:06:03.000Z">
-<meta property="article:modified_time" content="2023-08-14T13:57:46.298Z">
+<meta property="article:modified_time" content="2024-03-31T08:00:48.880Z">
 <meta property="article:author" content="西左">
 <meta property="article:tag" content="Data">
 <meta property="article:tag" content="CDC">
-<meta property="article:tag" content="DataX">
-<meta property="article:tag" content="Debezium">
-<meta property="article:tag" content="Cannal">
-<meta property="article:tag" content="Binlog">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://dangyoo.github.io/images/datax1.png">
 
-<link rel="canonical" href="https://dangyoo.github.io/2022/08/25/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84CDC%E7%9F%A5%E8%AF%86/">
+<link rel="canonical" href="https://dangyoo.github.io/2022/08/25/CDC/">
 
 
 <script id="page-configurations">
@@ -59,7 +55,7 @@
   };
 </script>
 
-  <title>鱼人宝宝都能看懂的CDC知识 | 西左Log</title>
+  <title>CDC | 西左Log</title>
   
 
 
@@ -183,7 +179,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2022/08/25/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84CDC%E7%9F%A5%E8%AF%86/">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2022/08/25/CDC/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.jpeg">
@@ -196,7 +192,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          鱼人宝宝都能看懂的CDC知识
+          CDC
         </h1>
 
         <div class="post-meta">
@@ -346,10 +342,6 @@
           <div class="post-tags">
               <a href="/tags/Data/" rel="tag"># Data</a>
               <a href="/tags/CDC/" rel="tag"># CDC</a>
-              <a href="/tags/DataX/" rel="tag"># DataX</a>
-              <a href="/tags/Debezium/" rel="tag"># Debezium</a>
-              <a href="/tags/Cannal/" rel="tag"># Cannal</a>
-              <a href="/tags/Binlog/" rel="tag"># Binlog</a>
           </div>
 
         
@@ -359,8 +351,8 @@
     <div class="post-nav">
       <div class="post-nav-item"></div>
       <div class="post-nav-item">
-    <a href="/2022/09/05/%E9%B1%BC%E4%BA%BA%E5%AE%9D%E5%AE%9D%E9%83%BD%E8%83%BD%E7%9C%8B%E6%87%82%E7%9A%84Flume%E7%9F%A5%E8%AF%86/" rel="next" title="鱼人宝宝都能看懂的Flume知识">
-      鱼人宝宝都能看懂的Flume知识 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/09/05/Flume/" rel="next" title="Flume">
+      Flume <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -449,7 +441,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-count">14</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -481,7 +473,7 @@
 <div class="copyright">
   
   &copy; 
-  <span itemprop="copyrightYear">2023</span>
+  <span itemprop="copyrightYear">2024</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
