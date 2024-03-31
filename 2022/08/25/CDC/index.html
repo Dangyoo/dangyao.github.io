@@ -21,12 +21,12 @@
     var CONFIG = {"hostname":"dangyoo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="闲言碎语在上家公司（代称N司）时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。 在伪删除方案无法推动的情况下，数据侧考虑获取业务数据">
+  <meta name="description" content="闲言碎语在N司时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。 在伪删除方案无法推动的情况下，数据侧考虑获取业务数据库的修改日志，来">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CDC">
 <meta property="og:url" content="https://dangyoo.github.io/2022/08/25/CDC/index.html">
 <meta property="og:site_name" content="西左Log">
-<meta property="og:description" content="闲言碎语在上家公司（代称N司）时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。 在伪删除方案无法推动的情况下，数据侧考虑获取业务数据">
+<meta property="og:description" content="闲言碎语在N司时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。 在伪删除方案无法推动的情况下，数据侧考虑获取业务数据库的修改日志，来">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://dangyoo.github.io/images/datax1.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/datax2.png">
@@ -35,7 +35,7 @@
 <meta property="og:image" content="https://dangyoo.github.io/images/binlog.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/binlog1.png">
 <meta property="article:published_time" content="2022-08-25T09:06:03.000Z">
-<meta property="article:modified_time" content="2024-03-31T08:40:03.191Z">
+<meta property="article:modified_time" content="2024-03-31T08:53:00.215Z">
 <meta property="article:author" content="西左">
 <meta property="article:tag" content="知识">
 <meta name="twitter:card" content="summary">
@@ -232,7 +232,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>在上家公司（代称N司）时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。</p>
+        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>在N司时，遇到一个情况：由于传统行业对数据资产的重视程度不够（也可能是安全意识较强），所有开发在数据库进行删除操作时，都是用的真删除，而非互联网公司常见的伪删除。这就造成，数据仓库每天同步全量数据的话，可能会发生主键丢失的情况，同时由于数据库设计以及不同系统间数据不通等各种问题，下游使用数据时就会出现准确性被质疑的情况。</p>
 <p>在伪删除方案无法推动的情况下，数据侧考虑获取业务数据库的修改日志，来补齐这部分被删除的信息，所以就去研究了一下常见的方案。</p>
 <span id="more"></span>
 

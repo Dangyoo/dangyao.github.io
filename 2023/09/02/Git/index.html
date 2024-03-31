@@ -30,12 +30,12 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://dangyoo.github.io/images/git1.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/git2.png">
-<meta property="og:image" content="https://dangyoo.github.io/images/git3.png">
-<meta property="og:image" content="https://dangyoo.github.io/images/git4.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/git5.png">
 <meta property="og:image" content="https://dangyoo.github.io/images/git6.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/git3.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/git4.png">
 <meta property="article:published_time" content="2023-09-02T08:06:03.000Z">
-<meta property="article:modified_time" content="2024-03-31T08:32:16.329Z">
+<meta property="article:modified_time" content="2024-03-31T09:01:21.939Z">
 <meta property="article:author" content="西左">
 <meta property="article:tag" content="知识">
 <meta name="twitter:card" content="summary">
@@ -265,6 +265,30 @@
 <p>feature分支 - 从develop创建的分支，一般是同期并行开发但不同期上线时创建的分支，<br>分支上的研发任务完成后合并到develop分支</p>
 <p>hotfix分支 - 从master创建的分支，一般作为线上BUG修复使用，<br>修复完成后需要合并到master、develop分支</p>
 <p>可能还有其他如test分支（用于代码测试）、pre分支（用于预发布测试）等</p>
+<h2 id="IDEA操作"><a href="#IDEA操作" class="headerlink" title="IDEA操作"></a>IDEA操作</h2><ol>
+<li>配置Git，File - Settings - Version Control - Git - Path to Git executable：Git应用所在的路径</li>
+<li>远程仓库创建</li>
+<li>本地仓库初始化，VCS（Version Control） - Import into Version Control - Create Git Repository - 选择本地文件夹</li>
+<li>提交，Git - √ - 勾选需要提交的文件 - Commit Message填写 - Commit</li>
+<li>查看Log：左下角Version Control - Log</li>
+<li>添加远程仓库：VCS - Git - Push - Define_remote改为远程仓库链接</li>
+<li>克隆远程仓库：VCS - Checkout from Version Control - Git - 远程仓库链接 - Clone</li>
+<li>创建分支：左下角Version Control - Log - 版本中右键new一个分支</li>
+</ol>
+<img src="/images/git5.png" width="50%" height="50%">
+
+<img src="/images/git6.png" width="50%" height="50%">
+
+<h2 id="实战开发"><a href="#实战开发" class="headerlink" title="实战开发"></a>实战开发</h2><p>Z司使用的是单Master分支开发流程，工程师在开发需求时，常规操作如下：</p>
+<ol>
+<li>拉取最新的Master分支</li>
+<li>基于Master创建一个新的开发分支Dev</li>
+<li>在Dev分支进行改动</li>
+<li>将Dev分支从本地Push到远端（Github）</li>
+<li>在Github上创建对应的PR（Pull Request）</li>
+<li>CodeViewer对PR进行Review后选择Approve</li>
+<li>将Dev代码合并到Master分支，并进行后续部署（CI&#x2F;CD）</li>
+</ol>
 <h2 id="托管服务"><a href="#托管服务" class="headerlink" title="托管服务"></a>托管服务</h2><p>又称为远程仓库，常见有Github、码云Gitee、GitLab，其中Github和Gitee为国外国内的SaaS服务，而GitLab是一个开源项目，可以用于Git私服的搭建</p>
 <p>本地仓库连接远程仓库时，可以使用用户名密码方式，也可以使用SSH密钥认证方式（常用）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa  <span class="comment"># 生成客户端SSH密钥</span></span><br><span class="line">~/.ssh/id_rsa.pub  <span class="comment"># 公钥</span></span><br><span class="line"><span class="comment"># 将公钥上传到远程仓库xx@xx.com</span></span><br><span class="line">ssh -T xx@xx.com  <span class="comment"># 验证是否配置成功</span></span><br><span class="line"></span><br><span class="line">git remote add origin xx@xx.com:xx/xx.git  <span class="comment"># 添加一个远程仓库</span></span><br><span class="line">git remote  <span class="comment"># 查看已经配置的远程仓库</span></span><br><span class="line">git push origin master:master  <span class="comment"># 将本地仓库master分支推送到远程仓库origin的master分支</span></span><br><span class="line"><span class="comment"># 如果远程分支和本地分支名称相同，可以只写一个</span></span><br><span class="line">git push --set-upstream origin master:master  <span class="comment"># 推送并关联分支</span></span><br><span class="line">git push  <span class="comment"># 已经建立关联的分支可以省略</span></span><br><span class="line">git push -f  <span class="comment"># 强制覆盖</span></span><br><span class="line"></span><br><span class="line">git branch -vv  <span class="comment"># 查看本地分支详情（可显示与远程仓库分支的绑定关系）</span></span><br><span class="line"></span><br><span class="line">git <span class="built_in">clone</span> xx@xx.com:xx/xx.git  <span class="comment"># 克隆远程仓库到本地</span></span><br><span class="line">git fetch &#123;remotename&#125;&#123;branchname&#125;  <span class="comment"># 抓取远程分支到本地但并不进行合并</span></span><br><span class="line">git pull &#123;remotename&#125;&#123;branchname&#125;  <span class="comment"># 抓取远程分支到本地并和当前分支合并</span></span><br></pre></td></tr></table></figure>
@@ -319,40 +343,6 @@
 </ol>
 <h4 id="会话请求"><a href="#会话请求" class="headerlink" title="会话请求"></a>会话请求</h4><p>认证通过后，SSH客户端向服务器发送会话请求，请求服务器提供耨中类型的服务</p>
 <h4 id="会话交互"><a href="#会话交互" class="headerlink" title="会话交互"></a>会话交互</h4><p>会话建立后，SSH服务器和客户端在该会话上进行数据信息的交互，双发发送的数据均使用会话密钥进行加解密</p>
-<h2 id="IDEA操作"><a href="#IDEA操作" class="headerlink" title="IDEA操作"></a>IDEA操作</h2><ol>
-<li>配置Git，File - Settings - Version Control - Git - Path to Git executable：Git应用所在的路径</li>
-<li>远程仓库创建</li>
-<li>本地仓库初始化，VCS（Version Control） - Import into Version Control - Create Git Repository - 选择本地文件夹</li>
-<li>提交，Git - √ - 勾选需要提交的文件 - Commit Message填写 - Commit</li>
-<li>查看Log：左下角Version Control - Log</li>
-<li>添加远程仓库：VCS - Git - Push - Define_remote改为远程仓库链接</li>
-<li>克隆远程仓库：VCS - Checkout from Version Control - Git - 远程仓库链接 - Clone</li>
-<li>创建分支：左下角Version Control - Log - 版本中右键new一个分支</li>
-</ol>
-<img src="/images/git5.png" width="50%" height="50%">
-
-<img src="/images/git6.png" width="50%" height="50%">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     </div>
 
@@ -433,7 +423,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git"><span class="nav-number">2.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.</span> <span class="nav-text">基本环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-number">4.2.</span> <span class="nav-text">本地仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81"><span class="nav-number">4.3.</span> <span class="nav-text">文件的基本状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4"><span class="nav-number">4.4.</span> <span class="nav-text">基础指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E6%8C%87%E4%BB%A4"><span class="nav-number">4.5.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">4.6.</span> <span class="nav-text">常见开发规范</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%98%E7%AE%A1%E6%9C%8D%E5%8A%A1"><span class="nav-number">5.</span> <span class="nav-text">托管服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH"><span class="nav-number">5.1.</span> <span class="nav-text">SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Telnet"><span class="nav-number">5.1.1.</span> <span class="nav-text">Telnet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FTP"><span class="nav-number">5.1.2.</span> <span class="nav-text">FTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP"><span class="nav-number">5.1.3.</span> <span class="nav-text">TCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP"><span class="nav-number">5.1.4.</span> <span class="nav-text">UDP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">5.2.</span> <span class="nav-text">SSH工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B"><span class="nav-number">5.2.1.</span> <span class="nav-text">连接建立</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%8D%8F%E5%95%86"><span class="nav-number">5.2.2.</span> <span class="nav-text">版本协商</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8D%8F%E5%95%86"><span class="nav-number">5.2.3.</span> <span class="nav-text">算法协商</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2"><span class="nav-number">5.2.4.</span> <span class="nav-text">密钥交换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81"><span class="nav-number">5.2.5.</span> <span class="nav-text">用户认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E8%AF%B7%E6%B1%82"><span class="nav-number">5.2.6.</span> <span class="nav-text">会话请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E4%BA%A4%E4%BA%92"><span class="nav-number">5.2.7.</span> <span class="nav-text">会话交互</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDEA%E6%93%8D%E4%BD%9C"><span class="nav-number">6.</span> <span class="nav-text">IDEA操作</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Git"><span class="nav-number">2.</span> <span class="nav-text">Git</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B"><span class="nav-number">3.</span> <span class="nav-text">工作流程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="nav-number">4.</span> <span class="nav-text">常用命令</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">4.1.</span> <span class="nav-text">基本环境配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E4%BB%93%E5%BA%93"><span class="nav-number">4.2.</span> <span class="nav-text">本地仓库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%8A%B6%E6%80%81"><span class="nav-number">4.3.</span> <span class="nav-text">文件的基本状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E6%8C%87%E4%BB%A4"><span class="nav-number">4.4.</span> <span class="nav-text">基础指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E6%8C%87%E4%BB%A4"><span class="nav-number">4.5.</span> <span class="nav-text">分支指令</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E5%BC%80%E5%8F%91%E8%A7%84%E8%8C%83"><span class="nav-number">4.6.</span> <span class="nav-text">常见开发规范</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IDEA%E6%93%8D%E4%BD%9C"><span class="nav-number">5.</span> <span class="nav-text">IDEA操作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E6%88%98%E5%BC%80%E5%8F%91"><span class="nav-number">6.</span> <span class="nav-text">实战开发</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%98%E7%AE%A1%E6%9C%8D%E5%8A%A1"><span class="nav-number">7.</span> <span class="nav-text">托管服务</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH"><span class="nav-number">7.1.</span> <span class="nav-text">SSH</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Telnet"><span class="nav-number">7.1.1.</span> <span class="nav-text">Telnet</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#FTP"><span class="nav-number">7.1.2.</span> <span class="nav-text">FTP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TCP"><span class="nav-number">7.1.3.</span> <span class="nav-text">TCP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#UDP"><span class="nav-number">7.1.4.</span> <span class="nav-text">UDP</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#SSH%E5%B7%A5%E4%BD%9C%E6%96%B9%E5%BC%8F"><span class="nav-number">7.2.</span> <span class="nav-text">SSH工作方式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9E%E6%8E%A5%E5%BB%BA%E7%AB%8B"><span class="nav-number">7.2.1.</span> <span class="nav-text">连接建立</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%89%88%E6%9C%AC%E5%8D%8F%E5%95%86"><span class="nav-number">7.2.2.</span> <span class="nav-text">版本协商</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E5%8D%8F%E5%95%86"><span class="nav-number">7.2.3.</span> <span class="nav-text">算法协商</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%86%E9%92%A5%E4%BA%A4%E6%8D%A2"><span class="nav-number">7.2.4.</span> <span class="nav-text">密钥交换</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E8%AE%A4%E8%AF%81"><span class="nav-number">7.2.5.</span> <span class="nav-text">用户认证</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E8%AF%B7%E6%B1%82"><span class="nav-number">7.2.6.</span> <span class="nav-text">会话请求</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BC%9A%E8%AF%9D%E4%BA%A4%E4%BA%92"><span class="nav-number">7.2.7.</span> <span class="nav-text">会话交互</span></a></li></ol></li></ol></li></ol></div>
       </div>
       <!--/noindex-->
 
