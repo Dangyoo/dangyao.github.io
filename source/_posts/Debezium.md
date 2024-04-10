@@ -1,8 +1,8 @@
 ---
-title: 鱼人宝宝都能看懂的Debezium知识
+title: Debezium
 date: 2023-08-27 17:49:03
-categories: 知识
-tags:  [Data, CDC, Debezium]
+categories: [Data, Integration, Debezium]
+tags:  [知识]
 ---
 ## 闲言碎语
 
@@ -119,21 +119,22 @@ curl -H "Accept:application/json" localhost:8083/connectors/
 ``` bash
 # 配置信息
 {
-	"name": "mysql-connector",  # 连接器名称
-	"config": {
-     "connector.class": "io.debezium.connector.mysql.MySqlConnector",  # 官方内置类
-     "database.hostname": "localhost",
-     "database.port": "3306",
-     "database.user": "x",
-     "database.password": "x",
-     "database.server.id": "1",  # my.cnf中配置的server-id
-     "database.server.name": "cr7-demo",
-     "include.schema.changes": "true",
-     "database.whitelist": "testdb",
-     "table.whitlelist": "stu"
-     "database.history.kafka.boostrap.servers": "localhost:9092",
-     "database.history.kafka.topic": "cr7-schema-changes-inventory"  # 存储DDL表结构变化数据
-  }
+    "name": "mysql-connector",  # 连接器名称
+    "config": 
+    {
+         "connector.class": "io.debezium.connector.mysql.MySqlConnector",  # 官方内置类
+         "database.hostname": "localhost",
+         "database.port": "3306",
+         "database.user": "x",
+         "database.password": "x",
+         "database.server.id": "1",  # my.cnf中配置的server-id
+         "database.server.name": "cr7-demo",
+         "include.schema.changes": "true",
+         "database.whitelist": "testdb",
+         "table.whitlelist": "stu"
+         "database.history.kafka.boostrap.servers": "localhost:9092",
+         "database.history.kafka.topic": "cr7-schema-changes-inventory"  # 存储DDL表结构变化数据
+    }
 }
 # 把以上配置信息写到了一个json文件中：my-connector.json
 
@@ -481,17 +482,18 @@ cd debezium-connector-postgres/
 ``` bash
 # 配置信息
 {
-	"name": "postgresql-connector",  # 连接器名称
-	"config": {
-     "connector.class": "io.debezium.connector.postgresql.PostgresConnector",  # 官方内置类
-     "database.hostname": "localhost",
-     "database.port": "5432",
-     "database.user": "x",
-     "database.password": "x",
-     "database.dbname": "testdb",
-     "database.server.name": "pgsqldemo",
-     "plugin.name": "pgoutput"
-  }
+    "name": "postgresql-connector",  # 连接器名称
+    "config": 
+    {
+        "connector.class": "io.debezium.connector.postgresql.PostgresConnector",  # 官方内置类
+        "database.hostname": "localhost",
+        "database.port": "5432",
+        "database.user": "x",
+        "database.password": "x",
+        "database.dbname": "testdb",
+        "database.server.name": "pgsqldemo",
+        "plugin.name": "pgoutput"
+    }
 }
 # 写入postgresql-connector.json文件中
 # 重启Kafka连接器，这里不重启的话会报500 Failed to find any class that implements Connector错误

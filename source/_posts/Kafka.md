@@ -1,8 +1,8 @@
 ---
-title: 鱼人宝宝都能看懂的Kafka知识
+title: Kafka
 date: 2022-09-15 18:06:03
-categories: 知识
-tags: [Data, Kafka]
+categories: [Data, Integration, Kafka]
+tags: [知识]
 ---
 ## 闲言碎语
 
@@ -307,8 +307,8 @@ Partition的副本，为了保证集群中的某个节点发生故障时，该�
 --topic test2
 # ./kafka-topics.sh --describe --topic test2 --bootstrap-server localhost:9092
 # Topic：test2		partitionCount: 2		ReplicationFactor: 3		configs:
-#	Topic: test2		Partition: 0		Leader: 2		Replicas: 2,0,1		Isr: 2,0,1
-# Topic: test2    Partition: 1		Leader: 0		Replicas: 0,1,2   Isr: 0,1,2
+# Topic: test2		Partition: 0            Leader: 2		Replicas: 2,0,1		Isr: 2,0,1
+# Topic: test2          Partition: 1		Leader: 0		Replicas: 0,1,2         Isr: 0,1,2
 ```
 
 #### Leader

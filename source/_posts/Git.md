@@ -1,8 +1,8 @@
 ---
-title: 鱼人宝宝都能看懂的Git知识
+title: Git
 date: 2023-09-02 16:06:03
-categories: 知识
-tags: [Git]
+categories: [Dev Tools, Git]
+tags: [知识]
 ---
 ## 闲言碎语
 
@@ -133,6 +133,33 @@ hotfix分支 - 从master创建的分支，一般作为线上BUG修复使用，
 
 可能还有其他如test分支（用于代码测试）、pre分支（用于预发布测试）等
 
+
+## IDEA操作
+
+1. 配置Git，File - Settings - Version Control - Git - Path to Git executable：Git应用所在的路径
+2. 远程仓库创建
+3. 本地仓库初始化，VCS（Version Control） - Import into Version Control - Create Git Repository - 选择本地文件夹
+4. 提交，Git - √ - 勾选需要提交的文件 - Commit Message填写 - Commit
+5. 查看Log：左下角Version Control - Log
+6. 添加远程仓库：VCS - Git - Push - Define_remote改为远程仓库链接
+7. 克隆远程仓库：VCS - Checkout from Version Control - Git - 远程仓库链接 - Clone
+8. 创建分支：左下角Version Control - Log - 版本中右键new一个分支
+
+<img src="/images/git5.png" width="50%" height="50%">
+
+<img src="/images/git6.png" width="50%" height="50%">
+
+## 实战开发
+
+Z司使用的是单Master分支开发流程，工程师在开发需求时，常规操作如下：
+1. 拉取最新的Master分支
+2. 基于Master创建一个新的开发分支Dev
+3. 在Dev分支进行改动
+4. 将Dev分支从本地Push到远端（Github）
+5. 在Github上创建对应的PR（Pull Request）
+6. CodeViewer对PR进行Review后选择Approve
+7. 将Dev代码合并到Master分支，并进行后续部署（CI/CD）
+
 ## 托管服务
 
 又称为远程仓库，常见有Github、码云Gitee、GitLab，其中Github和Gitee为国外国内的SaaS服务，而GitLab是一个开源项目，可以用于Git私服的搭建
@@ -241,39 +268,3 @@ SSH客户端向SSH服务器发起认证庆祝，SSH服务器对SSH客户端进�
 #### 会话交互
 
 会话建立后，SSH服务器和客户端在该会话上进行数据信息的交互，双发发送的数据均使用会话密钥进行加解密
-
-## IDEA操作
-
-1. 配置Git，File - Settings - Version Control - Git - Path to Git executable：Git应用所在的路径
-2. 远程仓库创建
-3. 本地仓库初始化，VCS（Version Control） - Import into Version Control - Create Git Repository - 选择本地文件夹
-4. 提交，Git - √ - 勾选需要提交的文件 - Commit Message填写 - Commit
-5. 查看Log：左下角Version Control - Log
-6. 添加远程仓库：VCS - Git - Push - Define_remote改为远程仓库链接
-7. 克隆远程仓库：VCS - Checkout from Version Control - Git - 远程仓库链接 - Clone
-8. 创建分支：左下角Version Control - Log - 版本中右键new一个分支
-
-<img src="/images/git5.png" width="50%" height="50%">
-
-<img src="/images/git6.png" width="50%" height="50%">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

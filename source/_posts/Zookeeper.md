@@ -1,8 +1,8 @@
 ---
-title: 鱼人宝宝都能看懂的Zookeeper知识
+title: Zookeeper
 date: 2023-08-24 18:06:03
-categories: 知识
-tags: [Data, Zookeeper]
+categories: [Data, Integration, Zookeeper]
+tags: [知识]
 ---
 ## 闲言碎语
 

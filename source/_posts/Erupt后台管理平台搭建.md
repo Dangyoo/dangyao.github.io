@@ -1,8 +1,8 @@
 ---
-title: 鱼人宝宝都能看懂的Erupt实践攻略
+title: Erupt后台管理平台搭建
 date: 2023-03-30 16:17:16
-categories: 实践
-tags: Erupt
+categories: [小项目, 低代码平台]
+tags: [实践]
 ---
 ## 闲言碎语
 
