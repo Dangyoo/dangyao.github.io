@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"dangyoo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="闲言碎语使用MAC读U盘或者移动硬盘，基本都会遇到只能读不能写或者读都不能读的情况，大概了解是因为磁盘格式的问题导致，也知道下载Mounty软件来解决问题。但是里边具体的原因以及解决的办法是啥都不太清楚。 遂查资料">
+<meta property="og:type" content="article">
+<meta property="og:title" content="磁盘格式是什么">
+<meta property="og:url" content="https://dangyoo.github.io/2024/04/12/%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E6%98%AF%E4%BB%80%E4%B9%88/index.html">
+<meta property="og:site_name" content="西左Log">
+<meta property="og:description" content="闲言碎语使用MAC读U盘或者移动硬盘，基本都会遇到只能读不能写或者读都不能读的情况，大概了解是因为磁盘格式的问题导致，也知道下载Mounty软件来解决问题。但是里边具体的原因以及解决的办法是啥都不太清楚。 遂查资料">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-12T12:20:41.000Z">
+<meta property="article:modified_time" content="2024-04-13T12:57:36.138Z">
+<meta property="article:author" content="西左">
+<meta property="article:tag" content="常识">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="https://dangyoo.github.io/2024/04/12/%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E6%98%AF%E4%BB%80%E4%B9%88/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>磁盘格式是什么 | 西左Log</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?15db7c636ac845c8c8fe0ca45dac6e54";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">西左Log</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2024/04/12/%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E6%98%AF%E4%BB%80%E4%B9%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="西左">
+      <meta itemprop="description" content="自是者不彰。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="西左Log">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          磁盘格式是什么
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-12 20:20:41" itemprop="dateCreated datePublished" datetime="2024-04-12T20:20:41+08:00">2024-04-12</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%97%A5%E5%B8%B8%E8%80%83%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">日常考据</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>使用MAC读U盘或者移动硬盘，基本都会遇到只能读不能写或者读都不能读的情况，大概了解是因为磁盘格式的问题导致，也知道下载Mounty软件来解决问题。但是里边具体的原因以及解决的办法是啥都不太清楚。</p>
+<p>遂查资料</p>
+<span id="more"></span>
+
+<h2 id="磁盘格式是什么"><a href="#磁盘格式是什么" class="headerlink" title="磁盘格式是什么"></a>磁盘格式是什么</h2><p>我们说的磁盘格式是指磁盘文件系统，磁盘文件系统是一种设计用来利用数据存储设备来保存计算机文件的文件系统，最常用的数据存储设备是磁盘驱动器，可以直接或者间接地连接到计算机上。例如：文件分配表（FAT12、FAT16、FAT32、exFAT）、New Technology File System、分层文件系统HFS、HFS Plus、延伸文件系统（ext1、ext2、ext3、ext4）、ODS、btrfs、XFS、UFS、ZFS。</p>
+<p>也就是说，磁盘格式 &#x3D; 磁盘文件系统 &#x3D; 文件系统中的一种。</p>
+<h3 id="文件系统是什么"><a href="#文件系统是什么" class="headerlink" title="文件系统是什么"></a>文件系统是什么</h3><p>文件系统是一种存储和组织计算机数据的方法，它使得对其访问和查找变得容易。</p>
+<p>文件系统使用文件和树形目录的抽象逻辑概念代替了硬盘和光盘等物理设备使用数据块的概念，用户使用文件系统来保存数据不必关心数据实际保存在硬盘（或者光盘）的地址为多少的数据块上，只需要记住这个文件的所属目录和文件名。在写入新数据之前，用户不必关心硬盘上的那个块地址没有被使用，硬盘上的存储空间管理（分配和释放）功能由文件系统自动完成，用户只需要记住数据被写入到了哪个文件中。</p>
+<p>文件系统通常使用硬盘和光盘这样的存储设备，并维护文件在设备中的物理位置，实现了数据的存储、分级组织、访问和获取等操作。</p>
+<p>文件系统将设备中的空间划分为特定大小的块（或者称为簇），一般每块512字节。数据存储在这些块中，大小被修正为占用整数个块。由文件系统软件来负责将这些块组织为文件和目录，并记录哪些块被分配给了哪个文件，以及哪些块没有被使用。</p>
+<h3 id="其他文件系统"><a href="#其他文件系统" class="headerlink" title="其他文件系统"></a>其他文件系统</h3><p>除了磁盘文件系统外，还有用于CD、DVD、蓝光盘的光盘文件系统（ISO 9660和UDF），用于存储卡、U盘等的闪存文件系统（JFFS2和YAFFS，现在一般使用exFAT），用于数据库的数据库文件系统，用于远程挂载的网络文件系统。</p>
+<h2 id="常见文件系统类型"><a href="#常见文件系统类型" class="headerlink" title="常见文件系统类型"></a>常见文件系统类型</h2><h3 id="FAT"><a href="#FAT" class="headerlink" title="FAT"></a>FAT</h3><p>文件分配表（File Allocation Table），1977年由比尔·盖茨和马斯·麦当劳为了管理磁盘而发明，并在1980年被添·彼得逊的86-DOS操作系统采用。</p>
+<p>FAT文件系统考虑当时电脑性能有限，所以未被复杂化，因此几乎所有PC的操作系统都支持。这特性使它成为理想的软盘和存储卡文件系统，也适合用作不同操作系统中的资料交流。</p>
+<p>但FAT有一个严重的缺点：当文件删除后写入新资料，FAT不会将文件整理成完整片段再写入，长期使用后会使文件资料变得逐渐分散，而减慢了读写速度。碎片整理是一种解决方法，但必须经常磁盘碎片整理来保持FAT文件系统的效率。</p>
+<ul>
+<li>FAT12: 最初的FAT版本由微软在1980年代初为DOS操作系统开发。FAT12被设计用于管理非常小的磁盘和简单的存储结构，最多支持容量为16MB的磁盘。</li>
+<li>FAT16: 随着技术的发展和存储需求的增加，FAT16在1984年随DOS 3.0推出，最大支持2GB的磁盘。</li>
+<li>FAT32: 为了克服FAT16在磁盘容量上的限制，FAT32于1996年随Windows 95 OSR2推出，单个文件的大小限制为4GB，而卷的最大大小通常被操作系统限制在32GB。</li>
+<li>exFAT（Extended File Allocation Table） - 微软2006年发布，旨在超越FAT32的文件大小和卷大小限制，特别是针对高容量的存储设备，如USB闪存驱动器和SD卡。支持单个文件大小超过4GB（理论上可以达到16EB - Exabytes），卷大小也可以非常大，理论上支持到16EB。由于它是较新的系统，老旧设备可能不支持，老旧设备还需要使用FAT32。</li>
+</ul>
+<h3 id="NTFS"><a href="#NTFS" class="headerlink" title="NTFS"></a>NTFS</h3><p>新型文件系统（New Technology File System），NTFS是微软在1993年随Windows NT 3.1推出NTFS，以满足更高的数据安全性、更大的文件和卷支持需求。NTFS支持文件压缩、加密和权限控制等高级特性，是Windows系统中最常用的文件系统。</p>
+<h3 id="HFS"><a href="#HFS" class="headerlink" title="HFS"></a>HFS</h3><p>分层式文件系统（Hierarchical File System），苹果公司为Macintosh计算机在1985年设计的文件系统，被称为Mac OS Standard。它为文件和文件夹提供了分层的组织结构。</p>
+<p>HFS+（也称为Mac OS Extended）: 1998年推出，解决了原始HFS文件系统的许多限制，如文件名长度和最大卷大小，支持更大的文件和Unicode编码。</p>
+<h3 id="EXT"><a href="#EXT" class="headerlink" title="EXT"></a>EXT</h3><p>延伸文件系统（Extended File System），1992年，为Linux内核开发的第一个文件系统，被设计来克服当时文件系统的限制。</p>
+<ul>
+<li>EXT2: 1993年推出，成为Linux的首选文件系统，提供了良好的性能和稳定性。</li>
+<li>EXT3: 2001年，为EXT2添加了日志功能，提高了数据恢复的能力。</li>
+<li>EXT4: 2008年，进一步增强了性能，支持更大的单个文件和总存储容量，改进了磁盘空间的分配。</li>
+</ul>
+<h3 id="APFS"><a href="#APFS" class="headerlink" title="APFS"></a>APFS</h3><p>苹果文件系统（Apple File System），苹果公司为提高效率和安全性，于2017年随iOS 10.3和macOS High Sierra推出，专为固态驱动器和先进的数据安全特性设计，支持快照、克隆和加密等功能。</p>
+<h2 id="支持情况"><a href="#支持情况" class="headerlink" title="支持情况"></a>支持情况</h2><table>
+<thead>
+<tr>
+<th>文件系统</th>
+<th>Windows</th>
+<th>macOS</th>
+<th>Linux</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FAT32</td>
+<td>读&#x2F;写</td>
+<td>读&#x2F;写</td>
+<td>读&#x2F;写</td>
+</tr>
+<tr>
+<td>exFAT</td>
+<td>读&#x2F;写</td>
+<td>读&#x2F;写</td>
+<td>读&#x2F;写 (需安装额外软件支持)</td>
+</tr>
+<tr>
+<td>NTFS</td>
+<td>读&#x2F;写</td>
+<td>读 (默认) &#x2F; 写 (需第三方软件)</td>
+<td>读&#x2F;写 (需安装额外软件支持)</td>
+</tr>
+<tr>
+<td>EXT4</td>
+<td>不支持 (需第三方软件)</td>
+<td>不支持 (需第三方软件)</td>
+<td>读&#x2F;写</td>
+</tr>
+<tr>
+<td>APFS</td>
+<td>不支持 (需第三方软件)</td>
+<td>读&#x2F;写</td>
+<td>读 (有限支持，需安装额外软件)</td>
+</tr>
+</tbody></table>
+<h3 id="Windows"><a href="#Windows" class="headerlink" title="Windows:"></a>Windows:</h3><ul>
+<li>原生支持FAT32、exFAT和NTFS；</li>
+<li>不支持EXT4，需要通过第三方软件，如Ext2Fsd；</li>
+<li>不支持APFS，需要通过第三方软件，如MacDrive来访问。</li>
+</ul>
+<h3 id="macOS"><a href="#macOS" class="headerlink" title="macOS:"></a>macOS:</h3><ul>
+<li>原生支持FAT32、exFAT和APFS。 </li>
+<li>对NTFS的写入支持需要第三方软件，如NTFS for Mac、Mounty。</li>
+<li>不支持EXT4，需要第三方软件来访问，如macFUSE。</li>
+</ul>
+<h3 id="Linux"><a href="#Linux" class="headerlink" title="Linux:"></a>Linux:</h3><ul>
+<li>原生支持FAT32、EXT4。</li>
+<li>对NTFS的完整支持（包括读写）通常需要安装额外的软件包如ntfs-3g。</li>
+<li>对exFAT的支持也需要安装额外软件，如FUSE exFAT。</li>
+<li>APFS的支持是有限的，主要是只读，并且需要额外的软件支持，如apfs-fuse。</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B8%B8%E8%AF%86/" rel="tag"># 常识</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/02/Git/" rel="prev" title="Git">
+      <i class="fa fa-chevron-left"></i> Git
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.</span> <span class="nav-text">磁盘格式是什么</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.1.</span> <span class="nav-text">文件系统是什么</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B6%E4%BB%96%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.</span> <span class="nav-text">其他文件系统</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E8%A7%81%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E7%B1%BB%E5%9E%8B"><span class="nav-number">3.</span> <span class="nav-text">常见文件系统类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FAT"><span class="nav-number">3.1.</span> <span class="nav-text">FAT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NTFS"><span class="nav-number">3.2.</span> <span class="nav-text">NTFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HFS"><span class="nav-number">3.3.</span> <span class="nav-text">HFS</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#EXT"><span class="nav-number">3.4.</span> <span class="nav-text">EXT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#APFS"><span class="nav-number">3.5.</span> <span class="nav-text">APFS</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%AF%E6%8C%81%E6%83%85%E5%86%B5"><span class="nav-number">4.</span> <span class="nav-text">支持情况</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Windows"><span class="nav-number">4.1.</span> <span class="nav-text">Windows:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#macOS"><span class="nav-number">4.2.</span> <span class="nav-text">macOS:</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Linux"><span class="nav-number">4.3.</span> <span class="nav-text">Linux:</span></a></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="西左"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">西左</p>
+  <div class="site-description" itemprop="description">自是者不彰。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dangyoo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dangyoo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">西左</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
