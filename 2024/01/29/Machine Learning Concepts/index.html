@@ -1,0 +1,1145 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"dangyoo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="闲言碎语近期 Generative AI 越来越火，考虑再把 Machine Learning 拾起来，刚好公司有个项目能实践，之前都是中文学习，英文对应不上，趁机会重新整理一遍基本的知识。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Machine Learning Concepts">
+<meta property="og:url" content="https://dangyoo.github.io/2024/01/29/Machine%20Learning%20Concepts/index.html">
+<meta property="og:site_name" content="西左Log">
+<meta property="og:description" content="闲言碎语近期 Generative AI 越来越火，考虑再把 Machine Learning 拾起来，刚好公司有个项目能实践，之前都是中文学习，英文对应不上，趁机会重新整理一遍基本的知识。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-1.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-2.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-3.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-4.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-5.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-6.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/r2-function.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-7.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-8.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-9.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-10.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-11.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-12.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-13.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/machine-learning-14.png">
+<meta property="article:published_time" content="2024-01-29T02:20:41.000Z">
+<meta property="article:modified_time" content="2024-04-13T13:45:39.497Z">
+<meta property="article:author" content="西左">
+<meta property="article:tag" content="知识">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dangyoo.github.io/images/machine-learning-1.png">
+
+<link rel="canonical" href="https://dangyoo.github.io/2024/01/29/Machine%20Learning%20Concepts/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Machine Learning Concepts | 西左Log</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?15db7c636ac845c8c8fe0ca45dac6e54";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">西左Log</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2024/01/29/Machine%20Learning%20Concepts/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="西左">
+      <meta itemprop="description" content="自是者不彰。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="西左Log">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Machine Learning Concepts
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-01-29 10:20:41" itemprop="dateCreated datePublished" datetime="2024-01-29T10:20:41+08:00">2024-01-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data/" itemprop="url" rel="index"><span itemprop="name">Data</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>近期 Generative AI 越来越火，考虑再把 Machine Learning 拾起来，刚好公司有个项目能实践，之前都是中文学习，英文对应不上，趁机会重新整理一遍基本的知识。</p>
+<span id="more"></span>
+
+<h2 id="Introduction"><a href="#Introduction" class="headerlink" title="Introduction"></a>Introduction</h2><p>Machine learning is in many ways the intersection of two disciplines - data science and software engineering. The goal of machine learning is to use data to create a predictive model that can be incorporated into a software application or service. To achieve this goal requires collaboration between data scientists who explore and prepare the data before using it to train a machine learning model, and software developers who integrate the models into applications where they’re used to predict new data values (a process known as inferencing).</p>
+<h2 id="What-is-machine-learning"><a href="#What-is-machine-learning" class="headerlink" title="What is machine learning?"></a>What is machine learning?</h2><p>Machine learning has its origins in statistics and mathematical modeling of data. The fundamental idea of machine learning is to use data from past observations to predict unknown outcomes or values. For example:</p>
+<ul>
+<li>The proprietor of an ice cream store might use an app that combines historical sales and weather records to predict how many ice creams they’re likely to sell on a given day, based on the weather forecast.</li>
+<li>A doctor might use clinical data from past patients to run automated tests that predict whether a new patient is at risk from diabetes based on factors like weight, blood glucose level, and other measurements.</li>
+<li>A researcher in the Antarctic might use past observations automate the identification of different penguin species (such as Adelie, Gentoo, or Chinstrap) based on measurements of a bird’s flippers, bill, and other physical attributes.</li>
+</ul>
+<h3 id="Machine-learning-as-a-function"><a href="#Machine-learning-as-a-function" class="headerlink" title="Machine learning as a function"></a>Machine learning as a function</h3><p>Because machine learning is based on mathematics and statistics, it’s common to think about machine learning models in mathematical terms. Fundamentally, a machine learning model is a software application that encapsulates a function to calculate an output value based on one or more input values. The process of defining that function is known as training. After the function has been defined, you can use it to predict new values in a process called inferencing.</p>
+<p>Let’s explore the steps involved in training and inferencing.</p>
+<img src="/images/machine-learning-1.png" width="50%" height="50%">
+
+<ol>
+<li>The training data consists of past observations. In most cases, the observations include the observed attributes or features of the thing being observed, and the known value of the thing you want to train a model to predict (known as the label).In mathematical terms, you’ll often see the features referred to using the shorthand variable name x, and the label referred to as y. Usually, an observation consists of multiple feature values, so x is actually a vector (an array with multiple values), like this: [x1,x2,x3,…].To make this clearer, let’s consider the examples described previously:<ul>
+<li>In the ice cream sales scenario, our goal is to train a model that can predict the number of ice cream sales based on the weather. The weather measurements for the day (temperature, rainfall, windspeed, and so on) would be the features (x), and the number of ice creams sold on each day would be the label (y).</li>
+<li>In the medical scenario, the goal is to predict whether or not a patient is at risk of diabetes based on their clinical measurements. The patient’s measurements (weight, blood glucose level, and so on) are the features (x), and the likelihood of diabetes (for example, 1 for at risk, 0 for not at risk) is the label (y).</li>
+<li>In the Antarctic research scenario, we want to predict the species of a penguin based on its physical attributes. The key measurements of the penguin (length of its flippers, width of its bill, and so on) are the features (x), and the species (for example, 0 for Adelie, 1 for Gentoo, or 2 for Chinstrap) is the label (y).</li>
+</ul>
+</li>
+<li>An algorithm is applied to the data to try to determine a relationship between the features and the label, and generalize that relationship as a calculation that can be performed on x to calculate y. The specific algorithm used depends on the kind of predictive problem you’re trying to solve (more about this later), but the basic principle is to try to fit a function to the data, in which the values of the features can be used to calculate the label.</li>
+<li>The result of the algorithm is a model that encapsulates the calculation derived by the algorithm as a function - let’s call it f. In mathematical notation:y &#x3D; f(x)</li>
+<li>Now that the training phase is complete, the trained model can be used for inferencing. The model is essentially a software program that encapsulates the function produced by the training process. You can input a set of feature values, and receive as an output a prediction of the corresponding label. Because the output from the model is a prediction that was calculated by the function, and not an observed value, you’ll often see the output from the function shown as ŷ (which is rather delightfully verbalized as “y-hat”).</li>
+</ol>
+<h2 id="Types-of-machine-learning"><a href="#Types-of-machine-learning" class="headerlink" title="Types of machine learning"></a>Types of machine learning</h2><p>There are multiple types of machine learning, and you must apply the appropriate type depending on what you’re trying to predict. A breakdown of common types of machine learning is shown in the following diagram.<br><img src="/images/machine-learning-2.png" width="50%" height="50%"></p>
+<h3 id="Supervised-machine-learning"><a href="#Supervised-machine-learning" class="headerlink" title="Supervised machine learning"></a>Supervised machine learning</h3><p>Supervised machine learning is a general term for machine learning algorithms in which the training data includes both feature values and known label values. Supervised machine learning is used to train models by determining a relationship between the features and labels in past observations, so that unknown labels can be predicted for features in future cases.</p>
+<h3 id="Regression"><a href="#Regression" class="headerlink" title="Regression"></a>Regression</h3><p>Regression is a form of supervised machine learning in which the label predicted by the model is a numeric value. For example:</p>
+<ul>
+<li>The number of ice creams sold on a given day, based on the temperature, rainfall, and windspeed.</li>
+<li>The selling price of a property based on its size in square feet, the number of bedrooms it contains, and socio-economic metrics for its location.</li>
+<li>The fuel efficiency (in miles-per-gallon) of a car based on its engine size, weight, width, height, and length.</li>
+</ul>
+<h3 id="Classification"><a href="#Classification" class="headerlink" title="Classification"></a>Classification</h3><p>Classification is a form of supervised machine learning in which the label represents a categorization, or class. There are two common classification scenarios.</p>
+<h4 id="Binary-classification"><a href="#Binary-classification" class="headerlink" title="Binary classification"></a>Binary classification</h4><p>In binary classification, the label determines whether the observed item is (or isn’t) an instance of a specific class. Or put another way, binary classification models predict one of two mutually exclusive outcomes. For example:</p>
+<ul>
+<li>Whether a patient is at risk for diabetes based on clinical metrics like weight, age, blood glucose level, and so on.</li>
+<li>Whether a bank customer will default on a loan based on income, credit history, age, and other factors.</li>
+<li>Whether a mailing list customer will respond positively to a marketing offer based on demographic attributes and past purchases.</li>
+</ul>
+<p>In all of these examples, the model predicts a binary true&#x2F;false or positive&#x2F;negative prediction for a single possible class.</p>
+<h4 id="Multiclass-classification"><a href="#Multiclass-classification" class="headerlink" title="Multiclass classification"></a>Multiclass classification</h4><p>Multiclass classification extends binary classification to predict a label that represents one of multiple possible classes. For example,</p>
+<ul>
+<li>The species of a penguin (Adelie, Gentoo, or Chinstrap) based on its physical measurements.</li>
+<li>The genre of a movie (comedy, horror, romance, adventure, or science fiction) based on its cast, director, and budget.</li>
+</ul>
+<p>In most scenarios that involve a known set of multiple classes, multiclass classification is used to predict mutually exclusive labels. For example, a penguin can’t be both a Gentoo and an Adelie. However, there are also some algorithms that you can use to train multilabel classification models, in which there may be more than one valid label for a single observation. For example, a movie could potentially be categorized as both science fiction and comedy.</p>
+<h2 id="Unsupervised-machine-learning"><a href="#Unsupervised-machine-learning" class="headerlink" title="Unsupervised machine learning"></a>Unsupervised machine learning</h2><p>Unsupervised machine learning involves training models using data that consists only of feature values without any known labels. Unsupervised machine learning algorithms determine relationships between the features of the observations in the training data.</p>
+<h3 id="Clustering"><a href="#Clustering" class="headerlink" title="Clustering"></a>Clustering</h3><p>The most common form of unsupervised machine learning is clustering. A clustering algorithm identifies similarities between observations based on their features, and groups them into discrete clusters. For example:</p>
+<ul>
+<li>Group similar flowers based on their size, number of leaves, and number of petals.</li>
+<li>Identify groups of similar customers based on demographic attributes and purchasing behavior.</li>
+</ul>
+<p>In some ways, clustering is similar to multiclass classification; in that it categorizes observations into discrete groups. The difference is that when using classification, you already know the classes to which the observations in the training data belong; so the algorithm works by determining the relationship between the features and the known classification label. In clustering, there’s no previously known cluster label and the algorithm groups the data observations based purely on similarity of features.</p>
+<p>In some cases, clustering is used to determine the set of classes that exist before training a classification model. For example, you might use clustering to segment your customers into groups, and then analyze those groups to identify and categorize different classes of customer (high value - low volume, frequent small purchaser, and so on). You could then use your categorizations to label the observations in your clustering results and use the labeled data to train a classification model that predicts to which customer category a new customer might belong.</p>
+<h2 id="Regression-1"><a href="#Regression-1" class="headerlink" title="Regression"></a>Regression</h2><p>Regression models are trained to predict numeric label values based on training data that includes both features and known labels. The process for training a regression model (or indeed, any supervised machine learning model) involves multiple iterations in which you use an appropriate algorithm (usually with some parameterized settings) to train a model, evaluate the model’s predictive performance, and refine the model by repeating the training process with different algorithms and parameters until you achieve an acceptable level of predictive accuracy.<br><img src="/images/machine-learning-3.png" width="50%" height="50%"></p>
+<p>The diagram shows four key elements of the training process for supervised machine learning models:</p>
+<ol>
+<li>Split the training data (randomly) to create a dataset with which to train the model while holding back a subset of the data that you’ll use to validate the trained model.</li>
+<li>Use an algorithm to fit the training data to a model. In the case of a regression model, use a regression algorithm such as linear regression.</li>
+<li>Use the validation data you held back to test the model by predicting labels for the features.</li>
+<li>Compare the known actual labels in the validation dataset to the labels that the model predicted. Then aggregate the differences between the predicted and actual label values to calculate a metric that indicates how accurately the model predicted for the validation data.</li>
+</ol>
+<p>After each train, validate, and evaluate iteration, you can repeat the process with different algorithms and parameters until an acceptable evaluation metric is achieved.</p>
+<h3 id="Example-regression"><a href="#Example-regression" class="headerlink" title="Example - regression"></a>Example - regression</h3><p>Let’s explore regression with a simplified example in which we’ll train a model to predict a numeric label (y) based on a single feature value (x). Most real scenarios involve multiple feature values, which adds some complexity; but the principle is the same.</p>
+<p>For our example, let’s stick with the ice cream sales scenario we discussed previously. For our feature, we’ll consider the temperature (let’s assume the value is the maximum temperature on a given day), and the label we want to train a model to predict is the number of ice creams sold that day. We’ll start with some historic data that includes records of daily temperatures (x) and ice cream sales (y):</p>
+<table>
+<thead>
+<tr>
+<th>Temperature (x)</th>
+<th>Ice cream sales (y)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>51</td>
+<td>1</td>
+</tr>
+<tr>
+<td>52</td>
+<td>0</td>
+</tr>
+<tr>
+<td>67</td>
+<td>14</td>
+</tr>
+<tr>
+<td>65</td>
+<td>14</td>
+</tr>
+<tr>
+<td>70</td>
+<td>23</td>
+</tr>
+<tr>
+<td>69</td>
+<td>20</td>
+</tr>
+<tr>
+<td>72</td>
+<td>23</td>
+</tr>
+<tr>
+<td>75</td>
+<td>26</td>
+</tr>
+<tr>
+<td>73</td>
+<td>22</td>
+</tr>
+<tr>
+<td>81</td>
+<td>30</td>
+</tr>
+<tr>
+<td>78</td>
+<td>26</td>
+</tr>
+<tr>
+<td>83</td>
+<td>36</td>
+</tr>
+</tbody></table>
+<h4 id="Training-a-regression-model"><a href="#Training-a-regression-model" class="headerlink" title="Training a regression model"></a>Training a regression model</h4><p>We’ll start by splitting the data and using a subset of it to train a model. Here’s the training dataset:</p>
+<table>
+<thead>
+<tr>
+<th>Temperature (x)</th>
+<th>Ice cream sales (y)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>51</td>
+<td>1</td>
+</tr>
+<tr>
+<td>65</td>
+<td>14</td>
+</tr>
+<tr>
+<td>69</td>
+<td>20</td>
+</tr>
+<tr>
+<td>72</td>
+<td>23</td>
+</tr>
+<tr>
+<td>75</td>
+<td>26</td>
+</tr>
+<tr>
+<td>81</td>
+<td>30</td>
+</tr>
+</tbody></table>
+<p>To get an insight of how these x and y values might relate to one another, we can plot them as coordinates along two axes, like this:<br><img src="/images/machine-learning-4.png" width="50%" height="50%"></p>
+<p>Now we’re ready to apply an algorithm to our training data and fit it to a function that applies an operation to x to calculate y. One such algorithm is linear regression, which works by deriving a function that produces a straight line through the intersections of the x and y values while minimizing the average distance between the line and the plotted points, like this:</p>
+<img src="/images/machine-learning-5.png" width="50%" height="50%">
+
+<p>The line is a visual representation of the function in which the slope of the line describes how to calculate the value of y for a given value of x. The line intercepts the x axis at 50, so when x is 50, y is 0. As you can see from the axis markers in the plot, the line slopes so that every increase of 5 along the x axis results in an increase of 5 up the y axis; so when x is 55, y is 5; when x is 60, y is 10, and so on. To calculate a value of y for a given value of x, the function simply subtracts 50; in other words, the function can be expressed like this:</p>
+<p>f(x) &#x3D; x-50</p>
+<p>You can use this function to predict the number of ice creams sold on a day with any given temperature. For example, suppose the weather forecast tells us that tomorrow it will be 77 degrees. We can apply our model to calculate 77-50 and predict that we’ll sell 27 ice creams tomorrow.</p>
+<p>But just how accurate is our model?</p>
+<h4 id="Evaluating-a-regression-model"><a href="#Evaluating-a-regression-model" class="headerlink" title="Evaluating a regression model"></a>Evaluating a regression model</h4><p>To validate the model and evaluate how well it predicts, we held back some data for which we know the label (y) value. Here’s the data we held back:</p>
+<table>
+<thead>
+<tr>
+<th>Temperature (x)</th>
+<th>Ice cream sales (y)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>52</td>
+<td>0</td>
+</tr>
+<tr>
+<td>67</td>
+<td>14</td>
+</tr>
+<tr>
+<td>70</td>
+<td>23</td>
+</tr>
+<tr>
+<td>73</td>
+<td>22</td>
+</tr>
+<tr>
+<td>78</td>
+<td>26</td>
+</tr>
+<tr>
+<td>83</td>
+<td>36</td>
+</tr>
+</tbody></table>
+<p>We can use the model to predict the label for each of the observations in this dataset based on the feature (x) value; and then compare the predicted label (ŷ) to the known actual label value (y).</p>
+<p>Using the model we trained earlier, which encapsulates the function f(x) &#x3D; x-50, results in the following predictions:</p>
+<table>
+<thead>
+<tr>
+<th>Temperature (x)</th>
+<th>Ice cream sales (y)</th>
+<th>Predicted sales (ŷ)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>52</td>
+<td>0</td>
+<td>2</td>
+</tr>
+<tr>
+<td>67</td>
+<td>14</td>
+<td>17</td>
+</tr>
+<tr>
+<td>70</td>
+<td>23</td>
+<td>20</td>
+</tr>
+<tr>
+<td>73</td>
+<td>22</td>
+<td>23</td>
+</tr>
+<tr>
+<td>78</td>
+<td>26</td>
+<td>28</td>
+</tr>
+<tr>
+<td>83</td>
+<td>36</td>
+<td>33</td>
+</tr>
+</tbody></table>
+<p>We can plot both the predicted and actual labels against the feature values like this:<br><img src="/images/machine-learning-6.png" width="50%" height="50%"></p>
+<p>The predicted labels are calculated by the model so they’re on the function line, but there’s some variance between the ŷ values calculated by the function and the actual y values from the validation dataset; which is indicated on the plot as a line between the ŷ and y values that shows how far off the prediction was from the actual value.</p>
+<h4 id="Regression-evaluation-metrics"><a href="#Regression-evaluation-metrics" class="headerlink" title="Regression evaluation metrics"></a>Regression evaluation metrics</h4><p>Based on the differences between the predicted and actual values, you can calculate some common metrics that are used to evaluate a regression model.</p>
+<h5 id="Mean-Absolute-Error-MAE"><a href="#Mean-Absolute-Error-MAE" class="headerlink" title="Mean Absolute Error (MAE)"></a>Mean Absolute Error (MAE)</h5><p>The variance in this example indicates by how many ice creams each prediction was wrong. It doesn’t matter if the prediction was over or under the actual value (so for example, -3 and +3 both indicate a variance of 3). This metric is known as the absolute error for each prediction, and can be summarized for the whole validation set as the mean absolute error (MAE).</p>
+<p>In the ice cream example, the mean (average) of the absolute errors (2, 3, 3, 1, 2, and 3) is 2.33.</p>
+<h5 id="Mean-Squared-Error-MSE"><a href="#Mean-Squared-Error-MSE" class="headerlink" title="Mean Squared Error (MSE)"></a>Mean Squared Error (MSE)</h5><p>The mean absolute error metric takes all discrepancies between predicted and actual labels into account equally. However, it may be more desirable to have a model that is consistently wrong by a small amount than one that makes fewer, but larger errors. One way to produce a metric that “amplifies” larger errors by squaring the individual errors and calculating the mean of the squared values. This metric is known as the mean squared error (MSE).</p>
+<p>In our ice cream example, the mean of the squared absolute values (which are 4, 9, 9, 1, 4, and 9) is 6.</p>
+<h5 id="Root-Mean-Squared-Error-RMSE"><a href="#Root-Mean-Squared-Error-RMSE" class="headerlink" title="Root Mean Squared Error (RMSE)"></a>Root Mean Squared Error (RMSE)</h5><p>The mean squared error helps take the magnitude of errors into account, but because it squares the error values, the resulting metric no longer represents the quantity measured by the label. In other words, we can say that the MSE of our model is 6, but that doesn’t measure its accuracy in terms of the number of ice creams that were mispredicted; 6 is just a numeric score that indicates the level of error in the validation predictions.</p>
+<p>If we want to measure the error in terms of the number of ice creams, we need to calculate the square root of the MSE; which produces a metric called, unsurprisingly, Root Mean Squared Error. In this case √6, which is 2.45 (ice creams).</p>
+<h5 id="Coefficient-of-determination-R2"><a href="#Coefficient-of-determination-R2" class="headerlink" title="Coefficient of determination (R2)"></a>Coefficient of determination (R2)</h5><p>All of the metrics so far compare the discrepancy between the predicted and actual values in order to evaluate the model. However, in reality, there’s some natural random variance in the daily sales of ice cream that the model takes into account. In a linear regression model, the training algorithm fits a straight line that minimizes the mean variance between the function and the known label values. The coefficient of determination (more commonly referred to as R2 or R-Squared) is a metric that measures the proportion of variance in the validation results that can be explained by the model, as opposed to some anomalous aspect of the validation data (for example, a day with a highly unusual number of ice creams sales because of a local festival).</p>
+<p>The calculation for R2 is more complex than for the previous metrics. It compares the sum of squared differences between predicted and actual labels with the sum of squared differences between the actual label values and the mean of actual label values, like this:<br><img src="/images/r2-function.png" width="25%" height="25%"></p>
+<p>Don’t worry too much if that looks complicated; most machine learning tools can calculate the metric for you. The important point is that the result is a value between 0 and 1 that describes the proportion of variance explained by the model. In simple terms, the closer to 1 this value is, the better the model is fitting the validation data. In the case of the ice cream regression model, the R2 calculated from the validation data is 0.95.</p>
+<h3 id="Iterative-training"><a href="#Iterative-training" class="headerlink" title="Iterative training"></a>Iterative training</h3><p>The metrics described above are commonly used to evaluate a regression model. In most real-world scenarios, a data scientist will use an iterative process to repeatedly train and evaluate a model, varying:</p>
+<ul>
+<li>Feature selection and preparation (choosing which features to include in the model, and calculations applied to them to help ensure a better fit).</li>
+<li>Algorithm selection (We explored linear regression in the previous example, but there are many other regression algorithms)</li>
+<li>Algorithm parameters (numeric settings to control algorithm behavior, more accurately called hyperparameters to differentiate them from the x and y parameters).</li>
+</ul>
+<p>After multiple iterations, the model that results in the best evaluation metric that’s acceptable for the specific scenario is selected.</p>
+<h2 id="Binary-classification-1"><a href="#Binary-classification-1" class="headerlink" title="Binary classification"></a>Binary classification</h2><p>Classification, like regression, is a supervised machine learning technique; and therefore follows the same iterative process of training, validating, and evaluating models. Instead of calculating numeric values like a regression model, the algorithms used to train classification models calculate probability values for class assignment and the evaluation metrics used to assess model performance compare the predicted classes to the actual classes.</p>
+<p>Binary classification algorithms are used to train a model that predicts one of two possible labels for a single class. Essentially, predicting true or false. In most real scenarios, the data observations used to train and validate the model consist of multiple feature (x) values and a y value that is either 1 or 0.</p>
+<h3 id="Example-binary-classification"><a href="#Example-binary-classification" class="headerlink" title="Example - binary classification"></a>Example - binary classification</h3><p>To understand how binary classification works, let’s look at a simplified example that uses a single feature (x) to predict whether the label y is 1 or 0. In this example, we’ll use the blood glucose level of a patient to predict whether or not the patient has diabetes. Here’s the data with which we’ll train the model:</p>
+<table>
+<thead>
+<tr>
+<th>Blood glucose (x)</th>
+<th>Diabetic? (y)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>67</td>
+<td>0</td>
+</tr>
+<tr>
+<td>103</td>
+<td>1</td>
+</tr>
+<tr>
+<td>114</td>
+<td>1</td>
+</tr>
+<tr>
+<td>72</td>
+<td>0</td>
+</tr>
+<tr>
+<td>116</td>
+<td>1</td>
+</tr>
+<tr>
+<td>65</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h4 id="Training-a-binary-classification-model"><a href="#Training-a-binary-classification-model" class="headerlink" title="Training a binary classification model"></a>Training a binary classification model</h4><p>To train the model, we’ll use an algorithm to fit the training data to a function that calculates the probability of the class label being true (in other words, that the patient has diabetes). Probability is measured as a value between 0.0 and 1.0, such that the total probability for all possible classes is 1.0. So for example, if the probability of a patient having diabetes is 0.7, then there’s a corresponding probability of 0.3 that the patient isn’t diabetic.</p>
+<p>There are many algorithms that can be used for binary classification, such as logistic regression, which derives a sigmoid (S-shaped) function with values between 0.0 and 1.0, like this:<br><img src="/images/machine-learning-7.png" width="50%" height="50%"></p>
+<p>Despite its name, in machine learning logistic regression is used for classification, not regression. The important point is the logistic nature of the function it produces, which describes an S-shaped curve between a lower and upper value (0.0 and 1.0 when used for binary classification).</p>
+<p>The function produced by the algorithm describes the probability of y being true (y&#x3D;1) for a given value of x. Mathematically, you can express the function like this:</p>
+<p>f(x) &#x3D; P(y&#x3D;1 | x)</p>
+<p>For three of the six observations in the training data, we know that y is definitely true, so the probability for those observations that y&#x3D;1 is 1.0 and for the other three, we know that y is definitely false, so the probability that y&#x3D;1 is 0.0. The S-shaped curve describes the probability distribution so that plotting a value of x on the line identifies the corresponding probability that y is 1.</p>
+<p>The diagram also includes a horizontal line to indicate the threshold at which a model based on this function will predict true (1) or false (0). The threshold lies at the mid-point for y (P(y) &#x3D; 0.5). For any values at this point or above, the model will predict true (1); while for any values below this point it will predict false (0). For example, for a patient with a blood glucose level of 90, the function would result in a probability value of 0.9. Since 0.9 is higher than the threshold of 0.5, the model would predict true (1) - in other words, the patient is predicted to have diabetes.</p>
+<h4 id="Evaluating-a-binary-classification-model"><a href="#Evaluating-a-binary-classification-model" class="headerlink" title="Evaluating a binary classification model"></a>Evaluating a binary classification model</h4><p>As with regression, when training a binary classification model you hold back a random subset of data with which to validate the trained model. Let’s assume we held back the following data to validate our diabetes classifier:</p>
+<table>
+<thead>
+<tr>
+<th>Blood glucose (x)</th>
+<th>Diabetic? (y)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>66</td>
+<td>0</td>
+</tr>
+<tr>
+<td>107</td>
+<td>1</td>
+</tr>
+<tr>
+<td>112</td>
+<td>1</td>
+</tr>
+<tr>
+<td>71</td>
+<td>0</td>
+</tr>
+<tr>
+<td>87</td>
+<td>1</td>
+</tr>
+<tr>
+<td>89</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<p>Applying the logistic function we derived previously to the x values results in the following plot.</p>
+<img src="/images/machine-learning-8.png" width="50%" height="50%">
+
+<p>Based on whether the probability calculated by the function is above or below the threshold, the model generates a predicted label of 1 or 0 for each observation. We can then compare the predicted class labels (ŷ) to the actual class labels (y), as shown here:</p>
+<table>
+<thead>
+<tr>
+<th>Blood glucose (x)</th>
+<th>Diabetic? (y)</th>
+<th>Predicted diabetes diagnosis (ŷ)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>66</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>107</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>112</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>71</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>87</td>
+<td>1</td>
+<td>0</td>
+</tr>
+<tr>
+<td>89</td>
+<td>1</td>
+<td>1</td>
+</tr>
+</tbody></table>
+<h4 id="Binary-classification-evaluation-metrics"><a href="#Binary-classification-evaluation-metrics" class="headerlink" title="Binary classification evaluation metrics"></a>Binary classification evaluation metrics</h4><p>The first step in calculating evaluation metrics for a binary classification model is usually to create a matrix of the number of correct and incorrect predictions for each possible class label:</p>
+<img src="/images/machine-learning-9.png" width="25%" height="25%">
+
+<p>This visualization is called a confusion matrix, and it shows the prediction totals where:</p>
+<ul>
+<li>ŷ&#x3D;0 and y&#x3D;0: True negatives (TN)</li>
+<li>ŷ&#x3D;1 and y&#x3D;0: False positives (FP)</li>
+<li>ŷ&#x3D;0 and y&#x3D;1: False negatives (FN)</li>
+<li>ŷ&#x3D;1 and y&#x3D;1: True positives (TP)</li>
+</ul>
+<p>The arrangement of the confusion matrix is such that correct (true) predictions are shown in a diagonal line from top-left to bottom-right. Often, color-intensity is used to indicate the number of predictions in each cell, so a quick glance at a model that predicts well should reveal a deeply shaded diagonal trend.</p>
+<h5 id="Accuracy"><a href="#Accuracy" class="headerlink" title="Accuracy"></a>Accuracy</h5><p>The simplest metric you can calculate from the confusion matrix is accuracy - the proportion of predictions that the model got right. Accuracy is calculated as:</p>
+<p>(TN+TP) ÷ (TN+FN+FP+TP)</p>
+<p>In the case of our diabetes example, the calculation is:</p>
+<p>(2+3) ÷ (2+1+0+3) </p>
+<p>&#x3D; 5 ÷ 6</p>
+<p>&#x3D; 0.83</p>
+<p>So for our validation data, the diabetes classification model produced correct predictions 83% of the time.</p>
+<p>Accuracy might initially seem like a good metric to evaluate a model, but consider this. Suppose 11% of the population has diabetes. You could create a model that always predicts 0, and it would achieve an accuracy of 89%, even though it makes no real attempt to differentiate between patients by evaluating their features. What we really need is a deeper understanding of how the model performs at predicting 1 for positive cases and 0 for negative cases.</p>
+<h5 id="Recall"><a href="#Recall" class="headerlink" title="Recall"></a>Recall</h5><p>Recall is a metric that measures the proportion of positive cases that the model identified correctly. In other words, compared to the number of patients who have diabetes, how many did the model predict to have diabetes?</p>
+<p>The formula for recall is:</p>
+<p>TP ÷ (TP+FN)</p>
+<p>For our diabetes example:</p>
+<p>3 ÷ (3+1)</p>
+<p>&#x3D; 3 ÷ 4</p>
+<p>&#x3D; 0.75</p>
+<p>So our model correctly identified 75% of patients who have diabetes as having diabetes.</p>
+<h5 id="Precision"><a href="#Precision" class="headerlink" title="Precision"></a>Precision</h5><p>Precision is a similar metric to recall, but measures the proportion of predicted positive cases where the true label is actually positive. In other words, what proportion of the patients predicted by the model to have diabetes actually have diabetes?</p>
+<p>The formula for precision is:</p>
+<p>TP ÷ (TP+FP)</p>
+<p>For our diabetes example:</p>
+<p>3 ÷ (3+0)</p>
+<p>&#x3D; 3 ÷ 3</p>
+<p>&#x3D; 1.0</p>
+<p>So 100% of the patients predicted by our model to have diabetes do in fact have diabetes.</p>
+<h5 id="F1-score"><a href="#F1-score" class="headerlink" title="F1-score"></a>F1-score</h5><p>F1-score is an overall metric that combined recall and precision. The formula for F1-score is:</p>
+<p>(2 x Precision x Recall) ÷ (Precision + Recall)</p>
+<p>For our diabetes example:</p>
+<p>(2 x 1.0 x 0.75) ÷ (1.0 + 0.75)</p>
+<p>&#x3D; 1.5 ÷ 1.75</p>
+<p>&#x3D; 0.86</p>
+<h5 id="Area-Under-the-Curve-AUC"><a href="#Area-Under-the-Curve-AUC" class="headerlink" title="Area Under the Curve (AUC)"></a>Area Under the Curve (AUC)</h5><p>Another name for recall is the true positive rate (TPR), and there’s an equivalent metric called the false positive rate (FPR) that is calculated as FP÷(FP+TN). We already know that the TPR for our model when using a threshold of 0.5 is 0.75, and we can use the formula for FPR to calculate a value of 0÷2 &#x3D; 0.</p>
+<p>Of course, if we were to change the threshold above which the model predicts true (1), it would affect the number of positive and negative predictions; and therefore change the TPR and FPR metrics. These metrics are often used to evaluate a model by plotting a received operator characteristic (ROC) curve that compares the TPR and FPR for every possible threshold value between 0.0 and 1.0:</p>
+<img src="/images/machine-learning-10.png" width="25%" height="25%">
+
+<p>The ROC curve for a perfect model would go straight up the TPR axis on the left and then across the FPR axis at the top. Since the plot area for the curve measures 1x1, the area under this perfect curve would be 1.0 (meaning that the model is correct 100% of the time). In contrast, a diagonal line from the bottom-left to the top-right represents the results that would be achieved by randomly guessing a binary label; producing an area under the curve of 0.5. In other words, given two possible class labels, you could reasonably expect to guess correctly 50% of the time.</p>
+<p>In the case of our diabetes model, the curve above is produced, and the area under the curve (AUC) metric is 0.875. Since the AUC is higher than 0.5, we can conclude the model performs better at predicting whether or not a patient has diabetes than randomly guessing.</p>
+<h2 id="Multiclass-classification-1"><a href="#Multiclass-classification-1" class="headerlink" title="Multiclass classification"></a>Multiclass classification</h2><p>Multiclass classification is used to predict to which of multiple possible classes an observation belongs. As a supervised machine learning technique, it follows the same iterative train, validate, and evaluate process as regression and binary classification in which a subset of the training data is held back to validate the trained model.</p>
+<h3 id="Example-multiclass-classification"><a href="#Example-multiclass-classification" class="headerlink" title="Example - multiclass classification"></a>Example - multiclass classification</h3><p>Multiclass classification algorithms are used to calculate probability values for multiple class labels, enabling a model to predict the most probable class for a given observation.</p>
+<p>Let’s explore an example in which we have some observations of penguins, in which the flipper length (x) of each penguin is recorded. For each observation, the data includes the penguin species (y), which is encoded as follows:</p>
+<ul>
+<li>0: Adelie</li>
+<li>1: Gentoo</li>
+<li>2: Chinstrap</li>
+</ul>
+<p>As with previous examples in this module, a real scenario would include multiple feature (x) values. We’ll use a single feature to keep things simple.</p>
+<table>
+<thead>
+<tr>
+<th>Flipper length (x)</th>
+<th>Species (y)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>167</td>
+<td>0</td>
+</tr>
+<tr>
+<td>172</td>
+<td>0</td>
+</tr>
+<tr>
+<td>225</td>
+<td>2</td>
+</tr>
+<tr>
+<td>197</td>
+<td>1</td>
+</tr>
+<tr>
+<td>189</td>
+<td>1</td>
+</tr>
+<tr>
+<td>232</td>
+<td>2</td>
+</tr>
+<tr>
+<td>158</td>
+<td>0</td>
+</tr>
+</tbody></table>
+<h4 id="Training-a-multiclass-classification-model"><a href="#Training-a-multiclass-classification-model" class="headerlink" title="Training a multiclass classification model"></a>Training a multiclass classification model</h4><p>To train a multiclass classification model, we need to use an algorithm to fit the training data to a function that calculates a probability value for each possible class. There are two kinds of algorithm you can use to do this:</p>
+<ul>
+<li>One-vs-Rest (OvR) algorithms</li>
+<li>Multinomial algorithms</li>
+</ul>
+<h5 id="One-vs-Rest-OvR-algorithms"><a href="#One-vs-Rest-OvR-algorithms" class="headerlink" title="One-vs-Rest (OvR) algorithms"></a>One-vs-Rest (OvR) algorithms</h5><p>One-vs-Rest algorithms train a binary classification function for each class, each calculating the probability that the observation is an example of the target class. Each function calculates the probability of the observation being a specific class compared to any other class. For our penguin species classification model, the algorithm would essentially create three binary classification functions:</p>
+<ul>
+<li>f0(x) &#x3D; P(y&#x3D;0 | x)</li>
+<li>f1(x) &#x3D; P(y&#x3D;1 | x)</li>
+<li>f2(x) &#x3D; P(y&#x3D;2 | x)</li>
+</ul>
+<p>Each algorithm produces a sigmoid function that calculates a probability value between 0.0 and 1.0. A model trained using this kind of algorithm predicts the class for the function that produces the highest probability output.</p>
+<h5 id="Multinomial-algorithms"><a href="#Multinomial-algorithms" class="headerlink" title="Multinomial algorithms"></a>Multinomial algorithms</h5><p>As an alternative approach is to use a multinomial algorithm, which creates a single function that returns a multi-valued output. The output is a vector (an array of values) that contains the probability distribution for all possible classes - with a probability score for each class which when totaled add up to 1.0:</p>
+<p>f(x) &#x3D;[P(y&#x3D;0|x), P(y&#x3D;1|x), P(y&#x3D;2|x)]</p>
+<p>An example of this kind of function is a softmax function, which could produce an output like the following example:</p>
+<p>[0.2, 0.3, 0.5]</p>
+<p>The elements in the vector represent the probabilities for classes 0, 1, and 2 respectively; so in this case, the class with the highest probability is 2.</p>
+<p>Regardless of which type of algorithm is used, the model uses the resulting function to determine the most probable class for a given set of features (x) and predicts the corresponding class label (y).</p>
+<h4 id="Evaluating-a-multiclass-classification-model"><a href="#Evaluating-a-multiclass-classification-model" class="headerlink" title="Evaluating a multiclass classification model"></a>Evaluating a multiclass classification model</h4><p>You can evaluate a multiclass classifier by calculating binary classification metrics for each individual class. Alternatively, you can calculate aggregate metrics that take all classes into account.</p>
+<p>Let’s assume that we’ve validated our multiclass classifier, and obtained the following results:</p>
+<table>
+<thead>
+<tr>
+<th>Flipper length (x)</th>
+<th>Actual species (y)</th>
+<th>Predicted species (ŷ)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>165</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>171</td>
+<td>0</td>
+<td>0</td>
+</tr>
+<tr>
+<td>205</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>195</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>183</td>
+<td>1</td>
+<td>1</td>
+</tr>
+<tr>
+<td>221</td>
+<td>2</td>
+<td>2</td>
+</tr>
+<tr>
+<td>214</td>
+<td>2</td>
+<td>2</td>
+</tr>
+</tbody></table>
+<p>The confusion matrix for a multiclass classifier is similar to that of a binary classifier, except that it shows the number of predictions for each combination of predicted (ŷ) and actual class labels (y):<br><img src="/images/machine-learning-11.png" width="25%" height="25%"></p>
+<p>From this confusion matrix, we can determine the metrics for each individual class as follows:</p>
+<table>
+<thead>
+<tr>
+<th>Class</th>
+<th>TP</th>
+<th>TN</th>
+<th>FP</th>
+<th>FN</th>
+<th>Accuracy</th>
+<th>Recall</th>
+<th>Precision</th>
+<th>F1-Score</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>2</td>
+<td>5</td>
+<td>0</td>
+<td>0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+<td>1.0</td>
+</tr>
+<tr>
+<td>1</td>
+<td>2</td>
+<td>4</td>
+<td>1</td>
+<td>0</td>
+<td>0.86</td>
+<td>1.0</td>
+<td>0.67</td>
+<td>0.8</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2</td>
+<td>4</td>
+<td>0</td>
+<td>1</td>
+<td>0.86</td>
+<td>0.67</td>
+<td>1.0</td>
+<td>0.8</td>
+</tr>
+</tbody></table>
+<p>To calculate the overall accuracy, recall, and precision metrics, you use the total of the TP, TN, FP, and FN metrics:</p>
+<ul>
+<li>Overall accuracy &#x3D; (13+6)÷(13+6+1+1) &#x3D; 0.90</li>
+<li>Overall recall &#x3D; 6÷(6+1) &#x3D; 0.86</li>
+<li>Overall precision &#x3D; 6÷(6+1) &#x3D; 0.86</li>
+</ul>
+<p>The overall F1-score is calculated using the overall recall and precision metrics:</p>
+<ul>
+<li>Overall F1-score &#x3D; (2x0.86x0.86)÷(0.86+0.86) &#x3D; 0.86</li>
+</ul>
+<h2 id="Clustering-1"><a href="#Clustering-1" class="headerlink" title="Clustering"></a>Clustering</h2><p>Clustering is a form of unsupervised machine learning in which observations are grouped into clusters based on similarities in their data values, or features. This kind of machine learning is considered unsupervised because it doesn’t make use of previously known label values to train a model. In a clustering model, the label is the cluster to which the observation is assigned, based only on its features.</p>
+<h3 id="Example-clustering"><a href="#Example-clustering" class="headerlink" title="Example - clustering"></a>Example - clustering</h3><p>For example, suppose a botanist observes a sample of flowers and records the number of leaves and petals on each flower:</p>
+<img src="/images/machine-learning-12.png" width="25%" height="25%">
+
+<p>There are no known labels in the dataset, just two features. The goal is not to identify the different types (species) of flower; just to group similar flowers together based on the number of leaves and petals.</p>
+<table>
+<thead>
+<tr>
+<th>Leaves (x1)</th>
+<th>Petals (x2)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>5</td>
+</tr>
+<tr>
+<td>0</td>
+<td>6</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>3</td>
+</tr>
+<tr>
+<td>1</td>
+<td>6</td>
+</tr>
+<tr>
+<td>1</td>
+<td>8</td>
+</tr>
+<tr>
+<td>2</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>7</td>
+</tr>
+<tr>
+<td>2</td>
+<td>8</td>
+</tr>
+</tbody></table>
+<h4 id="Training-a-clustering-model"><a href="#Training-a-clustering-model" class="headerlink" title="Training a clustering model"></a>Training a clustering model</h4><p>There are multiple algorithms you can use for clustering. One of the most commonly used algorithms is K-Means clustering, which consists of the following steps:</p>
+<ol>
+<li>The feature (x) values are vectorized to define n-dimensional coordinates (where n is the number of features). In the flower example, we have two features: number of leaves (x1) and number of petals (x2). So, the feature vector has two coordinates that we can use to conceptually plot the data points in two-dimensional space ([x1,x2])</li>
+<li>You decide how many clusters you want to use to group the flowers - call this value k. For example, to create three clusters, you would use a k value of 3. Then k points are plotted at random coordinates. These points become the center points for each cluster, so they’re called centroids.</li>
+<li>Each data point (in this case a flower) is assigned to its nearest centroid.</li>
+<li>Each centroid is moved to the center of the data points assigned to it based on the mean distance between the points.</li>
+<li>After the centroid is moved, the data points may now be closer to a different centroid, so the data points are reassigned to clusters based on the new closest centroid.</li>
+<li>The centroid movement and cluster reallocation steps are repeated until the clusters become stable or a predetermined maximum number of iterations is reached.</li>
+</ol>
+<h4 id="Evaluating-a-clustering-model"><a href="#Evaluating-a-clustering-model" class="headerlink" title="Evaluating a clustering model"></a>Evaluating a clustering model</h4><p>Since there’s no known label with which to compare the predicted cluster assignments, evaluation of a clustering model is based on how well the resulting clusters are separated from one another.</p>
+<p>There are multiple metrics that you can use to evaluate cluster separation, including:</p>
+<ul>
+<li>Average distance to cluster center: How close, on average, each point in the cluster is to the centroid of the cluster.</li>
+<li>Average distance to other center: How close, on average, each point in the cluster is to the centroid of all other clusters.</li>
+<li>Maximum distance to cluster center: The furthest distance between a point in the cluster and its centroid.</li>
+<li>Silhouette: A value between -1 and 1 that summarizes the ratio of distance between points in the same cluster and points in different clusters (The closer to 1, the better the cluster separation).</li>
+</ul>
+<h2 id="Deep-learning"><a href="#Deep-learning" class="headerlink" title="Deep learning"></a>Deep learning</h2><p>Deep learning is an advanced form of machine learning that tries to emulate the way the human brain learns. The key to deep learning is the creation of an artificial neural network that simulates electrochemical activity in biological neurons by using mathematical functions, as shown here.</p>
+<p>Biological neural network: Neurons fire in response to electrochemical stimuli. When fired, the signal is passed to connected neurons.</p>
+<p>Artificial neural network: Each neuron is a function that operates on an input value (x) and a weight (w). The function is wrapped in an activation function that determines whether to pass the output on.</p>
+<p>Artificial neural networks are made up of multiple layers of neurons - essentially defining a deeply nested function. This architecture is the reason the technique is referred to as deep learning and the models produced by it are often referred to as deep neural networks (DNNs). You can use deep neural networks for many kinds of machine learning problem, including regression and classification, as well as more specialized models for natural language processing and computer vision.</p>
+<p>Just like other machine learning techniques discussed in this module, deep learning involves fitting training data to a function that can predict a label (y) based on the value of one or more features (x). The function (f(x)) is the outer layer of a nested function in which each layer of the neural network encapsulates functions that operate on x and the weight (w) values associated with them. The algorithm used to train the model involves iteratively feeding the feature values (x) in the training data forward through the layers to calculate output values for ŷ, validating the model to evaluate how far off the calculated ŷ values are from the known y values (which quantifies the level of error, or loss, in the model), and then modifying the weights (w) to reduce the loss. The trained model includes the final weight values that result in the most accurate predictions.</p>
+<h3 id="Example-Using-deep-learning-for-classification"><a href="#Example-Using-deep-learning-for-classification" class="headerlink" title="Example - Using deep learning for classification"></a>Example - Using deep learning for classification</h3><p>To better understand how a deep neural network model works, let’s explore an example in which a neural network is used to define a classification model for penguin species.</p>
+<img src="/images/machine-learning-13.png" width="50%" height="50%">
+
+<p>The feature data (x) consists of some measurements of a penguin. Specifically, the measurements are:</p>
+<ul>
+<li>The length of the penguin’s bill.</li>
+<li>The depth of the penguin’s bill.</li>
+<li>The length of the penguin’s flippers.</li>
+<li>The penguin’s weight.</li>
+</ul>
+<p>In this case, x is a vector of four values, or mathematically, x&#x3D;[x1,x2,x3,x4].</p>
+<p>The label we’re trying to predict (y) is the species of the penguin, and that there are three possible species it could be:</p>
+<ul>
+<li>Adelie</li>
+<li>Gentoo</li>
+<li>Chinstrap</li>
+</ul>
+<p>This is an example of a classification problem, in which the machine learning model must predict the most probable class to which an observation belongs. A classification model accomplishes this by predicting a label that consists of the probability for each class. In other words, y is a vector of three probability values; one for each of the possible classes: [P(y&#x3D;0|x), P(y&#x3D;1|x), P(y&#x3D;2|x)].</p>
+<p>The process for inferencing a predicted penguin class using this network is:</p>
+<ol>
+<li>The feature vector for a penguin observation is fed into the input layer of the neural network, which consists of a neuron for each x value. In this example, the following x vector is used as the input: [37.3, 16.8, 19.2, 30.0]</li>
+<li>The functions for the first layer of neurons each calculate a weighted sum by combining the x value and w weight, and pass it to an activation function that determines if it meets the threshold to be passed on to the next layer.</li>
+<li>Each neuron in a layer is connected to all of the neurons in the next layer (an architecture sometimes called a fully connected network) so the results of each layer are fed forward through the network until they reach the output layer.</li>
+<li>The output layer produces a vector of values; in this case, using a softmax or similar function to calculate the probability distribution for the three possible classes of penguin. In this example, the output vector is: [0.2, 0.7, 0.1]</li>
+<li>The elements of the vector represent the probabilities for classes 0, 1, and 2. The second value is the highest, so the model predicts that the species of the penguin is 1 (Gentoo).</li>
+</ol>
+<h4 id="How-does-a-neural-network-learn"><a href="#How-does-a-neural-network-learn" class="headerlink" title="How does a neural network learn?"></a>How does a neural network learn?</h4><p>The weights in a neural network are central to how it calculates predicted values for labels. During the training process, the model learns the weights that will result in the most accurate predictions. Let’s explore the training process in a little more detail to understand how this learning takes place.</p>
+<img src="/images/machine-learning-14.png" width="50%" height="50%">
+
+<ol>
+<li>The training and validation datasets are defined, and the training features are fed into the input layer.</li>
+<li>The neurons in each layer of the network apply their weights (which are initially assigned randomly) and feed the data through the network.</li>
+<li>The output layer produces a vector containing the calculated values for ŷ. For example, an output for a penguin class prediction might be [0.3. 0.1. 0.6].</li>
+<li>A loss function is used to compare the predicted ŷ values to the known y values and aggregate the difference (which is known as the loss). For example, if the known class for the case that returned the output in the previous step is Chinstrap, then the y value should be [0.0, 0.0, 1.0]. The absolute difference between this and the ŷ vector is [0.3, 0.1, 0.4]. In reality, the loss function calculates the aggregate variance for multiple cases and summarizes it as a single loss value.</li>
+<li>Since the entire network is essentially one large nested function, an optimization function can use differential calculus to evaluate the influence of each weight in the network on the loss, and determine how they could be adjusted (up or down) to reduce the amount of overall loss. The specific optimization technique can vary, but usually involves a gradient descent approach in which each weight is increased or decreased to minimize the loss.</li>
+<li>The changes to the weights are backpropagated to the layers in the network, replacing the previously used values.</li>
+<li>The process is repeated over multiple iterations (known as epochs) until the loss is minimized and the model predicts acceptably accurately.</li>
+</ol>
+<p>While it’s easier to think of each case in the training data being passed through the network one at a time, in reality the data is batched into matrices and processed using linear algebraic calculations. For this reason, neural network training is best performed on computers with graphical processing units (GPUs) that are optimized for vector and matrix manipulation.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%9F%A5%E8%AF%86/" rel="tag"># 知识</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2023/09/02/Git/" rel="prev" title="Git">
+      <i class="fa fa-chevron-left"></i> Git
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/10/IP%E5%AE%9A%E4%BD%8D%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/" rel="next" title="IP定位原理是什么">
+      IP定位原理是什么 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Introduction"><span class="nav-number">2.</span> <span class="nav-text">Introduction</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#What-is-machine-learning"><span class="nav-number">3.</span> <span class="nav-text">What is machine learning?</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Machine-learning-as-a-function"><span class="nav-number">3.1.</span> <span class="nav-text">Machine learning as a function</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Types-of-machine-learning"><span class="nav-number">4.</span> <span class="nav-text">Types of machine learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Supervised-machine-learning"><span class="nav-number">4.1.</span> <span class="nav-text">Supervised machine learning</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Regression"><span class="nav-number">4.2.</span> <span class="nav-text">Regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Classification"><span class="nav-number">4.3.</span> <span class="nav-text">Classification</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Binary-classification"><span class="nav-number">4.3.1.</span> <span class="nav-text">Binary classification</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Multiclass-classification"><span class="nav-number">4.3.2.</span> <span class="nav-text">Multiclass classification</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Unsupervised-machine-learning"><span class="nav-number">5.</span> <span class="nav-text">Unsupervised machine learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Clustering"><span class="nav-number">5.1.</span> <span class="nav-text">Clustering</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Regression-1"><span class="nav-number">6.</span> <span class="nav-text">Regression</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-regression"><span class="nav-number">6.1.</span> <span class="nav-text">Example - regression</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Training-a-regression-model"><span class="nav-number">6.1.1.</span> <span class="nav-text">Training a regression model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Evaluating-a-regression-model"><span class="nav-number">6.1.2.</span> <span class="nav-text">Evaluating a regression model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Regression-evaluation-metrics"><span class="nav-number">6.1.3.</span> <span class="nav-text">Regression evaluation metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Mean-Absolute-Error-MAE"><span class="nav-number">6.1.3.1.</span> <span class="nav-text">Mean Absolute Error (MAE)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Mean-Squared-Error-MSE"><span class="nav-number">6.1.3.2.</span> <span class="nav-text">Mean Squared Error (MSE)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Root-Mean-Squared-Error-RMSE"><span class="nav-number">6.1.3.3.</span> <span class="nav-text">Root Mean Squared Error (RMSE)</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Coefficient-of-determination-R2"><span class="nav-number">6.1.3.4.</span> <span class="nav-text">Coefficient of determination (R2)</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Iterative-training"><span class="nav-number">6.2.</span> <span class="nav-text">Iterative training</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Binary-classification-1"><span class="nav-number">7.</span> <span class="nav-text">Binary classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-binary-classification"><span class="nav-number">7.1.</span> <span class="nav-text">Example - binary classification</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Training-a-binary-classification-model"><span class="nav-number">7.1.1.</span> <span class="nav-text">Training a binary classification model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Evaluating-a-binary-classification-model"><span class="nav-number">7.1.2.</span> <span class="nav-text">Evaluating a binary classification model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Binary-classification-evaluation-metrics"><span class="nav-number">7.1.3.</span> <span class="nav-text">Binary classification evaluation metrics</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#Accuracy"><span class="nav-number">7.1.3.1.</span> <span class="nav-text">Accuracy</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Recall"><span class="nav-number">7.1.3.2.</span> <span class="nav-text">Recall</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Precision"><span class="nav-number">7.1.3.3.</span> <span class="nav-text">Precision</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#F1-score"><span class="nav-number">7.1.3.4.</span> <span class="nav-text">F1-score</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Area-Under-the-Curve-AUC"><span class="nav-number">7.1.3.5.</span> <span class="nav-text">Area Under the Curve (AUC)</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Multiclass-classification-1"><span class="nav-number">8.</span> <span class="nav-text">Multiclass classification</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-multiclass-classification"><span class="nav-number">8.1.</span> <span class="nav-text">Example - multiclass classification</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Training-a-multiclass-classification-model"><span class="nav-number">8.1.1.</span> <span class="nav-text">Training a multiclass classification model</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#One-vs-Rest-OvR-algorithms"><span class="nav-number">8.1.1.1.</span> <span class="nav-text">One-vs-Rest (OvR) algorithms</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Multinomial-algorithms"><span class="nav-number">8.1.1.2.</span> <span class="nav-text">Multinomial algorithms</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Evaluating-a-multiclass-classification-model"><span class="nav-number">8.1.2.</span> <span class="nav-text">Evaluating a multiclass classification model</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Clustering-1"><span class="nav-number">9.</span> <span class="nav-text">Clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-clustering"><span class="nav-number">9.1.</span> <span class="nav-text">Example - clustering</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Training-a-clustering-model"><span class="nav-number">9.1.1.</span> <span class="nav-text">Training a clustering model</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Evaluating-a-clustering-model"><span class="nav-number">9.1.2.</span> <span class="nav-text">Evaluating a clustering model</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-learning"><span class="nav-number">10.</span> <span class="nav-text">Deep learning</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Example-Using-deep-learning-for-classification"><span class="nav-number">10.1.</span> <span class="nav-text">Example - Using deep learning for classification</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#How-does-a-neural-network-learn"><span class="nav-number">10.1.1.</span> <span class="nav-text">How does a neural network learn?</span></a></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="西左"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">西左</p>
+  <div class="site-description" itemprop="description">自是者不彰。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">16</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dangyoo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dangyoo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">西左</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

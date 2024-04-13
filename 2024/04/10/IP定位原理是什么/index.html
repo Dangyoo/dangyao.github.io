@@ -21,17 +21,20 @@
     var CONFIG = {"hostname":"dangyoo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="自是者不彰。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="西左Log">
-<meta property="og:url" content="https://dangyoo.github.io/categories/Data/Integration/Kafka/index.html">
+  <meta name="description" content="闲言碎语一直不太理解怎么根据IP地址解析出对应的物理地址，毕竟看着也不并是类似身份证的格式来标识的。 遂查资料">
+<meta property="og:type" content="article">
+<meta property="og:title" content="IP定位原理是什么">
+<meta property="og:url" content="https://dangyoo.github.io/2024/04/10/IP%E5%AE%9A%E4%BD%8D%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/index.html">
 <meta property="og:site_name" content="西左Log">
-<meta property="og:description" content="自是者不彰。">
+<meta property="og:description" content="闲言碎语一直不太理解怎么根据IP地址解析出对应的物理地址，毕竟看着也不并是类似身份证的格式来标识的。 遂查资料">
 <meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2024-04-10T11:23:53.000Z">
+<meta property="article:modified_time" content="2024-04-13T13:03:07.172Z">
 <meta property="article:author" content="西左">
+<meta property="article:tag" content="常识">
 <meta name="twitter:card" content="summary">
 
-<link rel="canonical" href="https://dangyoo.github.io/categories/Data/Integration/Kafka/">
+<link rel="canonical" href="https://dangyoo.github.io/2024/04/10/IP%E5%AE%9A%E4%BD%8D%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/">
 
 
 <script id="page-configurations">
@@ -39,12 +42,12 @@
   CONFIG.page = {
     sidebar: "",
     isHome : false,
-    isPost : false,
+    isPost : true,
     lang   : 'zh-CN'
   };
 </script>
 
-  <title>分类: Kafka | 西左Log</title>
+  <title>IP定位原理是什么 | 西左Log</title>
   
 
 
@@ -161,51 +164,112 @@
         <div class="content-wrap">
           
 
-          <div class="content category">
+          <div class="content post posts-expand">
             
 
+    
   
   
-  
-  <div class="post-block">
-    <div class="posts-collapse">
-      <div class="collection-title">
-        <h2 class="collection-header">Kafka
-          <small>分类</small>
-        </h2>
-      </div>
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2024/04/10/IP%E5%AE%9A%E4%BD%8D%E5%8E%9F%E7%90%86%E6%98%AF%E4%BB%80%E4%B9%88/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="西左">
+      <meta itemprop="description" content="自是者不彰。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="西左Log">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          IP定位原理是什么
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-10 19:23:53" itemprop="dateCreated datePublished" datetime="2024-04-10T19:23:53+08:00">2024-04-10</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%97%A5%E5%B8%B8%E8%80%83%E6%8D%AE/" itemprop="url" rel="index"><span itemprop="name">日常考据</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-    <div class="collection-year">
-      <span class="collection-header">2022</span>
+        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>一直不太理解怎么根据IP地址解析出对应的物理地址，毕竟看着也不并是类似身份证的格式来标识的。</p>
+<p>遂查资料</p>
+<span id="more"></span>
+
+<h2 id="IP是什么"><a href="#IP是什么" class="headerlink" title="IP是什么"></a>IP是什么</h2><p>IP地址(本文中特指IPv4地址)，是用于标识网络和主机的一种逻辑标识。依托于强大的TCP&#x2F;IP协议，使得我们可以凭借一个IP地址，就访问互联网上的所有资源。</p>
+<p>IP地址本质上，只是一个32位的无符号整型(unsigned int)，范围从0 ~ 2^32 ，总计约43亿个IP地址。为了便于使用，一般使用字符串形式的IP地址，也就是我们平常用到的192.168.0.1这种形式。实际上，就是把整数，每8个二进制位转换成对应的十进制整数，以点分隔的形式使用。</p>
+<p>全球共有五个区域互联网注册机构（RIR），分别是：</p>
+<ul>
+<li>美洲互联网号码注册管理机构（American Registry for Internet Numbers，ARIN）</li>
+<li>欧洲IP网络资源协调中心（RIPE Network Coordination Centre，RIPE NCC）</li>
+<li>亚太网络信息中心（Asia-Pacific Network Information Centre，APNIC）</li>
+<li>拉丁美洲及加勒比地区互联网地址注册管理机构（Latin American and Caribbean Internet Address Registry，LACNIC）</li>
+<li>非洲网络信息中心（African Network Information Centre，AfriNIC）</li>
+</ul>
+<p>IP地址的划分，有RIP机构来进行统筹管理。负责亚太地区IP地址分配的，就是APINIC，总部位于澳大利亚墨尔本。</p>
+<p>各大RIP机构都提供了关于IP地址划分的登记信息，即whois记录。可以在各大RIP机构提供的whois查询页面上查看，或者使用whois命令查询</p>
+<h2 id="IP怎么精确定位"><a href="#IP怎么精确定位" class="headerlink" title="IP怎么精确定位"></a>IP怎么精确定位</h2><p>通过whois信息，可以查询到申请使用该IP的运营商信息，并且在网段描述信息中，会包含国籍和省份信息。但是这样远远不够，风控场景中，需要更加精确的结果，需要知道这个IP具体在哪个城市、哪个乡镇，甚至希望能够精确到某一条街道或者小区。</p>
+<p>类似IP138等提供的精确定位服务，是如何产生的呢？</p>
+<p>俗称“人海战术”，众多网友向某个IP库提供数据更新，上报IP地址的确切位置。</p>
+<p>一种IP地址定位手段，是通过海量Traceroute信息来分析。</p>
+<p>理论上，如果能得到所有IP相互之间Traceroute的信息，就可以绘制出整个互联网的链路图。</p>
+<p>每一次Traceroute，都会返回详细的网络链路信息。积累了最够多的链路信息之后，就可以直观地看出，很多链路都经过了同一个IP，那么这个IP就是骨干节点或者区域的骨干节点。先确定出哪些节点式CN2骨干节点，进一步确定省级骨干节点，再逐一识别市县区级骨干节点，最后得到全国范围内的网络分布。</p>
+
     </div>
 
-  <article itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+    
+    
+    
 
-      <div class="post-meta">
-        <time itemprop="dateCreated"
-              datetime="2022-09-15T18:06:03+08:00"
-              content="2022-09-15">
-          09-15
-        </time>
-      </div>
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E5%B8%B8%E8%AF%86/" rel="tag"># 常识</a>
+          </div>
 
-      <div class="post-title">
-          <a class="post-title-link" href="/2022/09/15/Kafka/" itemprop="url">
-            <span itemprop="name">Kafka</span>
-          </a>
-      </div>
+        
 
-    </header>
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/01/29/Machine%20Learning%20Concepts/" rel="prev" title="Machine Learning Concepts">
+      <i class="fa fa-chevron-left"></i> Machine Learning Concepts
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2024/04/12/%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E6%98%AF%E4%BB%80%E4%B9%88/" rel="next" title="磁盘格式是什么">
+      磁盘格式是什么 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
   </article>
-
-    </div>
-  </div>
   
   
-  
-
   
 
 
@@ -258,6 +322,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">2.</span> <span class="nav-text">IP是什么</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#IP%E6%80%8E%E4%B9%88%E7%B2%BE%E7%A1%AE%E5%AE%9A%E4%BD%8D"><span class="nav-number">3.</span> <span class="nav-text">IP怎么精确定位</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
@@ -273,14 +338,14 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">6</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
