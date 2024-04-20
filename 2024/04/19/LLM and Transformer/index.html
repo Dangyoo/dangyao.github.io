@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 7.0.0-rc2">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"dangyoo.github.io","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":true,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="闲言碎语研究了一段时间 GPT，作为 natural language processing (NLP) 的重大技术进步，有必要把历史梳理一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LLM and Transformer">
+<meta property="og:url" content="https://dangyoo.github.io/2024/04/19/LLM%20and%20Transformer/index.html">
+<meta property="og:site_name" content="西左Log">
+<meta property="og:description" content="闲言碎语研究了一段时间 GPT，作为 natural language processing (NLP) 的重大技术进步，有必要把历史梳理一下。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm1.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm2.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm3.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm4.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm5.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm6.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm7.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm8.png">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm9.jpg">
+<meta property="og:image" content="https://dangyoo.github.io/images/llm10.png">
+<meta property="article:published_time" content="2024-04-19T13:10:33.000Z">
+<meta property="article:modified_time" content="2024-04-20T05:10:01.579Z">
+<meta property="article:author" content="西左">
+<meta property="article:tag" content="知识">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dangyoo.github.io/images/llm1.png">
+
+<link rel="canonical" href="https://dangyoo.github.io/2024/04/19/LLM%20and%20Transformer/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>LLM and Transformer | 西左Log</title>
+  
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?15db7c636ac845c8c8fe0ca45dac6e54";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">西左Log</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://dangyoo.github.io/2024/04/19/LLM%20and%20Transformer/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpeg">
+      <meta itemprop="name" content="西左">
+      <meta itemprop="description" content="自是者不彰。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="西左Log">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          LLM and Transformer
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2024-04-19 21:10:33" itemprop="dateCreated datePublished" datetime="2024-04-19T21:10:33+08:00">2024-04-19</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data/" itemprop="url" rel="index"><span itemprop="name">Data</span></a>
+                </span>
+                  ，
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Data/Machine-Learning/" itemprop="url" rel="index"><span itemprop="name">Machine Learning</span></a>
+                </span>
+            </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h2 id="闲言碎语"><a href="#闲言碎语" class="headerlink" title="闲言碎语"></a>闲言碎语</h2><p>研究了一段时间 GPT，作为 natural language processing (NLP) 的重大技术进步，有必要把历史梳理一下。</p>
+<span id="more"></span>
+
+<h2 id="History-of-LLM"><a href="#History-of-LLM" class="headerlink" title="History of LLM"></a>History of LLM</h2><p>Foundation models, such as GPT-3, are state-of-the-art natural language processing models designed to understand, generate, and interact with human language. To understand the significance of foundation models, it’s essential to explore their origins, which stem from advancements in the fields of artificial intelligence and natural language processing.</p>
+<h3 id="AI"><a href="#AI" class="headerlink" title="AI"></a>AI</h3><img src="/images/llm1.png" width="50%" height="50%">
+
+<ol>
+<li>The purpose of artificial intelligence (AI) is for computers or machines to perform tasks with human-like intelligence.</li>
+<li>A popular approach nowadays to approach artificial intelligence is through machine learning, a subfield that gives computers the ability to learn without being explicitly programmed.</li>
+<li>The subfield of deep learning uses artificial neural networks to learn and represent complex patterns and hierarchies from data, which are especially useful for data like images and text.</li>
+</ol>
+<p>In other words, machine learning and deep learning techniques can be used to realize AI. There are different types of tasks that you can have computers or machines perform.</p>
+<h3 id="NLP"><a href="#NLP" class="headerlink" title="NLP"></a>NLP</h3><p>Natural language processing (NLP) is a type of AI that focuses on understanding, interpreting, and generating human language. Some common NLP use cases are:</p>
+<img src="/images/llm2.png" width="50%" height="50%">
+
+<ol>
+<li>Speech-to-text and text-to-speech conversion. For example, generate subtitles for videos.</li>
+<li>Machine translation. For example, translate text from English to Japanese.</li>
+<li>Text classification. For example, label an email as spam or not spam.</li>
+<li>Entity extraction. For example, extract keywords or names from a document.</li>
+<li>Question answering. For example, provide answers to questions like “What is the capital of France?”</li>
+<li>Text summarization. For example, generate a short one-paragraph summary from a multi-page document.</li>
+</ol>
+<p>Historically, NLP has been challenging as our language is complex and computers find it hard to understand text. In this module, you learn how developments in AI and specifically NLP have led to the models we use today. You’ll explore and use various language models in the model catalog, available in the Azure Machine Learning studio.</p>
+<h2 id="Statistical-techniques-used-for-NLP"><a href="#Statistical-techniques-used-for-NLP" class="headerlink" title="Statistical techniques used for NLP"></a>Statistical techniques used for NLP</h2><p>Over the last decades, multiple developments in the field of natural language processing (NLP) have resulted in achieving large language models (LLMs).</p>
+<p>To understand LLMs, let’s first explore the statistical techniques for NLP that over time have contributed to the current techniques.</p>
+<h3 id="The-beginnings-of-NLP"><a href="#The-beginnings-of-NLP" class="headerlink" title="The beginnings of NLP"></a>The beginnings of NLP</h3><p>As NLP is focused on understanding and generating text, most first attempts at accomplishing NLP were based on using the rules and structure inherent to languages. Especially before machine learning techniques became prevalent, structural models and formal grammar were the primary methods employed.</p>
+<p>These approaches relied on explicit programming of linguistic rules and grammatical patterns to process and generate text. Though these models could handle some specific language tasks reasonably well, they faced significant challenges when confronted with the vast complexity and variability of natural languages.</p>
+<p>Instead of hard-coding rules, researchers in the 1990s began to utilize statistical and probabilistic models to learn patterns and representations directly from data.</p>
+<h3 id="Tokenization"><a href="#Tokenization" class="headerlink" title="Tokenization"></a>Tokenization</h3><p>As you may expect, machines have a hard time deciphering text as they mostly rely on numbers. To read text, we therefore need to convert the presented text to numbers.</p>
+<p>One important development to allow machines to more easily work with text has been tokenization. Tokens are strings with a known meaning, usually representing a word. Tokenization is turning words into tokens, which are then converted to numbers. A statistical approach to tokenization is by using a pipeline:</p>
+<img src="/images/llm3.png" width="50%" height="50%">
+
+<ol>
+<li>Start with the text you want to tokenize.</li>
+<li>Split the words in the text based on a rule. For example, split the words where there’s a white space.</li>
+<li>Stemming. Merge similar words by removing the end of a word.</li>
+<li>Stop word removal. Remove noisy words that have little meaning like the and a. A dictionary of these words is provided to structurally remove them from the text.</li>
+<li>Assign a number to each unique token.</li>
+</ol>
+<p>Tokenization allowed for text to be labeled. As a result, statistical techniques could be used to let computers find patterns in the data instead of applying rule-based models.</p>
+<h3 id="Statistical-techniques-for-NLP"><a href="#Statistical-techniques-for-NLP" class="headerlink" title="Statistical techniques for NLP"></a>Statistical techniques for NLP</h3><p>Two important advancements to achieve NLP used statistical techniques: Naïve Bayes and Term Frequency - Inverse Document Frequency (TF-IDF).</p>
+<h4 id="Naive-Bayes"><a href="#Naive-Bayes" class="headerlink" title="Naïve Bayes"></a>Naïve Bayes</h4><p>Naïve Bayes is a statistical technique that was first used for email filtering. To learn the difference between spam and not spam, two documents are compared. Naïve Bayes classifiers identify which tokens are correlated with emails labeled as spam. In other words, the technique finds which group of words only occurs in one type of document and not in the other. The group of words is often referred to as bag-of-words features.</p>
+<p>For example, the words miracle cure, lose weight fast, and anti-aging may appear more frequently in spam emails about dubious health products than your regular emails.</p>
+<p>Though Naïve Bayes proved to be more effective than simple rule-based models for text classification, it was still relatively rudimentary as only the presence (and not the position) of a word or token was considered.</p>
+<h4 id="TF-IDF"><a href="#TF-IDF" class="headerlink" title="TF-IDF"></a>TF-IDF</h4><p>The Term Frequency - Inverse Document Frequency (TF-IDF) technique had a similar approach in that it compared the frequency of a word in one document with the frequency of the word in a whole corpus of documents. By understanding in which context a word was being used, documents could be classified based on certain topics. TF-IDF is often used for information retrieval, to help understand which relative words or tokens to search for.</p>
+<p>Note：<br>In the context of NLP, a corpus refers to a large and structured collection of text documents that is used for machine learning tasks. Corpora (plural of corpus) serve as essential resources for training, testing, and evaluating various NLP models.</p>
+<p>For example, the word flour may often occur in documents that include recipes for baking. If searching for documents with flour, documents that include baking can also be retrieved as the words are often used together in a text.</p>
+<p>TF-IDF proved to be useful for search engines in understanding a document’s relevance to someone’s search query. However, the TF-IDF technique doesn’t take the semantic relationship between words into consideration. Synonyms or words with similar meanings aren’t detected.</p>
+<p>Though statistical techniques were valuable developments in the field of NLP, deep learning techniques created the necessary innovations to accomplish the level of NLP we have today.</p>
+<h2 id="Deep-learning-techniques-used-for-NLP"><a href="#Deep-learning-techniques-used-for-NLP" class="headerlink" title="Deep learning techniques used for NLP"></a>Deep learning techniques used for NLP</h2><p>Statistical techniques were relatively good at Natural Language Processing (NLP) tasks like text classification. For tasks like translation, there was still much room for improvement.</p>
+<p>A recent technique that has advanced the field of Natural Language Processing (NLP) for tasks like translation is deep learning.</p>
+<p>When you want to translate text, you shouldn’t just translate each word to another language. You may remember translation services from years ago that translated sentences too literally, often resulting in interesting results. Instead, you want a language model to understand the meaning (or semantics) of a text, and use that information to create a grammatically correct sentence in the target language.</p>
+<h3 id="Word-embeddings"><a href="#Word-embeddings" class="headerlink" title="Word embeddings"></a>Word embeddings</h3><p>One of the key concepts introduced by applying deep learning techniques to NLP is word embeddings. Word embeddings solved the problem of not being able to define the semantic relationship between words.</p>
+<p>Before word embeddings, a prevailing challenge with NLP was to detect the semantic relationship between words. Word embeddings represent words in a vector space, so that the relationship between words can be easily described and calculated.</p>
+<p>Word embeddings are created during self-supervised learning. During the training process, the model analyzes the cooccurrence patterns of words in sentences and learns to represent them as vectors. The vectors represent the words with coordinates in a multidimensional space. The distance between words can then be calculated by determining the distance between the relative vectors, describing the semantic relationship between words.</p>
+<p>Imagine you train a model on a large corpus of text data. During the training process, the model finds that the words bike and car are often used in the same patterns of words. Next to finding bike and car in the same text, you can also find each of them to be used when describing similar things. For example, someone may drive a bike or a car, or buy a bike or a car at a shop.</p>
+<p>The model learns that the two words are often found in similar contexts and therefore plots the word vectors for bike and car close to each other in the vector space.</p>
+<p>Imagine we have a three-dimensional vector space where each dimension corresponds to a semantic feature. In this case, let’s say the dimensions represent factors like vehicle type, mode of transportation, and activity. We can then assign hypothetical vectors to the words based on their semantic relationships:</p>
+<img src="/images/llm4.png" width="50%" height="50%">
+
+<ol>
+<li>Boat [2, 1, 4] is close to drive and shop, reflecting that you can drive a boat and visit shops near bodies of water.</li>
+<li>Car [7, 5, 1] closer to bike than boat as cars and bikes are both used on land rather than on water.</li>
+<li>Bike [6, 8, 0] is closer to drive in the activity dimension and close to car in the vehicle type dimension.</li>
+<li>Drive [8, 4, 3] is close to boat, car and bike, but far from shop as it describes a different kind of activity.</li>
+<li>Shop [1, 3, 5] is closest to bike as these words are most commonly used together.</li>
+</ol>
+<p>Note：<br>In the example, a three-dimensional plane is used to describe word embeddings and vector spaces in simple terms. Vector spaces are often multidimensional planes with vectors representing a position in that space, similar to coordinates in a two-dimensional plane.</p>
+<p>Though word embeddings are a great approach to detecting the semantic relationship between words, it still has its problems. For example, words with different intents like love and hate often appear related because they’re used in similar context. Another problem was that the model would only use one entry per word, resulting in a word with different meanings like bank to be semantically related to a wild array of words.</p>
+<h3 id="Adding-memory-to-NLP-models"><a href="#Adding-memory-to-NLP-models" class="headerlink" title="Adding memory to NLP models"></a>Adding memory to NLP models</h3><p>To understand text isn’t just to understand individual words, presented in isolation. Words can differ in their meaning depending on the context they’re presented in. In other words, the sentence around a word matters to the meaning of the word.</p>
+<h4 id="Using-RNNs-to-include-the-context-of-a-word"><a href="#Using-RNNs-to-include-the-context-of-a-word" class="headerlink" title="Using RNNs to include the context of a word"></a>Using RNNs to include the context of a word</h4><p>Before deep learning, including the context of a word was a task too complex and costly. One of the first breakthroughs in including the context were Recurrent Neural Networks (RNNs).</p>
+<p>RNNs consist of multiple sequential steps. Each step takes an input and a hidden state. Imagine the input at each step to be a new word. Each step also produces an output. The hidden state can serve as a memory of the network, storing the output of the previous step and passing it as input to the next step.</p>
+<p>Imagine a sentence like:<br>Vincent Van Gogh was a painter most known for creating stunning and emotionally expressive artworks, including …</p>
+<p>To know what word comes next, you need to remember the name of the painter. The sentence needs to be completed, as the last word is still missing. A missing or masked word in NLP tasks is often represented with [MASK]. By using the special [MASK] token in a sentence, you can let a language model know it needs to predict what the missing token or value is.</p>
+<p>Simplifying the example sentence, you can provide the following input to an RNN: Vincent was a painter known for [MASK]:</p>
+<img src="/images/llm5.png" width="50%" height="50%">
+
+<p>The RNN takes each token as an input, process it, and update the hidden state with a memory of that token. When the next token is processed as new input, the hidden state from the previous step is updated.</p>
+<p>Finally, the last token is presented as input to the model, namely the [MASK] token. Indicating that there’s information missing and the model needs to predict its value. The RNN then uses the hidden state to predict that the output should be something like Starry Night</p>
+<img src="/images/llm6.png" width="50%" height="50%">
+
+<p>In the example, the hidden state contains the information Vincent, is, painter, and know. With RNNs, each of these tokens are equally important in the hidden state, and therefore equally considered when predicting the output.</p>
+<p>RNNs allow for context to be included when deciphering the meaning of a word in relation to the complete sentence. However, as the hidden state of an RNN is updated with each token, the actual relevant information, or signal, may be lost.</p>
+<p>In the example provided, Vincent Van Gogh’s name is at the start of the sentence, while the mask is at the end. At the final step, when the mask is presented as input, the hidden state may contain a large amount of information that is irrelevant for predicting the mask’s output. Since the hidden state has a limited size, the relevant information may even be deleted to make room for new and more recent information.</p>
+<p>When we read this sentence, we know that only certain words are essential to predict the last word. An RNN however, includes all (relevant and irrelevant) information in a hidden state. As a result, the relevant information may become a weak signal in the hidden state, meaning that it can be overlooked because there’s too much other irrelevant information influencing the model.</p>
+<h4 id="Improving-RNNs-with-Long-Short-Term-Memory"><a href="#Improving-RNNs-with-Long-Short-Term-Memory" class="headerlink" title="Improving RNNs with Long Short-Term Memory"></a>Improving RNNs with Long Short-Term Memory</h4><p>One solution to the weak signal problem with RNNs is a newer type of RNN: Long Short-Term Memory (LSTM). LSTM is able to process sequential data by maintaining a hidden state that is updated at each step. With LSTM, the model can decide what to remember and what to forget. By doing so, context that isn’t relevant or doesn’t provide valuable information can be skipped, and important signals can be persisted longer.</p>
+<h2 id="Transformer-architecture-used-for-NLP"><a href="#Transformer-architecture-used-for-NLP" class="headerlink" title="Transformer architecture used for NLP"></a>Transformer architecture used for NLP</h2><p>The latest breakthrough in Natural Language Processing (NLP) is owed to the development of the Transformer architecture.</p>
+<p>Transformers were introduced in the Attention is all you needpaper by Vaswani, et al. from 2017. The Transformer architecture provides an alternative to the Recurrent Neural Networks (RNNS) to do NLP. Whereas RNNs are compute-intensive since they process words sequentially, Transformers don’t process the words sequentially, but instead process each word independently in parallel by using attention.</p>
+<p>The position of a word and the order of words in a sentence are important to understand the meaning of a text. To include this information, without having to process text sequentially, Transformers use positional encoding.</p>
+<h3 id="Positional-encoding"><a href="#Positional-encoding" class="headerlink" title="Positional encoding"></a>Positional encoding</h3><p>Before Transformers, language models used word embeddings to encode text into vectors. In the Transformer architecture, positional encoding is used to encode text into vectors. Positional encoding is the sum of word embedding vectors and positional vectors. By doing so, the encoded text includes information about the meaning and position of a word in a sentence.</p>
+<p>To encode the position of a word in a sentence, you could use a single number to represent the index value. For example:</p>
+<table>
+<thead>
+<tr>
+<th>Token</th>
+<th>Index value</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>The</td>
+<td>0</td>
+</tr>
+<tr>
+<td>work</td>
+<td>1</td>
+</tr>
+<tr>
+<td>of</td>
+<td>2</td>
+</tr>
+<tr>
+<td>William</td>
+<td>3</td>
+</tr>
+<tr>
+<td>Shakespeare</td>
+<td>4</td>
+</tr>
+<tr>
+<td>inspired</td>
+<td>5</td>
+</tr>
+<tr>
+<td>many</td>
+<td>6</td>
+</tr>
+<tr>
+<td>movies</td>
+<td>7</td>
+</tr>
+<tr>
+<td>…</td>
+<td>…</td>
+</tr>
+</tbody></table>
+<p>The longer a text or sequence, the larger the index values may become. Though using unique values for each position in a text is a simple approach, the values would hold no meaning, and the growing values may create instability during model training.</p>
+<p>The solution proposed in the Attention is all you need paper uses sine and cosine functions, where pos is the position and i is the dimension:</p>
+<img src="/images/llm7.png" width="25%" height="25%">
+
+<p>When you use these periodic functions together to create, you can create unique vectors for each position. As a result, the values are within a range and the index doesn’t get larger when a larger text is encoded. Also, these positional vectors make it easier for the model to calculate and compare the positions of different words in a sentence against each other.</p>
+<h3 id="Multi-head-attention"><a href="#Multi-head-attention" class="headerlink" title="Multi-head attention"></a>Multi-head attention</h3><p>The most important technique used by Transformers to process text is the use of attention instead of recurrence.</p>
+<p>Attention (also referred to as self-attention or intra-attention) is a mechanism used to map new information to learned information in order to understand what the new information entails.</p>
+<p>Transformers use an attention function, where a new word is encoded (using positional encoding) and represented as a query. The output of an encoded word is a key with an associated value.</p>
+<p>To illustrate the three variables that are used by the attention function: the query, keys, and values, let’s explore a simplified example. Imagine encoding the sentence Vincent van Gogh is a painter, known for his stunning and emotionally expressive artworks. When encoding the query Vincent van Gogh, the output may be Vincent van Gogh as the key with painter as the associated value. The architecture stores keys and values in a table, which it can then use for future decoding:</p>
+<table>
+<thead>
+<tr>
+<th>Keys</th>
+<th>Values</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Vincent Van Gogh</td>
+<td>Painter</td>
+</tr>
+<tr>
+<td>William Shakespeare</td>
+<td>Playwright</td>
+</tr>
+<tr>
+<td>Charles Dickens</td>
+<td>Writer</td>
+</tr>
+</tbody></table>
+<p>Whenever a new sentence is presented like Shakespeare’s work has influenced many movies, mostly thanks to his work as a …. The model can complete the sentence by taking Shakespeare as the query and finding it in the table of keys and values. Shakespeare the query is closest to William Shakespeare the key, and thus the associated value playwright is presented as the output.</p>
+<h4 id="Using-the-scaled-dot-product-to-compute-the-attention-function"><a href="#Using-the-scaled-dot-product-to-compute-the-attention-function" class="headerlink" title="Using the scaled dot-product to compute the attention function"></a>Using the scaled dot-product to compute the attention function</h4><p>To calculate the attention function, the query, keys, and values are all encoded to vectors. The attention function then computes the scaled dot-product between the query vector and the keys vectors.</p>
+<img src="/images/llm8.png" width="25%" height="25%">
+
+<p>The dot-product calculates the angle between vectors representing tokens, with the product being larger when the vectors are more aligned.</p>
+<p>The softmax function is used within the attention function, over the scaled dot-product of the vectors, to create a probability distribution with possible outcomes. In other words, the softmax function’s output includes which keys are closest to the query. The key with the highest probability is then selected, and the associated value is the output of the attention function.</p>
+<p>The Transformer architecture uses multi-head attention, which means tokens are processed by the attention function several times in parallel. By doing so, a word or sentence can be processed multiple times, in various ways, to extract different kinds of information from the sentence.</p>
+<h3 id="Explore-the-Transformer-architecture"><a href="#Explore-the-Transformer-architecture" class="headerlink" title="Explore the Transformer architecture"></a>Explore the Transformer architecture</h3><p>In the Attention is all you need paper, the proposed Transformer architecture is modeled as:</p>
+<img src="/images/llm9.jpg" width="50%" height="50%">
+
+<p>There are two main components in the original Transformer architecture:</p>
+<ul>
+<li>The encoder: Responsible for processing the input sequence and creating a representation that captures the context of each token.</li>
+<li>The decoder: Generates the output sequence by attending to the encoder’s representation and predicting the next token in the sequence..</li>
+</ul>
+<p>The most important innovations presented in the Transformer architecture were positional encoding and multi-head attention. A simplified representation of the architecture, focusing on these two components may look like:</p>
+<img src="/images/llm10.png" width="50%" height="50%">
+
+<ul>
+<li>In the encoder layer, an input sequence is encoded with positional encoding, after which multi-head attention is used to create a representation of the text.</li>
+<li>In the decoder layer, an (incomplete) output sequence is encoded in a similar way, by first using positional encoding and then multi-head attention. Then, the multi-head attention mechanism is used a second time within the decoder to combine the output of the encoder and the output of the encoded output sequence that was passed as input to the decoder part. As a result, the output can be generated.</li>
+</ul>
+<p>The Transformer architecture introduced concepts that drastically improved a model’s ability to understand and generate text. Different models have been trained using adaptations of the Transformer architecture to optimize for specific NLP tasks.</p>
+<p>The Transformer architecture has allowed us to train models for Natural Language Processing (NLP) in a more efficient way. Instead of processing each token in a sentence or sequence, attention allows a model to process tokens in parallel in various ways.</p>
+<p>To train a model using the Transformer architecture, you need to use a large amount of text data as input. Different models have been trained, which mostly differ by the data they’ve been trained on, or by how they implement attention within their architectures. Since the models are trained on large datasets, and the models themselves are large in size, they’re often referred to as Large Language Models (LLMs).</p>
+<h2 id="Fine-tuning-foundation-models-for-specific-tasks"><a href="#Fine-tuning-foundation-models-for-specific-tasks" class="headerlink" title="Fine-tuning foundation models for specific tasks"></a>Fine-tuning foundation models for specific tasks</h2><p>Though the foundation models may already satisfy your requirements, it may be necessary for you to fine-tune a foundation model.</p>
+<p>Foundation models are pretrained on a diverse range of text from the internet, making them proficient in general language understanding. However, fine-tuning allows you to tailor the model’s knowledge to a specific task or domain, optimizing its performance and ensuring it excels in that particular context.</p>
+<p>Some common tasks for which you may want to fine-tune a foundation model are:</p>
+<ul>
+<li>Text classification: Categorizing a given text into predefined classes or categories based on its content or context.</li>
+<li>Token classification: Assigning specific labels or tags to individual tokens or words in a text, often used in tasks like named entity recognition.</li>
+<li>Question answering: Providing accurate and relevant answers to questions posed in natural language.</li>
+<li>Summarization: Creating concise and coherent summaries of longer texts, capturing the essential information.</li>
+<li>Translation: Converting text from one language to another while preserving the meaning and context.</li>
+</ul>
+<p>As foundation models are already pretrained, you need a smaller task-specific dataset to fine-tune a foundation model. When you fine-tune a model, you’re likely to need less data and compute than when you would train a model from scratch.</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%9F%A5%E8%AF%86/" rel="tag"># 知识</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2024/04/12/%E7%A3%81%E7%9B%98%E6%A0%BC%E5%BC%8F%E6%98%AF%E4%BB%80%E4%B9%88/" rel="prev" title="磁盘格式是什么">
+      <i class="fa fa-chevron-left"></i> 磁盘格式是什么
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%B2%E8%A8%80%E7%A2%8E%E8%AF%AD"><span class="nav-number">1.</span> <span class="nav-text">闲言碎语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#History-of-LLM"><span class="nav-number">2.</span> <span class="nav-text">History of LLM</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#AI"><span class="nav-number">2.1.</span> <span class="nav-text">AI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NLP"><span class="nav-number">2.2.</span> <span class="nav-text">NLP</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Statistical-techniques-used-for-NLP"><span class="nav-number">3.</span> <span class="nav-text">Statistical techniques used for NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#The-beginnings-of-NLP"><span class="nav-number">3.1.</span> <span class="nav-text">The beginnings of NLP</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Tokenization"><span class="nav-number">3.2.</span> <span class="nav-text">Tokenization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Statistical-techniques-for-NLP"><span class="nav-number">3.3.</span> <span class="nav-text">Statistical techniques for NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Naive-Bayes"><span class="nav-number">3.3.1.</span> <span class="nav-text">Naïve Bayes</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TF-IDF"><span class="nav-number">3.3.2.</span> <span class="nav-text">TF-IDF</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Deep-learning-techniques-used-for-NLP"><span class="nav-number">4.</span> <span class="nav-text">Deep learning techniques used for NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Word-embeddings"><span class="nav-number">4.1.</span> <span class="nav-text">Word embeddings</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Adding-memory-to-NLP-models"><span class="nav-number">4.2.</span> <span class="nav-text">Adding memory to NLP models</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-RNNs-to-include-the-context-of-a-word"><span class="nav-number">4.2.1.</span> <span class="nav-text">Using RNNs to include the context of a word</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Improving-RNNs-with-Long-Short-Term-Memory"><span class="nav-number">4.2.2.</span> <span class="nav-text">Improving RNNs with Long Short-Term Memory</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Transformer-architecture-used-for-NLP"><span class="nav-number">5.</span> <span class="nav-text">Transformer architecture used for NLP</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Positional-encoding"><span class="nav-number">5.1.</span> <span class="nav-text">Positional encoding</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Multi-head-attention"><span class="nav-number">5.2.</span> <span class="nav-text">Multi-head attention</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Using-the-scaled-dot-product-to-compute-the-attention-function"><span class="nav-number">5.2.1.</span> <span class="nav-text">Using the scaled dot-product to compute the attention function</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Explore-the-Transformer-architecture"><span class="nav-number">5.3.</span> <span class="nav-text">Explore the Transformer architecture</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Fine-tuning-foundation-models-for-specific-tasks"><span class="nav-number">6.</span> <span class="nav-text">Fine-tuning foundation models for specific tasks</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="西左"
+      src="/images/avatar.jpeg">
+  <p class="site-author-name" itemprop="name">西左</p>
+  <div class="site-description" itemprop="description">自是者不彰。</div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">17</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/dangyoo" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;dangyoo" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">西左</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/jquery@3/dist/jquery.min.js"></script>
+  <script src="//cdn.jsdelivr.net/gh/fancyapps/fancybox@3/dist/jquery.fancybox.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
